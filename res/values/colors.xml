@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<color name="green_gelap">#87a106</color>
+	<color name="green_terang">#eaff7f</color>
+	<color name="grey_line">#dededd</color>
+	<color name="black_soft">#686862</color>
+	<color name="blue_modern">#4bcbfa</color>
+	
+    <drawable name="transparent">#00ffffff</drawable>
+    <drawable name="altercolor1">#80ffffff</drawable>
+    <drawable name="altercolor2">#98c4c4c4</drawable>
+</resources>

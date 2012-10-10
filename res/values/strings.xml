@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="hello">Hello World, GemiActivity!</string>
+    <string name="app_name">Gemi</string>
+    <string name="dateSliderTitle">Selected date</string>    
+
+</resources>
