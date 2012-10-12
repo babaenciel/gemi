@@ -3,6 +3,7 @@
 
     <string name="hello">Hello World, GemiActivity!</string>
     <string name="app_name">Gemi</string>
-    <string name="dateSliderTitle">Selected date</string>    
+    <string name="dateSliderTitle">Selected date</string>   
+    <string name="kategori_prompt">Pilih Kategori</string> 
 
 </resources>

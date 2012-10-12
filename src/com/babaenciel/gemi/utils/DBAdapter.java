@@ -29,10 +29,9 @@ public class DBAdapter extends SQLiteOpenHelper {
 			"create table Anggaran (" +
 			"id_anggaran integer primary key autoincrement," +
 			"nama text," +
-			"bulan text," +
-			"tahun text," +
 			"jumlah_anggaran integer," +
-			"jumlah_pengeluaran integer)";
+			"jumlah_pengeluaran integer," +
+			"tanggal text)";						
 		db.execSQL(tabelAnggaran);
 		
 		String anggaranPengeluaran = 
@@ -61,10 +60,12 @@ public class DBAdapter extends SQLiteOpenHelper {
 
 	@Override
 	public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+		db.execSQL("drop table if exists Kategori");
 		db.execSQL("drop table if exists Pemasukan");
 		db.execSQL("drop table if exists Anggaran");
 		db.execSQL("drop table if exists Anggaran_Pengeluaran");	
 		db.execSQL("drop trigger if exists update_id_pemasukan");
+		
 		String tabelPemasukan = 
 				"create table Pemasukan (" +
 				"id_pemasukan integer primary key autoincrement," +
@@ -74,14 +75,13 @@ public class DBAdapter extends SQLiteOpenHelper {
 				"id_kategori integer)";
 			db.execSQL(tabelPemasukan);
 			
-			/*String tabelAnggaran = 
+			String tabelAnggaran = 
 				"create table Anggaran (" +
 				"id_anggaran integer primary key autoincrement," +
 				"nama text," +
-				"bulan text," +
-				"tahun text," +
 				"jumlah_anggaran integer," +
-				"jumlah_pengeluaran integer)";
+				"jumlah_pengeluaran integer," +
+				"tanggal text)";						
 			db.execSQL(tabelAnggaran);
 			
 			String anggaranPengeluaran = 
@@ -91,20 +91,20 @@ public class DBAdapter extends SQLiteOpenHelper {
 				"nominal integer," +
 				"tanggal text," +
 				"id_anggaran integer)";
-			db.execSQL(anggaranPengeluaran);*/
+			db.execSQL(anggaranPengeluaran);
 			
 			String kategori = 
-				"create table Kategori (" +
-				"id_kategori integer primary key autoincrement, " +
-				"nama text)";
+					"create table Kategori (" +
+					"id_kategori integer primary key autoincrement, " +
+					"nama text)";
 			db.execSQL(kategori);
 			
-			/*String trigger_delete_pengeluaran_anggaran = 
+			String trigger_delete_pengeluaran_anggaran = 
 				"create trigger delete_pengeluaran_anggaran after delete on Anggaran for each row " +
 				"begin " +
 				"delete from Anggaran_Pengeluaran where id_anggaran = old.id_anggaran;" +
 				"end;";
-			db.execSQL(trigger_delete_pengeluaran_anggaran);*/
+			db.execSQL(trigger_delete_pengeluaran_anggaran);
 		
 		
 	}

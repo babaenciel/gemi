@@ -1,13 +1,20 @@
 package com.babaenciel.gemi.utils;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import android.text.format.Time;
 import android.util.Log;
 
 public class MyDate {
 
 	Time time;
-	int month;
-	int year;
+	public int date;
+	public int month;
+	public int year;
+	public String dateFull1;	//dd-mm-yyyy
+	public String dateFull2;	//yyyy-mm-dd
 	int monthJumlah;
 	public int monthCounter;	
 	public int yearCounter;	
@@ -25,8 +32,11 @@ public class MyDate {
 	
 	public void setNow() {
 		time.setToNow();
+		date = time.monthDay;
 		month = time.month+1;	//karena month dimulai dari 0
 		year = time.year;
+		dateFull1 = date+"-"+month+"-"+year;
+		dateFull2 = year+"-"+month+"-"+date;
 	}
 	
 	/*algoritma agar rumit.
@@ -91,6 +101,40 @@ public class MyDate {
 			yearText = Integer.toString(year + yearCounter);
 		} 
 		
+	}
+	
+	//from dd-mm-yyyy to yyyy-mm-dd
+	public String konversiTanggal1(String tanggaldd) {
+		SimpleDateFormat simple = new SimpleDateFormat("dd-MM-yyyy");
+		SimpleDateFormat simple2 = new SimpleDateFormat("yyyy-MM-dd");
+		Date date1;
+		String date2 = null;
+		try {
+			date1 = simple.parse(tanggaldd);
+			date2 = simple2.format(date1);
+		} catch (ParseException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}        		
+		
+		return date2;
+	}
+	
+	//from yyyy-mm-dd to dd-mm-yyyy
+	public String konversiTanggal2(String tanggalyyyy) {
+		SimpleDateFormat simple = new SimpleDateFormat("yyyy-MM-dd");
+		SimpleDateFormat simple2 = new SimpleDateFormat("dd-MM-yyyy");
+		Date date1;
+		String date2 = null;
+		try {
+			date1 = simple.parse(tanggalyyyy);
+			date2 = simple2.format(date1);
+		} catch (ParseException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}        		
+		
+		return date2;
 	}
 	
 	public String konversiBulanKeText(int monthDigit) {

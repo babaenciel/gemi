@@ -13,6 +13,7 @@ import com.babaenciel.gemi.utils.DBAdapter;
 
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
@@ -45,9 +46,9 @@ public class PemasukanActivity extends SherlockFragmentActivity implements Pemas
 		/*KategoriDatabase db2 = new KategoriDatabase(this);
 		db2.insertKategori("Gaji");
 		db2.insertKategori("Penjualan");
-		db2.insertKategori("Hadiah");
+		db2.insertKategori("Hadiah");*/
 		
-		PemasukanDatabase db = new PemasukanDatabase(this);
+		/*PemasukanDatabase db = new PemasukanDatabase(this);
 		db.insertPemasukan("gajian", 200000, "2012-10-12", 1);
 		db.insertPemasukan("gajian kedua", 200000, "2012-10-12", 2);
 		db.insertPemasukan("gajian kemarin", 200000, "2012-10-20", 3);
@@ -75,7 +76,7 @@ public class PemasukanActivity extends SherlockFragmentActivity implements Pemas
 	public boolean onCreateOptionsMenu(Menu menu) {
 		SubMenu subMenu1 = menu.addSubMenu("Action Item");
         subMenu1.add("Insert Pemasukan");     
-        subMenu1.add("change menu");
+        subMenu1.add("Change View by Category");
 
         MenuItem subMenu1Item = subMenu1.getItem();
         subMenu1Item.setIcon(R.drawable.ic_launcher);
@@ -96,15 +97,16 @@ public class PemasukanActivity extends SherlockFragmentActivity implements Pemas
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		if(item.getTitle().equals("Insert Pemasukan")) {
-			Toast.makeText(getApplicationContext(), "Insert", Toast.LENGTH_SHORT).show();
-		}else if(item.getTitle().equals("change menu")) {
-			item.setTitle("change menu 2");
+			Intent i = new Intent(this, PemasukanInsert.class);
+			startActivity(i);
+		}else if(item.getTitle().equals("Change View by Category")) {
+			item.setTitle("Change View by Date");
 			viewToggle = 2;
 			adapter = new PemasukanFragmentPagerAdapter(getSupportFragmentManager(), this, viewToggle);
 			pager.setAdapter(adapter);
 			pager.setCurrentItem(adapter.getCount() / 2);
-		}else if(item.getTitle().equals("change menu 2")) {
-			item.setTitle("change menu");
+		}else if(item.getTitle().equals("Change View by Date")) {
+			item.setTitle("Change View by Category");
 			viewToggle = 1;
 			adapter = new PemasukanFragmentPagerAdapter(getSupportFragmentManager(), this, viewToggle);
 			pager.setAdapter(adapter);

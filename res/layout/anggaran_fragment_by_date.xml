@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+    
+    <TextView 
+        android:id="@+id/anggaran_fragment_by_date_bulan"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="5dp"
+        android:textSize="18dip"
+        android:textColor="@color/blue_modern"
+        android:typeface="monospace"/>
+    
+     <!-- nggak tau kenapa bisa seperti ini. trial n error -->
+    <RelativeLayout 
+        android:id="@+id/anggaran_fragment_by_date_layout"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"        
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="10dp"
+        android:layout_below="@id/anggaran_fragment_by_date_bulan">
+	        <TextView 
+		        android:id="@+id/anggaran_fragment_by_date_total_text"
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"			          
+		        android:layout_marginLeft="10dip"    
+		        android:layout_centerVertical="true"		        
+		        android:textSize="18dip"
+		        android:textColor="@color/black_soft"       
+		        android:text="Total Pengeluaran"/>
+    
+		    <TextView
+		        android:id="@+id/anggaran_fragment_by_date_total_nominal_atas"
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"		        		
+		        android:layout_marginRight="10dip"	 
+		        android:layout_alignParentRight="true"        		       
+		        android:textSize="18dip"
+		        android:textColor="@color/blue_modern"
+		        android:text="nominal atas"/>
+		    
+		     <TextView
+		        android:id="@+id/anggaran_fragment_by_date_total_nominal_bawah"
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"		        		
+		        android:layout_marginRight="10dip"	 
+		        android:layout_alignParentRight="true"  
+		        android:layout_below="@id/anggaran_fragment_by_date_total_nominal_atas"      		       
+		        android:textSize="18dip"
+		        android:textColor="@color/blue_modern"
+		        android:text="nominal bawah"/>
+    </RelativeLayout>
+    
+    <ListView 
+        android:id="@+id/anggaran_fragment_by_date_list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/anggaran_fragment_by_date_layout"
+        android:divider="@color/black_soft"/>
+
+</RelativeLayout>

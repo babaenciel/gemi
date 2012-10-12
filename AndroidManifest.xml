@@ -22,7 +22,10 @@
             </intent-filter>
         </activity>
         
-        <activity android:name=".pemasukan.PemasukanActivity"></activity>
+        <activity android:name="com.babaenciel.gemi.pemasukan.PemasukanActivity"></activity>
+        <activity android:name="com.babaenciel.gemi.pemasukan.PemasukanInsert"></activity>
+        <activity android:name="com.babaenciel.gemi.anggaran.AnggaranActivity"></activity>
+        <activity android:name="com.babaenciel.gemi.anggaran.AnggaranPengeluaranActivity"></activity>
     </application>
     
 

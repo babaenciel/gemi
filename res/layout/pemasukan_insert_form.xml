@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"    
+    android:background="@android:color/white" 
+    android:orientation="vertical"
+    android:padding="0dip">
+   
+    <EditText 
+        android:id="@+id/pemasukan_form_edittext_nama"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"        
+        android:layout_marginTop="20dip"
+        android:background="@drawable/edittext_custom"
+        android:hint="masukkan nama pemasukan"
+        android:singleLine="true"
+        android:textSize="18dip"
+        android:inputType="text"/>
+    
+   	<Spinner 
+		android:id="@+id/pemasukan_form_spinner_kategori"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_marginTop="20dip"
+		android:prompt="@string/kategori_prompt"/>
+    
+    
+     <EditText 
+        android:id="@+id/pemasukan_form_edittext_nominal"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"        
+        android:layout_marginTop="20dip"
+        android:background="@drawable/edittext_custom"
+        android:hint="masukkan jumlah"
+        android:singleLine="true"
+        android:textSize="18dip"
+        android:maxLength="9"
+        android:inputType="number"/>
+     
+      
+      <EditText 
+	        android:id="@+id/pemasukan_form_edittext_tanggal"
+	        android:layout_width="200dip"
+	        android:layout_height="wrap_content"        
+	        android:layout_marginTop="20dip"	        
+	        android:background="@drawable/edittext_custom"
+	        android:focusable="false"
+	        android:hint="masukkan tanggal"
+	        android:singleLine="true"	        
+	        android:textSize="18dip" />
+    
+      <Button 
+          android:id="@+id/pemasukan_form_submit_button"
+          android:layout_width="80dip"
+          android:layout_height="wrap_content"          
+          android:layout_marginTop="20dip"
+          android:text="submit"/>
+
+</LinearLayout>

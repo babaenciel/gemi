@@ -1,5 +1,6 @@
 package com.babaenciel.gemi;
 
+import com.babaenciel.gemi.anggaran.AnggaranActivity;
 import com.babaenciel.gemi.pemasukan.PemasukanActivity;
 
 import android.os.Bundle;
@@ -32,10 +33,10 @@ public class MainActivity extends Activity {
 				if(((TextView)arg1).getText().equals("pemasukan")) {
 					Intent i = new Intent(getApplicationContext(), PemasukanActivity.class);
 					startActivity(i);
-				}/*else if(((TextView)arg1).getText().equals("anggaran")) {
-					Intent i = new Intent(getApplicationContext(), Anggaran.class);
+				}else if(((TextView)arg1).getText().equals("anggaran")) {
+					Intent i = new Intent(getApplicationContext(), AnggaranActivity.class);
 					startActivity(i);
-				}	*/			
+				}		
 			}        	
 		});
     }

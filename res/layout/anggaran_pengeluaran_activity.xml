@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@android:color/white">
+    
+     <!-- nggak tau kenapa bisa seperti ini. trial n error -->
+    <RelativeLayout 
+        android:id="@+id/anggaran_pengeluaran_layout"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"        
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp">
+	        <TextView 
+		        android:id="@+id/anggaran_pengeluaran_total_text"
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"			          
+		        android:layout_marginLeft="10dip"    
+		        android:layout_centerVertical="true"		        
+		        android:textSize="18dip"
+		        android:textColor="@color/black_soft"       
+		        android:text="Total Pengeluaran"/>
+    
+		    <TextView
+		        android:id="@+id/anggaran_pengeluaran_nominal"
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"		        		
+		        android:layout_marginRight="10dip"	 
+		        android:layout_alignParentRight="true"        		       
+		        android:textSize="18dip"
+		        android:textColor="@color/blue_modern"/>
+		    		     
+    </RelativeLayout>
+    
+    <ListView 
+        android:id="@+id/anggaran_pengeluaran_list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/anggaran_pengeluaran_layout"
+        android:divider="@color/black_soft"/>
+
+</RelativeLayout>

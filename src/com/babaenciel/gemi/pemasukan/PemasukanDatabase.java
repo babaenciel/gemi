@@ -29,6 +29,7 @@ public class PemasukanDatabase {
 		db.insert("Pemasukan", null, cv);		
 	}
 	
+	//untuk view by date
 	public Cursor getPemasukanFromMonthYear(String month, String year) {
 		SQLiteDatabase db = dbAdapter.getReadableDatabase();
 		String query = "SELECT * " +
@@ -41,6 +42,7 @@ public class PemasukanDatabase {
 		return cursor;
 	}
 	
+	//untuk view by categori
 	public Cursor getPemasukanFromMonthYear2(String month, String year) {
 		SQLiteDatabase db = dbAdapter.getReadableDatabase();
 		String query = "SELECT * " +
@@ -101,6 +103,34 @@ public class PemasukanDatabase {
 		cursor.close();
 		db.close();
 		return kategori;		
+	}
+	
+	public ArrayList<String> getKategori() {
+		SQLiteDatabase db = dbAdapter.getReadableDatabase();
+		String query = "select nama from Kategori";
+		Cursor cursor = db.rawQuery(query, null);
+		ArrayList<String> kategori = new ArrayList<String>();
+		
+		if(cursor.moveToFirst()) {
+			do {
+				kategori.add(cursor.getString(0));
+			}while(cursor.moveToNext());			
+		}
+		
+		cursor.close();
+		db.close();
+		return kategori;
+	}
+	
+	public int getIdKategori(String nama) {
+		SQLiteDatabase db = dbAdapter.getReadableDatabase();
+		String query = "select id_kategori from Kategori where nama = '"+nama+"'";
+		Cursor cursor = db.rawQuery(query, null);
+		int id = 0;
+		if(cursor.moveToFirst()) {			
+			id = cursor.getInt(0);
+		}
+		return id;
 	}
 	
 	public void updatePemasukan(int id, String nama, int nominal, String tanggal) {
