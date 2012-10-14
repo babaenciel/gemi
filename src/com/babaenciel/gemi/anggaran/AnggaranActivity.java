@@ -11,6 +11,8 @@ import com.babaenciel.gemi.R;
 
 public class AnggaranActivity extends SherlockFragmentActivity implements AnggaranInterface {
 	private static final int THEME = R.style.Theme_Sherlock;
+	ViewPager pager;
+	AnggaranFragmentPagerAdapter adapter;
 
 	@Override
 	protected void onCreate(Bundle arg0) {
@@ -34,8 +36,8 @@ public class AnggaranActivity extends SherlockFragmentActivity implements Anggar
 		db.insertAnggaranPengeluaran("makan sore", 20000, "2012-10-10", 1);
 		db.insertAnggaranPengeluaran("makan malem banget", 50000, "2012-10-10", 1);*/
 		
-		ViewPager pager = (ViewPager) findViewById(R.id.anggaran_activity_pager);
-		AnggaranFragmentPagerAdapter adapter = new AnggaranFragmentPagerAdapter(getSupportFragmentManager());
+		pager = (ViewPager) findViewById(R.id.anggaran_activity_pager);
+		adapter = new AnggaranFragmentPagerAdapter(getSupportFragmentManager());
 		pager.setAdapter(adapter);
 		pager.setCurrentItem(adapter.getCount() / 2);
 	}
@@ -51,10 +53,21 @@ public class AnggaranActivity extends SherlockFragmentActivity implements Anggar
 		return super.onOptionsItemSelected(item);
 	}
 
+	//onResume() digunakan agar ketika user kembali dari AnggaranPengeluaranActivity,
+	//nilai total pengeluarannya ikut berubah.
+	//Disini dilakukan pengresetan adapter.
+	@Override
+	protected void onResume() {		
+		super.onResume();
+		adapter = new AnggaranFragmentPagerAdapter(getSupportFragmentManager());
+		pager.setAdapter(adapter);
+		pager.setCurrentItem(adapter.getCount() / 2);
+	}
+	
 	@Override
 	public void onDetail(int id_anggaran) {
 		Intent i = new Intent(this, AnggaranPengeluaranActivity.class);
-		i.putExtra("id_anggaran", id_anggaran);
+		i.putExtra("id_anggaran", id_anggaran);		
 		startActivity(i);
 		
 	}
@@ -67,6 +80,12 @@ public class AnggaranActivity extends SherlockFragmentActivity implements Anggar
 
 	@Override
 	public void onUpdate() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void restartActivity() {
 		// TODO Auto-generated method stub
 		
 	}

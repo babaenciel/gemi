@@ -81,4 +81,35 @@ public class AnggaranPengeluaranDatabase {
 		return jumlah;
 	}
 	
+	public void deleteAnggaranPengeluaran(int id_anggaran_pengeluaran, int id_anggaran) {
+		SQLiteDatabase db = dbAdapter.getReadableDatabase();
+		String query = "select nominal from Anggaran_Pengeluaran where " +
+				"id_anggaran_pengeluaran = " + id_anggaran_pengeluaran;
+		Cursor cursor = db.rawQuery(query, null);
+		int nominal = 0;
+		if(cursor.moveToFirst()) {
+			nominal = cursor.getInt(0);
+		}
+		cursor.close();
+		
+		db = dbAdapter.getReadableDatabase();
+		db.delete("Anggaran_Pengeluaran", "id_anggaran_pengeluaran = "+id_anggaran_pengeluaran, null);
+		
+		query = "select jumlah_pengeluaran from Anggaran where " +
+				"id_anggaran = "+ id_anggaran;
+		cursor = db.rawQuery(query, null);
+		int jumlah_pengeluaran = 0;
+		if(cursor.moveToFirst()) {
+			jumlah_pengeluaran = cursor.getInt(0);
+		}
+		cursor.close();
+		jumlah_pengeluaran = jumlah_pengeluaran - nominal;
+		
+		db = dbAdapter.getWritableDatabase();
+		ContentValues cv = new ContentValues();
+		cv.put("jumlah_pengeluaran", jumlah_pengeluaran);
+		db.update("Anggaran", cv, "id_anggaran = "+id_anggaran, null);
+		db.close();
+	}
+	
 }
