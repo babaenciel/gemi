@@ -35,15 +35,18 @@ public class PemasukanFragment extends SherlockFragment {
 	
 	public static SherlockFragment newInstance(MyDate myDate) {
 		PemasukanFragment f = new PemasukanFragment();
-				
+		
+		String month = myDate.konversiBulanDitambahi0(myDate.monthCounter);
 		Bundle b = new Bundle();		
-		b.putInt("month", myDate.monthCounter);
+		//b.putInt("month", myDate.monthCounter);
 		b.putInt("year", myDate.yearCounter);
+		b.putString("month", month);
+		
 		b.putString("monthText", myDate.monthText);
 		b.putString("yearText", myDate.yearText);
 		
-		Log.d("month", ""+myDate.monthCounter);
-		Log.d("year", ""+myDate.yearCounter);
+		Log.d("month counter", ""+myDate.monthCounter);
+		Log.d("year counter", ""+myDate.yearCounter);
 		f.setArguments(b);
 		return f;		
 	}
@@ -64,9 +67,12 @@ public class PemasukanFragment extends SherlockFragment {
 	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
-			Bundle savedInstanceState) {		
-		month = Integer.toString(getArguments().getInt("month"));
-		year = Integer.toString(getArguments().getInt("year"));		
+			Bundle savedInstanceState) {			
+		//month = Integer.toString(getArguments().getInt("month"));
+		month = getArguments().getString("month");
+		year = Integer.toString(getArguments().getInt("year"));
+		Log.d("month", month);
+		Log.d("year", year);
 		
 		//inflate view
 		View view = inflater.inflate(com.babaenciel.gemi.R.layout.activity_pemasukan, null);
@@ -87,7 +93,7 @@ public class PemasukanFragment extends SherlockFragment {
 		jumlahPemasukan.setText(customFormat.format(jumlah));
 		
 		ArrayList<PemasukanObject> values = new ArrayList<PemasukanObject>();
-		Cursor cursor = db.getPemasukanFromMonthYear(Integer.toString(getArguments().getInt("month")), Integer.toString(getArguments().getInt("year")));		
+		Cursor cursor = db.getPemasukanFromMonthYear(month, year);		
 		if(cursor.moveToFirst()) {
 			do {
 				//row index -> 0: id_pemasukan, 1: nama, 2: nominal, 3: tanggal, 4:id_kategori

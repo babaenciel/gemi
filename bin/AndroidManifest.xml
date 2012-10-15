@@ -26,6 +26,8 @@
         <activity android:name="com.babaenciel.gemi.pemasukan.PemasukanInsert"></activity>
         <activity android:name="com.babaenciel.gemi.anggaran.AnggaranActivity"></activity>
         <activity android:name="com.babaenciel.gemi.anggaran.AnggaranPengeluaranActivity"></activity>
+        <activity android:name="com.babaenciel.gemi.anggaran.AnggaranInsertFormActivity"></activity>
+        <activity android:name="com.babaenciel.gemi.anggaran.AnggaranPengeluaranInsertFormActivity"></activity>
     </application>
     
 

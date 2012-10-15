@@ -31,8 +31,11 @@ public class AnggaranFragmentByDate extends SherlockFragment {
 	
 	public static AnggaranFragmentByDate newInstance(MyDate myDate) {
 		AnggaranFragmentByDate f = new AnggaranFragmentByDate();
+		
+		String month = myDate.konversiBulanDitambahi0(myDate.monthCounter);
 		Bundle bundle = new Bundle();
-		bundle.putInt("month", myDate.monthCounter);
+		//bundle.putInt("month", myDate.monthCounter);
+		bundle.putString("month", month);
 		bundle.putInt("year", myDate.yearCounter);
 		bundle.putString("monthText", myDate.monthText);
 		bundle.putString("yearText", myDate.yearText);
@@ -44,7 +47,8 @@ public class AnggaranFragmentByDate extends SherlockFragment {
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-		month = Integer.toString(getArguments().getInt("month"));
+		//month = Integer.toString(getArguments().getInt("month"));
+		month = getArguments().getString("month");
 		year = Integer.toString(getArguments().getInt("year"));
 		
 		//inflate the xml layout

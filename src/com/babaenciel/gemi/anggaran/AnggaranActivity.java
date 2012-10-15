@@ -3,10 +3,12 @@ package com.babaenciel.gemi.anggaran;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
+import com.actionbarsherlock.view.SubMenu;
 import com.babaenciel.gemi.R;
 
 public class AnggaranActivity extends SherlockFragmentActivity implements AnggaranInterface {
@@ -44,13 +46,23 @@ public class AnggaranActivity extends SherlockFragmentActivity implements Anggar
 	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		// TODO Auto-generated method stub
+		SubMenu subMenu1 = menu.addSubMenu("Action Item");
+        subMenu1.add("Set Anggaran Baru");             
+
+        MenuItem subMenu1Item = subMenu1.getItem();
+        subMenu1Item.setIcon(R.drawable.ic_launcher);
+        subMenu1Item.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS | MenuItem.SHOW_AS_ACTION_WITH_TEXT);
+        
 		return super.onCreateOptionsMenu(menu);
 	}
 	
 	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {		
-		return super.onOptionsItemSelected(item);
+	public boolean onOptionsItemSelected(MenuItem item) {
+		if(item.getTitle().equals("Set Anggaran Baru")) {
+			Intent i = new Intent(this, AnggaranInsertFormActivity.class);
+			startActivity(i);			
+		}
+		return true;
 	}
 
 	//onResume() digunakan agar ketika user kembali dari AnggaranPengeluaranActivity,
@@ -59,6 +71,7 @@ public class AnggaranActivity extends SherlockFragmentActivity implements Anggar
 	@Override
 	protected void onResume() {		
 		super.onResume();
+		Log.d("resumed", "anggaran resumed");
 		adapter = new AnggaranFragmentPagerAdapter(getSupportFragmentManager());
 		pager.setAdapter(adapter);
 		pager.setCurrentItem(adapter.getCount() / 2);

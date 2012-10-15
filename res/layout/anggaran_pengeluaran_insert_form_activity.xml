@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical"
+    android:background="@android:color/white"  >    
+
+    <EditText 
+        android:id="@+id/anggaran_pengeluaran_form_edittext_nama"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"        
+        android:layout_marginTop="20dip"
+        android:background="@drawable/edittext_custom"
+        android:hint="masukkan nama anggaran"
+        android:singleLine="true"
+        android:textSize="18dip"
+        android:inputType="text"/>
+    
+    <TextView 
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_marginTop="10dp"
+		android:layout_marginLeft="10dp"
+		android:layout_marginRight="10dp"	        
+		android:textColor="@color/black_soft"
+		android:textSize="18dip"
+		android:text="pengeluaran untuk anggaran... "/>
+    
+	<Spinner 
+		android:id="@+id/anggaran_pengeluaran_form_spinner"
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		android:layout_marginLeft="10dp"
+		android:layout_marginRight="10dp" />
+    
+    
+     <EditText 
+        android:id="@+id/anggaran_pengeluaran_form_edittext_nominal"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"        
+        android:layout_marginTop="20dip"
+        android:background="@drawable/edittext_custom"
+        android:hint="masukkan jumlah anggaran"
+        android:singleLine="true"
+        android:textSize="18dip"
+        android:maxLength="9"
+        android:inputType="number"/>
+     
+      
+      <EditText 
+	        android:id="@+id/anggaran_pengeluaran_form_edittext_tanggal"
+	        android:layout_width="200dip"
+	        android:layout_height="wrap_content"        
+	        android:layout_marginTop="20dip"	        
+	        android:background="@drawable/edittext_custom"
+	        android:focusable="false"
+	        android:hint="masukkan tanggal"
+	        android:singleLine="true"	        
+	        android:textSize="18dip" />
+    
+      <Button 
+          android:id="@+id/anggaran_pengeluaran_form_submit_button"
+          android:layout_width="80dip"
+          android:layout_height="wrap_content"          
+          android:layout_marginTop="20dip"
+          android:text="submit"/>
+
+</LinearLayout>

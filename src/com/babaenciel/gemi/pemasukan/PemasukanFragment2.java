@@ -41,8 +41,10 @@ public class PemasukanFragment2 extends SherlockFragment {
 	public static SherlockFragment newInstance(MyDate myDate) {
 		PemasukanFragment2 f = new PemasukanFragment2();
 				
+		String month = myDate.konversiBulanDitambahi0(myDate.monthCounter);
 		Bundle b = new Bundle();		
-		b.putInt("month", myDate.monthCounter);
+		//b.putInt("month", myDate.monthCounter);
+		b.putString("month", month);
 		b.putInt("year", myDate.yearCounter);
 		b.putString("monthText", myDate.monthText);
 		//b.putString("yearText", myDate.yearText);
@@ -70,7 +72,8 @@ public class PemasukanFragment2 extends SherlockFragment {
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		//get from arguments
-		month = Integer.toString(getArguments().getInt("month"));
+		//month = Integer.toString(getArguments().getInt("month"));
+		month = getArguments().getString("month");
 		year = Integer.toString(getArguments().getInt("year"));
 		monthText = getArguments().getString("monthText");
 		//yearText = getArguments().getString("yearText");

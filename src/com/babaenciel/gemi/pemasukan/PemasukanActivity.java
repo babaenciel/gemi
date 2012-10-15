@@ -97,7 +97,7 @@ public class PemasukanActivity extends SherlockFragmentActivity implements Pemas
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		if(item.getTitle().equals("Insert Pemasukan")) {
-			Intent i = new Intent(this, PemasukanInsert.class);
+			Intent i = new Intent(this, PemasukanInsert.class);			
 			startActivity(i);
 		}else if(item.getTitle().equals("Change View by Category")) {
 			item.setTitle("Change View by Date");

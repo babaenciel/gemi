@@ -20,16 +20,20 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.actionbarsherlock.app.SherlockActivity;
+import com.actionbarsherlock.view.Menu;
+import com.actionbarsherlock.view.MenuItem;
+import com.actionbarsherlock.view.SubMenu;
 import com.babaenciel.gemi.R;
 
 public class AnggaranPengeluaranActivity extends SherlockActivity {
 	private static final int THEME = R.style.Theme_Sherlock;
 	private static final CharSequence[] anggaranPengeluaranMenuItem = {"Edit", "Delete"};
-	private int buttonPressed = 0;	//digunakan untuk mengecek apakah dialog telah diedit atau didelete.
+	public static int buttonPressed;	//digunakan untuk mengecek apakah dialog telah diedit atau didelete.
 	Context context = this;
 	AnggaranPengeluaranDatabase db;
 	AnggaranPengeluaranActivity activity = this;
 	AnggaranInterface anggaranInterface;
+	int id_anggaran;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {	
@@ -38,7 +42,8 @@ public class AnggaranPengeluaranActivity extends SherlockActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.anggaran_pengeluaran_activity);
 		
-		final int id_anggaran = getIntent().getExtras().getInt("id_anggaran");
+		buttonPressed = 0;
+		id_anggaran = getIntent().getExtras().getInt("id_anggaran");
 		Log.d("id_anggaran", ""+id_anggaran);
 		
 		//initialize database
@@ -85,6 +90,7 @@ public class AnggaranPengeluaranActivity extends SherlockActivity {
 				    					db.deleteAnggaranPengeluaran(id_anggaran_pengeluaran, id_anggaran);				    					
 				    					activity.finish();
 				    					activity.startActivity(getIntent());
+				    					buttonPressed = 1;
 				    				}
 				    			})
 				    			.setNegativeButton("No",new DialogInterface.OnClickListener() {
@@ -104,5 +110,47 @@ public class AnggaranPengeluaranActivity extends SherlockActivity {
 			}
 		});
 	}
+	
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		SubMenu subMenu1 = menu.addSubMenu("Action Item");
+        subMenu1.add("Insert Pengeluaran");             
+
+        MenuItem subMenu1Item = subMenu1.getItem();
+        subMenu1Item.setIcon(R.drawable.ic_launcher);
+        subMenu1Item.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS | MenuItem.SHOW_AS_ACTION_WITH_TEXT);
+        
+		return super.onCreateOptionsMenu(menu);
+	}
+	
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		if(item.getTitle().equals("Insert Pengeluaran")) {
+			Intent i = new Intent(this, AnggaranPengeluaranInsertFormActivity.class);
+			i.putExtra("id_anggaran", id_anggaran);
+			startActivity(i);
+		}
+		return true;
+	}
+	
+	/*@Override
+	public void onBackPressed() {		
+		super.onBackPressed();
+		
+		if(buttonPressed == 1) {
+			Intent i = new Intent(context, AnggaranActivity.class);
+			startActivity(i);
+		}else {
+			
+		}
+	}*/
+	
+	/*@Override
+	protected void onResume() {		
+		super.onResume();
+		Intent i = new Intent(context, AnggaranPengeluaranActivity.class);
+		finish();
+		startActivity(i);
+	}*/
 		
 }

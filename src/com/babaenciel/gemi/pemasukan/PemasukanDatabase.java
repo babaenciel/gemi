@@ -130,6 +130,8 @@ public class PemasukanDatabase {
 		if(cursor.moveToFirst()) {			
 			id = cursor.getInt(0);
 		}
+		cursor.close();
+		db.close();
 		return id;
 	}
 	

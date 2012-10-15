@@ -88,9 +88,11 @@ public class PemasukanInsert extends SherlockActivity {
 				db.insertPemasukan(namaText, nominalAngka, konversiTanggalText, id_kategori);
 				
 				Toast.makeText(context, "insert : "+namaText+" sukses", Toast.LENGTH_SHORT).show();
-				pemasukanInsert.finish();
-				Intent i = new Intent(context, PemasukanActivity.class);
-				startActivity(i);				
+				pemasukanInsert.finish();				
+				Intent i = new Intent(context, PemasukanActivity.class);				
+				i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+				startActivity(i);
+				
 			}
 		});
 	}
@@ -125,5 +127,13 @@ public class PemasukanInsert extends SherlockActivity {
             return new DefaultDateSlider(this,mDateSetListener,c);
 		}
 		return null;
+	}
+	
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {		
+		super.onActivityResult(requestCode, resultCode, data);
+		if(requestCode == 1) {
+			
+		}
 	}
 }

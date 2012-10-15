@@ -16,14 +16,14 @@ public class AnggaranPengeluaranDatabase {
 		this.dbAdapter = new DBAdapter(context);
 	}
 	
-	public void insertAnggaranPengeluaran(String nama, int nominal, String tanggal, int id_anggaran) {
+	public int insertAnggaranPengeluaran(String nama, int nominal, String tanggal, int id_anggaran) {
 		SQLiteDatabase db = dbAdapter.getWritableDatabase();
 		ContentValues cv = new ContentValues();
 		cv.put("nama", nama);
 		cv.put("nominal", nominal);
 		cv.put("tanggal", tanggal);
 		cv.put("id_anggaran", id_anggaran);
-		db.insert("Anggaran_Pengeluaran", null, cv);
+		long id = db.insert("Anggaran_Pengeluaran", null, cv);
 		
 		db = dbAdapter.getReadableDatabase();
 		String query = "select sum(nominal) from Anggaran_Pengeluaran where id_anggaran = "+id_anggaran;
@@ -41,6 +41,24 @@ public class AnggaranPengeluaranDatabase {
 		cv2.put("jumlah_pengeluaran", jumlah_pengeluaran);
 		db.update("Anggaran", cv2, "id_anggaran = " + id_anggaran, null);		
 		db.close();
+		
+		return (int) id;
+	}
+	
+	public AnggaranPengeluaranObject getSingleAnggaranPengeluaran(int id_anggaran_pengeluaran) {
+		SQLiteDatabase db = dbAdapter.getReadableDatabase();
+		String query = "select * from Anggaran_Pengeluaran where id_anggaran_pengeluaran = " + id_anggaran_pengeluaran;
+		Cursor cursor = db.rawQuery(query, null);
+		AnggaranPengeluaranObject object = null;
+		if(cursor.moveToFirst()) {
+			object = new AnggaranPengeluaranObject(cursor.getInt(0), 
+					cursor.getString(1),
+					cursor.getInt(2),
+					cursor.getString(3),
+					cursor.getInt(4));
+		}
+		
+		return object;
 	}
 	
 	public ArrayList<AnggaranPengeluaranObject> getAnggaranPengeluaranById(int id_anggaran) {
@@ -81,6 +99,59 @@ public class AnggaranPengeluaranDatabase {
 		return jumlah;
 	}
 	
+	//method ini digunakan pada spinner di form anggaran pengeluaran,
+	//method ini berguna untuk mengambil tanggal dari suatu id.
+	//setelah mendapatkan tanggal, kemudian berlanjut ke method getAnggaranNamaAll.
+	public String getAnggaranTanggal(int id_anggaran) {
+		SQLiteDatabase db = dbAdapter.getReadableDatabase();
+		String query = "select tanggal from Anggaran where id_anggaran = " + id_anggaran;
+		Cursor cursor = db.rawQuery(query, null);
+		
+		String tanggal = null;
+		
+		if(cursor.moveToFirst()) {
+			tanggal = cursor.getString(0);
+		}
+		
+		db.close();
+		cursor.close();
+		return tanggal;
+	}
+	
+	//untuk mengambil anggaran-anggaran yang memiliki tanggal sama dengan suatu id.
+	public Cursor getAnggaranNamaAll(String tanggal) {
+		SQLiteDatabase db = dbAdapter.getReadableDatabase();
+		String query = "select id_anggaran as _id, nama from Anggaran where tanggal = '" + tanggal + "'";
+		Cursor cursor = db.rawQuery(query, null);
+		return cursor;
+	}
+	
+	public String getAnggaranNamaSingle(int id_anggaran) {
+		SQLiteDatabase db = dbAdapter.getReadableDatabase();
+		String query = "select nama from Anggaran where id_anggaran = " + id_anggaran;
+		Cursor cursor = db.rawQuery(query, null);
+		String nama = null;
+		if(cursor.moveToFirst()) {
+			nama = cursor.getString(0);
+		}
+		db.close();
+		cursor.close();
+		return nama;
+	}
+	
+	public AnggaranObject getAnggaranJumlahAnggaranDanPengeluaran(int id_anggaran) {
+		SQLiteDatabase db = dbAdapter.getReadableDatabase();
+		String query = "select jumlah_anggaran, jumlah_pengeluaran from Anggaran where id_anggaran = " + id_anggaran;
+		Cursor cursor = db.rawQuery(query, null);
+		AnggaranObject object = null;		
+		if(cursor.moveToFirst()) {
+			object = new AnggaranObject(0, null, cursor.getInt(1), cursor.getInt(0), null);
+		}
+		cursor.close();
+		db.close();
+		return object;
+	}
+	
 	public void deleteAnggaranPengeluaran(int id_anggaran_pengeluaran, int id_anggaran) {
 		SQLiteDatabase db = dbAdapter.getReadableDatabase();
 		String query = "select nominal from Anggaran_Pengeluaran where " +
@@ -110,6 +181,10 @@ public class AnggaranPengeluaranDatabase {
 		cv.put("jumlah_pengeluaran", jumlah_pengeluaran);
 		db.update("Anggaran", cv, "id_anggaran = "+id_anggaran, null);
 		db.close();
+	}
+	
+	public void dbClose() {
+		dbAdapter.close();
 	}
 	
 }

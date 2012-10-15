@@ -70,7 +70,8 @@ public class MyDate {
 				padahal hasil yang dibutuhkan adalah 0 karena -12 masih dalam tahun yg sama, belum pindah tahun. 
 				Jadi karena monthJumlah yg nilainya 12 di div 12 hasilnya 1,
 				maka perlu ditambahkan 1 dulu pada monthJumlah (jadi -11) agar ketika di mod 12 hasilnya masih 0.*/
-				yearCounter = ((monthJumlah+1) / 12)-1;		
+				yearCounter = ((monthJumlah+1) / 12)-1;
+				yearCounter = year + yearCounter;
 				
 				monthCounter = konversiBulanMinus(monthCounter);
 				Log.d("monthCounter", ""+monthCounter);				
@@ -79,6 +80,7 @@ public class MyDate {
 			}else {				
 				monthCounter = monthJumlah % 12;
 				yearCounter = (monthJumlah / 12)-1;
+				yearCounter = year + yearCounter;
 				
 				monthCounter = konversiBulanMinus(monthCounter);
 				Log.d("monthCounter", ""+monthCounter);				
@@ -101,6 +103,17 @@ public class MyDate {
 			yearText = Integer.toString(year + yearCounter);
 		} 
 		
+	}
+	
+	public String konversiBulanDitambahi0(int bulan) {
+		for(int i = 1; i < 10; i++) {
+			if(bulan == i) {
+				Log.d("MYDATE", "bulan == i");
+				return "0"+bulan;				
+			}
+		}
+		
+		return Integer.toString(bulan);
 	}
 	
 	//from dd-mm-yyyy to yyyy-mm-dd
@@ -135,6 +148,14 @@ public class MyDate {
 		}        		
 		
 		return date2;
+	}
+	
+	//ini untuk inputan yang nggak pake tanggal seperti di form input anggaran
+	public String konversiBulanTahunKeCompleteTanggal(String bulanTahun) {
+		String delims = "[-]";
+		String[] tokens = bulanTahun.split(delims);
+		String complete = tokens[1] + "-" + tokens[0] + "-" + "01";
+		return complete;
 	}
 	
 	public String konversiBulanKeText(int monthDigit) {
@@ -193,6 +214,16 @@ public class MyDate {
 			return 1;
 		} 
 		
+	}
+	
+	public int getHariDalamSuatuBulan(String bulan) {
+		if(bulan.equals("02")) {
+			return 29;
+		}else if(bulan.equals("01") || bulan.equals("03") || bulan.equals("05") || bulan.equals("07") || bulan.equals("08") || bulan.equals("10") || bulan.equals("12")) {
+			return 31;
+		}else {
+			return 30;
+		}
 	}
 		
 	
