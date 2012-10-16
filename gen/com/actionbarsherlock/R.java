@@ -1110,7 +1110,7 @@ containing a value of this type.
         public static final int layout_total_pemasukan=0x7f050037;
         public static final int list=0x7f050035;
         public static final int listMode=0x7f050002;
-        public static final int menu_settings=0x7f050074;
+        public static final int menu_settings=0x7f05007e;
         public static final int nominal_pemasukan=0x7f05005f;
         public static final int normal=0x7f050001;
         public static final int pemasukan_expandablelist=0x7f05003c;
@@ -1131,6 +1131,16 @@ containing a value of this type.
         public static final int showTitle=0x7f050007;
         public static final int t_name=0x7f050068;
         public static final int tabMode=0x7f050003;
+        public static final int tagihan_activity_pager=0x7f050074;
+        public static final int tagihan_fragment_bulan=0x7f050075;
+        public static final int tagihan_fragment_layout_total=0x7f050076;
+        public static final int tagihan_fragment_list=0x7f050079;
+        public static final int tagihan_fragment_list_rows_bullet=0x7f05007a;
+        public static final int tagihan_fragment_list_rows_judul=0x7f05007b;
+        public static final int tagihan_fragment_list_rows_nominal=0x7f05007c;
+        public static final int tagihan_fragment_list_rows_tanggal=0x7f05007d;
+        public static final int tagihan_fragment_total_nominal=0x7f050078;
+        public static final int tagihan_fragment_total_text=0x7f050077;
         public static final int tanggal_pemasukan=0x7f050060;
         public static final int tracks=0x7f050071;
         public static final int tv_title=0x7f050034;
@@ -1190,6 +1200,9 @@ containing a value of this type.
         public static final int quickaction=0x7f03002e;
         public static final int sherlock_spinner_dropdown_item=0x7f03002f;
         public static final int sherlock_spinner_item=0x7f030030;
+        public static final int tagihan_activity=0x7f030031;
+        public static final int tagihan_fragment=0x7f030032;
+        public static final int tagihan_fragment_list_rows=0x7f030033;
     }
     public static final class menu {
         public static final int activity_main=0x7f0c0000;

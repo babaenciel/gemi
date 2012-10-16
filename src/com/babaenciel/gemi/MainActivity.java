@@ -2,6 +2,7 @@ package com.babaenciel.gemi;
 
 import com.babaenciel.gemi.anggaran.AnggaranActivity;
 import com.babaenciel.gemi.pemasukan.PemasukanActivity;
+import com.babaenciel.gemi.tagihan.TagihanActivity;
 
 import android.os.Bundle;
 import android.app.Activity;
@@ -14,14 +15,14 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.AdapterView.OnItemClickListener;
 
-public class MainActivity extends Activity {
-
+public class MainActivity extends Activity {	
+	
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         
-        String[] isi = new String[] {"pemasukan", "anggaran"};
+        String[] isi = new String[] {"pemasukan", "anggaran", "tagihan"};
         ListView list = (ListView) findViewById(R.id.list);
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, isi);
         list.setAdapter(adapter);
@@ -36,7 +37,10 @@ public class MainActivity extends Activity {
 				}else if(((TextView)arg1).getText().equals("anggaran")) {
 					Intent i = new Intent(getApplicationContext(), AnggaranActivity.class);
 					startActivity(i);
-				}		
+				}else if(((TextView)arg1).getText().equals("tagihan")) {
+					Intent i = new Intent(getApplicationContext(), TagihanActivity.class);
+					startActivity(i);
+				}				
 			}        	
 		});
     }
