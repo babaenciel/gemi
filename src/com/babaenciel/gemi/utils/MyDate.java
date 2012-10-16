@@ -39,15 +39,13 @@ public class MyDate {
 		dateFull2 = year+"-"+month+"-"+date;
 	}
 	
-	/*algoritma agar rumit.
+	/*algoritma agak rumit.
 	jadi intinya adalah menambahkan bulan dengan posisi ketika diswipe.
 	jika swipe kekanan maka counter akan berincrement, dsb.
 		if(monthJumlah < 1) menangani swipe kebelakang.
 		ketika swipe kebelakang itu dibutuhkan algoritma konversi
 		karena monthJumlah bernilai -1 di awal dan kita butuh memulai dari bulan terakhir (bulan 12).
-		konversi yang dilakukan adalah mengkonversi dari -1 ke 12, -2 ke 11 dst.
-		
-	
+		konversi yang dilakukan adalah mengkonversi dari -1 ke 12, -2 ke 11 dst.	
 	*/
 	public void geserBulan(int counter) {
 		monthJumlah = month + counter;

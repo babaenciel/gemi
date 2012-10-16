@@ -8,9 +8,11 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
+import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.NotificationManager;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
@@ -83,19 +85,19 @@ public class AnggaranPengeluaranInsertFormActivity extends SherlockActivity {
 				EditText nama = (EditText) findViewById(R.id.anggaran_pengeluaran_form_edittext_nama);
 				EditText nominal = (EditText) findViewById(R.id.anggaran_pengeluaran_form_edittext_nominal);				
 				String tanggalKonversi = date.konversiTanggal1(tanggal.getText().toString());
-				id_baru = db.insertAnggaranPengeluaran(nama.getText().toString(), Integer.parseInt(nominal.getText().toString()), tanggalKonversi, id_anggaran);				
-				customToastShow();
-				activity.finish();	
+				id_baru = db.insertAnggaranPengeluaran(nama.getText().toString(), Integer.parseInt(nominal.getText().toString()), tanggalKonversi, id_anggaran);								
+				cekStatusAnggaran();
+				/*activity.finish();	
 				Intent i = new Intent(context, AnggaranPengeluaranActivity.class);
 				i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);				
 				i.putExtra("id_anggaran", id_anggaran);
-				startActivity(i);
+				startActivity(i);*/
 			}
 		});
 	    	    
 	}
 	
-	public void customToastShow() {
+	public void showCustomToast() {
 		LayoutInflater inflater = getLayoutInflater();
 		View layout = inflater.inflate(R.layout.anggaran_insert_pengeluaran_custom_toast, null);
 			
@@ -145,6 +147,43 @@ public class AnggaranPengeluaranInsertFormActivity extends SherlockActivity {
 		    public void onFinish() {toast.show();}
 		}.start();
 		
+	}
+	
+	public void showDialogWhenOverAnggaran() {				
+		LayoutInflater inflater = getLayoutInflater();
+		View view = inflater.inflate(R.layout.anggaran_pengeluaran_dialog_warning, null);
+		TextView text = (TextView)view.findViewById(R.id.anggaran_pengeluaran_dialog_warning_text);
+		text.setText("Pengeluaran kamu sudah melebihi anggaran!");
+		AlertDialog.Builder builder = new AlertDialog.Builder(context);
+		builder.setView(view);
+		builder.setNegativeButton("OK", new DialogInterface.OnClickListener() {
+			
+			public void onClick(DialogInterface dialog, int which) {
+				callActivity();
+				dialog.cancel();
+			}
+		});
+		
+		AlertDialog dialog = builder.create();
+		dialog.show();
+	}
+	
+	public void callActivity() {
+		activity.finish();	
+		Intent i = new Intent(context, AnggaranPengeluaranActivity.class);
+		i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);				
+		i.putExtra("id_anggaran", id_anggaran);
+		startActivity(i);		
+	}
+	
+	public void cekStatusAnggaran() {
+		AnggaranObject object = db.getAnggaranJumlahAnggaranDanPengeluaran(id_anggaran); 						
+		if(object.nominalAtas > object.nominalBawah) {
+			showDialogWhenOverAnggaran();
+		}else {
+			showCustomToast();
+			callActivity();
+		}
 	}
 	
 	//ini fungsi untuk dateslider. hasil kopasan
