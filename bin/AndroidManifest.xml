@@ -29,6 +29,10 @@
         <activity android:name="com.babaenciel.gemi.anggaran.AnggaranInsertFormActivity"></activity>
         <activity android:name="com.babaenciel.gemi.anggaran.AnggaranPengeluaranInsertFormActivity"></activity>
         <activity android:name="com.babaenciel.gemi.tagihan.TagihanActivity"></activity>
+        <activity android:name="com.babaenciel.gemi.tagihan.TagihanInsertActivity"></activity>
+        <activity android:name="com.babaenciel.gemi.hutang.HutangActivity"></activity>
+        
+        <receiver android:process=":remote" android:name="com.babaenciel.gemi.tagihan.TagihanBroadcastReceiver"></receiver>
     </application>
     
 

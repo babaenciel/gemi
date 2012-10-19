@@ -9,9 +9,7 @@ public class DBAdapter extends SQLiteOpenHelper {
 	private static String dbName = "FinancialPlanning.sqlite";
 
 	public DBAdapter(Context context) {
-		super(context, dbName, null, 2);
-		
-		
+		super(context, dbName, null, 1);		
 	}
 
 	@Override
@@ -43,6 +41,15 @@ public class DBAdapter extends SQLiteOpenHelper {
 			"id_anggaran integer)";
 		db.execSQL(anggaranPengeluaran);
 		
+		String tabelTagihan = 
+			"create table Tagihan (" +
+			"id_tagihan integer primary key autoincrement," +
+			"nama text," +
+			"jumlah integer," +
+			"tanggal_deadline text," +
+			"lunas int)";
+		db.execSQL(tabelTagihan);
+		
 		String kategori = 
 				"create table Kategori (" +
 				"id_kategori integer primary key autoincrement, " +
@@ -60,7 +67,7 @@ public class DBAdapter extends SQLiteOpenHelper {
 
 	@Override
 	public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-		db.execSQL("drop table if exists Kategori");
+		/*db.execSQL("drop table if exists Kategori");
 		db.execSQL("drop table if exists Pemasukan");
 		db.execSQL("drop table if exists Anggaran");
 		db.execSQL("drop table if exists Anggaran_Pengeluaran");	
@@ -104,7 +111,16 @@ public class DBAdapter extends SQLiteOpenHelper {
 				"begin " +
 				"delete from Anggaran_Pengeluaran where id_anggaran = old.id_anggaran;" +
 				"end;";
-			db.execSQL(trigger_delete_pengeluaran_anggaran);
+			db.execSQL(trigger_delete_pengeluaran_anggaran);*/
+		
+			String tabelTagihan = 
+				"create table Tagihan (" +
+				"id_tagihan integer primary key autoincrement," +
+				"nama text," +
+				"jumlah integer," +
+				"tanggal_deadline text," +
+				"lunas int)";
+			db.execSQL(tabelTagihan);
 		
 		
 	}

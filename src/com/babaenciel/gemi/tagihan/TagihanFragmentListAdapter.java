@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import com.babaenciel.gemi.R;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -53,7 +54,7 @@ public class TagihanFragmentListAdapter extends BaseAdapter {
 			holder = new TagihanHolder();
 			holder.nama = (TextView) convertView.findViewById(R.id.tagihan_fragment_list_rows_judul);
 			holder.jumlah = (TextView) convertView.findViewById(R.id.tagihan_fragment_list_rows_nominal);
-			holder.tanggal = (TextView) convertView.findViewById(R.id.tagihan_fragment_list_rows_tanggal);
+			holder.tanggal_deadline = (TextView) convertView.findViewById(R.id.tagihan_fragment_list_rows_tanggal);
 			convertView.setTag(holder);
 		}else {
 			holder = (TagihanHolder) convertView.getTag();
@@ -62,13 +63,20 @@ public class TagihanFragmentListAdapter extends BaseAdapter {
 		final TagihanObject tagihanObject = values.get(pos);		
 		
 		holder.nama.setText(tagihanObject.nama);
-		holder.tanggal.setText(tagihanObject.tanggal);
+		holder.tanggal_deadline.setText(tagihanObject.tanggal_deadline);
 		
 		//nominal format		
 		DecimalFormatSymbols simbol = new DecimalFormatSymbols();		
 		simbol.setGroupingSeparator('.');
 		DecimalFormat customFormat = new DecimalFormat("###,###,###",simbol);
 		holder.jumlah.setText(customFormat.format(tagihanObject.jumlah));	
+			
+		if(values.get(pos).lunas == 1) {			
+			convertView.setBackgroundResource(R.color.black_soft);			
+		}else {
+			convertView.setBackgroundResource(android.R.color.white);
+		}
+			
 		
 		return convertView;
 	}
@@ -76,7 +84,7 @@ public class TagihanFragmentListAdapter extends BaseAdapter {
 	static class TagihanHolder {
 		TextView nama;
 		TextView jumlah;
-		TextView tanggal;
+		TextView tanggal_deadline;
 	}
 
 }

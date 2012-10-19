@@ -114,6 +114,32 @@ public class MyDate {
 		return Integer.toString(bulan);
 	}
 	
+	//digunakan pada saat mengeset hari pada calender di alarm manager Tagihan
+	public int konversiTanggalDihilangkan0(String hari) {		
+		if(hari.equals("01")) {
+			return 1;
+		}else if(hari.equals("02")) {
+			return 2;
+		}else if(hari.equals("03")) {
+			return 3;
+		}else if(hari.equals("04")) {
+			return 4;
+		}else if(hari.equals("05")) {
+			return 5;
+		}else if(hari.equals("06")) {
+			return 6;
+		}else if(hari.equals("07")) {
+			return 7;
+		}else if(hari.equals("08")) {
+			return 8;
+		}else if(hari.equals("09")) {
+			return 9;
+		}else {
+			return Integer.parseInt(hari);
+		}
+		
+	}
+	
 	//from dd-mm-yyyy to yyyy-mm-dd
 	public String konversiTanggal1(String tanggaldd) {
 		SimpleDateFormat simple = new SimpleDateFormat("dd-MM-yyyy");
