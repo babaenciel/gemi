@@ -1,17 +1,25 @@
 package com.babaenciel.gemi.hutang;
 
+import java.util.ArrayList;
+
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.actionbarsherlock.app.SherlockFragment;
 import com.babaenciel.gemi.R;
 import com.babaenciel.gemi.utils.MyDate;
 
 public class HutangFragment extends SherlockFragment {
+	private static final CharSequence[] hutangMenuItem = {"Cicilan", "Edit", "Delete"};
 	
 	public static HutangFragment newInstance(MyDate myDate) {
 		HutangFragment f = new HutangFragment();
@@ -30,15 +38,66 @@ public class HutangFragment extends SherlockFragment {
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
+		String month = getArguments().getString("month");
+		String year = Integer.toString(getArguments().getInt("year"));
+		
 		View view = inflater.inflate(R.layout.hutang_fragment, null);
 		
 		TextView bulanView = (TextView) view.findViewById(R.id.hutang_bulan);
 		bulanView.setText(getArguments().getString("monthText"));
 		
-		ListView list = (ListView) view.findViewById(R.id.hutang_list);
-		HutangFragmentListAdapter adapter = new HutangFragmentListAdapter()
-		list.setAdapter(adapter)
+		HutangDatabase db = new HutangDatabase(getActivity());
+		ArrayList<HutangObject> values = db.getHutangFromMonthYear(month, year);
 		
+		ListView list = (ListView) view.findViewById(R.id.hutang_list);
+		final HutangFragmentListAdapter adapter = new HutangFragmentListAdapter(getActivity(), values);
+		list.setAdapter(adapter);
+		
+		list.setOnItemClickListener(new OnItemClickListener() {
+
+			@Override
+			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
+					long arg3) {
+				final int id_hutang = (int) arg3;
+				final HutangObject hutangObject = (HutangObject) adapter.getItem(arg2);
+				
+				AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+				builder.setTitle("sub Menu");
+				builder.setItems(hutangMenuItem, new DialogInterface.OnClickListener() {
+				    public void onClick(DialogInterface dialog, int item) {
+				    	if(hutangMenuItem[item].equals("Delete")) {
+				    		AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getActivity());
+				    		alertDialogBuilder.setTitle("Konfirmasi Delete");
+				    		alertDialogBuilder.setMessage("Yakin mau menghapus : "+ hutangObject.nama + " ?")
+				    			.setCancelable(false)
+				    			.setPositiveButton("Yes",new DialogInterface.OnClickListener() {
+				    				public void onClick(DialogInterface dialog,int id) {
+				    					//db.deletePemasukan(idRow);
+								    	//childListener.onDeleteChild(idRow, 1);
+				    					Toast.makeText(getActivity(), ""+id_hutang, Toast.LENGTH_SHORT).show();
+				    				}
+				    			})
+				    			.setNegativeButton("No",new DialogInterface.OnClickListener() {
+				    				public void onClick(DialogInterface dialog,int id) {				    						
+				    					dialog.cancel();
+				    				}
+				    			});				     
+				    		AlertDialog alertDialog = alertDialogBuilder.create();				 
+				    		alertDialog.show();
+				    		
+				    	}else if(hutangMenuItem[item].equals("Edit")) {
+				    		Toast.makeText(getActivity(), "Edit", Toast.LENGTH_SHORT).show();
+				    	}else {
+				    		//hutangInterface.onDetail(idRow);
+				    		Toast.makeText(getActivity(), "Cicilan", Toast.LENGTH_SHORT).show();
+				    	}				        
+				    }
+				});
+				AlertDialog alert = builder.create();				
+				alert.show();
+				
+			}
+		});
 		
 		return view;
 	}

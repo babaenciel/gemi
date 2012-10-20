@@ -9,7 +9,7 @@ public class DBAdapter extends SQLiteOpenHelper {
 	private static String dbName = "FinancialPlanning.sqlite";
 
 	public DBAdapter(Context context) {
-		super(context, dbName, null, 1);		
+		super(context, dbName, null, 2);		
 	}
 
 	@Override
@@ -49,6 +49,15 @@ public class DBAdapter extends SQLiteOpenHelper {
 			"tanggal_deadline text," +
 			"lunas int)";
 		db.execSQL(tabelTagihan);
+		
+		String tabelHutang = 
+			"create table Hutang (" +
+			"id_hutang integer primary key autoincrement," +
+			"nama text," +
+			"jumlah_cicilan integer," +
+			"jumlah_hutang integer," +
+			"tanggal_deadline text)";
+		db.execSQL(tabelHutang);				
 		
 		String kategori = 
 				"create table Kategori (" +
@@ -111,7 +120,7 @@ public class DBAdapter extends SQLiteOpenHelper {
 				"begin " +
 				"delete from Anggaran_Pengeluaran where id_anggaran = old.id_anggaran;" +
 				"end;";
-			db.execSQL(trigger_delete_pengeluaran_anggaran);*/
+			db.execSQL(trigger_delete_pengeluaran_anggaran);
 		
 			String tabelTagihan = 
 				"create table Tagihan (" +
@@ -120,9 +129,16 @@ public class DBAdapter extends SQLiteOpenHelper {
 				"jumlah integer," +
 				"tanggal_deadline text," +
 				"lunas int)";
-			db.execSQL(tabelTagihan);
+			db.execSQL(tabelTagihan);*/
 		
-		
+		String tabelHutang = 
+				"create table Hutang (" +
+				"id_hutang integer primary key autoincrement," +
+				"nama text," +
+				"jumlah_cicilan integer," +
+				"jumlah_hutang integer," +
+				"tanggal_deadline text)";
+			db.execSQL(tabelHutang);		
 	}
 	
 	
