@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"        
+    android:background="@android:color/white">    
+    
+    <ImageView 
+        android:clickable="false"
+        android:focusable="false"
+        android:id="@+id/hutang_fragment_list_rows_bullet"        
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingRight="10dip"
+        android:layout_centerVertical="true"             
+        android:src="@drawable/bullet"/>
+      
+    <TextView
+		android:id="@+id/hutang_fragment_list_rows_judul"		        
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_toRightOf="@id/hutang_fragment_list_rows_bullet"			
+		android:layout_marginTop="10dp"				
+		
+		android:textSize="18dp"
+		android:maxWidth="200dip" />
+        
+    <TextView
+	    android:id="@+id/hutang_fragment_list_rows_nominal_atas"        	    
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_alignParentRight="true"		
+		android:layout_marginTop="10dp"        
+		android:layout_marginRight="10dp"
+			        
+		android:textSize="17dip"
+		android:textStyle="bold" />        	         	
+
+        	 	 	 
+	<TextView
+	    android:id="@+id/hutang_fragment_list_rows_nominal_bawah"        	    
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_below="@id/hutang_fragment_list_rows_nominal_atas"		
+		android:layout_alignParentRight="true"		
+		android:layout_marginRight="10dp"
+		       
+		android:textSize="15dip" />    
+     	
+	<ProgressBar 
+        android:id="@+id/hutang_fragment_list_rows_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/hutang_fragment_list_rows_judul"        
+        style="@android:style/Widget.ProgressBar.Horizontal"
+        android:layout_marginTop="30dp" 
+        android:paddingBottom="5dp"                                         
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"/>	    
+    
+
+</RelativeLayout>

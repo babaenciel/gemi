@@ -3,6 +3,7 @@ package com.babaenciel.gemi;
 import com.babaenciel.gemi.anggaran.AnggaranActivity;
 import com.babaenciel.gemi.hutang.HutangActivity;
 import com.babaenciel.gemi.pemasukan.PemasukanActivity;
+import com.babaenciel.gemi.tabungan.TabunganActivity;
 import com.babaenciel.gemi.tagihan.TagihanActivity;
 
 import android.os.Bundle;
@@ -41,10 +42,14 @@ public class MainActivity extends Activity {
 				}else if(((TextView)arg1).getText().equals("tagihan")) {
 					Intent i = new Intent(getApplicationContext(), TagihanActivity.class);
 					startActivity(i);
-				}else {
+				}else if(((TextView)arg1).getText().equals("hutang")){
 					Intent i = new Intent(getApplicationContext(), HutangActivity.class);
 					startActivity(i);
-				}				
+				}else {
+					Intent i = new Intent(getApplicationContext(), TabunganActivity.class);
+					startActivity(i);
+				}	
+				
 			}        	
 		});
     }
