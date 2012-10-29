@@ -1,0 +1,434 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:scrollbars="vertical"
+    android:background="@color/sunday_2">
+    
+<RelativeLayout 
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+   	android:background="@color/sunday_2">
+        
+    <!-- SALDO -->
+    <View 
+        android:id="@+id/dashboard_saldo_block"
+        android:layout_width="130dp"
+        android:layout_height="40dp"
+        android:background="@color/sunday_5"/>
+    
+    <TextView 
+        android:id="@+id/dashboard_saldo_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="15dp"
+        android:textColor="@android:color/white"
+        android:textSize="18dip"
+        android:text="SALDO"/>
+    
+    <TextView 
+        android:id="@+id/dashboard_saldo_nominal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/dashboard_saldo_block"        
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="25dp"
+        android:textColor="@android:color/black"
+        android:textSize="20sp"
+        android:text="10.000.000"/>
+    
+    <!-- TABUNGAN -->
+    <View 
+        android:id="@+id/dashboard_tabungan_header_block"
+        android:layout_width="130dp"
+        android:layout_height="40dp"        
+        android:layout_below="@id/dashboard_saldo_block"        
+        android:background="@color/sunday_5"/>
+    
+    <TextView 
+        android:id="@+id/dashboard_tabungan_header_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/dashboard_saldo_block"
+        android:layout_marginTop="5dp"
+        android:layout_marginLeft="15dp"
+        android:textColor="@android:color/white"
+        android:textSize="20sp"
+        android:text="TABUNGAN"/>
+    
+    <TextView 
+        android:id="@+id/dashboard_tabungan_header_nominal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/dashboard_saldo_block"
+        android:layout_toRightOf="@id/dashboard_tabungan_header_block"
+        android:layout_marginTop="5dp"
+        android:layout_marginLeft="25dp"
+        android:textColor="@android:color/black"
+        android:textSize="18dip"
+        android:text="0"/>
+    
+    <!-- BULAN -->
+    <TextView 
+        android:id="@+id/dashboard_bulan_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/dashboard_tabungan_header_block"                
+        android:paddingTop="15dp"
+        android:paddingBottom="15dp"
+        android:gravity="center_horizontal"
+        android:background="@color/sunday_3"
+        android:textColor="@android:color/white"
+        android:textSize="18sp"
+        android:text="OKTOBER"/>
+    
+    <!-- PEMASUKAN -->
+    <RelativeLayout 
+        android:id="@+id/dashboard_pemasukan_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/dashboard_bulan_text"                   
+        android:background="@color/sunday_2">
+        
+        <View             
+	        android:id="@+id/dashboard_pemasukan_block"
+	        android:layout_width="150dp"
+	        android:layout_height="50dp"
+	        android:clickable="true"        	               
+	        android:background="@drawable/dashboard_block_clickable_selector" />
+        
+        <TextView 
+	        android:id="@+id/dashboard_pemasukan_text"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"	        	       
+	        android:layout_marginLeft="15dp"        	        
+	        android:paddingTop="15dp"
+        	android:paddingBottom="10dp"        	  
+	        android:textSize="18dip"
+	        android:textColor="@android:color/white"	        
+	        android:text="PEMASUKAN"/>
+    
+	    <TextView 
+	        android:id="@+id/dashboard_pemasukan_nominal"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"	        
+	        android:layout_toRightOf="@id/dashboard_pemasukan_block"
+	        android:layout_marginTop="15dp"        
+	        android:layout_marginLeft="25dp"        
+	        android:textSize="18dip"
+	        android:textColor="@android:color/black"
+	        android:text="100.000.000"/>
+    </RelativeLayout>
+    
+    
+    <!-- PENGELUARAN -->
+    <RelativeLayout 
+        android:id="@+id/dashboard_pengeluaran_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/dashboard_pemasukan_layout"                        
+        android:background="@color/sunday_2">      
+        
+	        <View             
+		        android:id="@+id/dashboard_pengeluaran_block"
+		        android:layout_width="150dp"
+		        android:layout_height="50dp"
+		        android:clickable="true"        	               
+		        android:background="@drawable/dashboard_block_clickable_selector" />
+        
+		    <TextView 
+		        android:id="@+id/dashboard_pengeluaran_text"
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+		        android:layout_marginLeft="15dp"        	        
+		        android:paddingTop="15dp"
+	        	android:paddingBottom="10dp"        	  
+		        android:textSize="18dip"
+		        android:textColor="@android:color/white"
+		        android:text="PENGELUARAN"/>
+		    
+		    <TextView 
+		        android:id="@+id/dashboard_pengeluaran_nominal"
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+		        android:layout_toRightOf="@id/dashboard_pengeluaran_block"
+		        android:layout_marginTop="15dp"        
+		        android:layout_marginLeft="25dp"        
+		        android:textSize="18dip"
+		        android:textColor="@android:color/black"
+		        android:text="0"/>
+    </RelativeLayout>
+    
+    <!-- LINE PEMBATAS
+    <View
+        android:id="@+id/dashboard_line_1"
+		android:layout_width="match_parent"
+		android:layout_height="1dp"
+		android:layout_below="@id/dashboard_pengeluaran_layout"		
+		android:background="@drawable/gradient_line" />
+	-->
+    
+    <!-- ANGGARAN -->
+    <RelativeLayout 
+        android:id="@+id/dashboard_anggaran_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/dashboard_pengeluaran_layout"                
+        android:background="@color/sunday_2">    
+        
+       	 	<View             
+		        android:id="@+id/dashboard_anggaran_block"
+		        android:layout_width="150dp"
+		        android:layout_height="50dp"
+		        android:clickable="true"        	               
+		        android:background="@drawable/dashboard_block_clickable_selector" />
+        
+		    <TextView 
+		        android:id="@+id/dashboard_anggaran_text"
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"		        
+		        android:layout_marginLeft="15dp"        	        
+		        android:paddingTop="15dp"
+	        	android:paddingBottom="15dp"        	  
+		        android:textSize="18dip"
+		        android:textColor="@android:color/white"
+		        android:text="ANGGARAN"/>
+		    
+		    <TextView 
+		        android:id="@+id/dashboard_anggaran_nominal_atas"
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"	
+		        android:layout_below="@id/dashboard_anggaran_block"	   
+		        android:layout_marginTop="5dp"
+		        android:layout_marginLeft="15dp"     		        	       
+		        android:textStyle="bold"
+		        android:textSize="18dp"
+		        android:textColor="@color/text_green"
+		        android:text="50.000"/>
+		    <TextView 
+		        android:id="@+id/dashboard_anggaran_nominal_divider"
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+		        android:layout_below="@id/dashboard_anggaran_block"
+		        android:layout_toRightOf="@id/dashboard_anggaran_nominal_atas"
+		        android:layout_marginTop="5dp"
+		        android:layout_marginLeft="10dp"
+		        android:layout_marginRight="10dp"
+		        android:textSize="18sp"
+		        android:text="/"/>
+		    
+		     <TextView 
+		        android:id="@+id/dashboard_anggaran_nominal_bawah"
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+		        android:layout_below="@id/dashboard_anggaran_block"		        
+		        android:layout_toRightOf="@id/dashboard_anggaran_nominal_divider"
+		        android:layout_marginTop="5dp"		                		               
+		        android:textSize="18sp"
+		        android:textColor="@android:color/black"
+		        android:text="100.000"/>
+		    
+		    <ProgressBar 
+		        android:id="@+id/dashboard_anggaran_progressbar"
+		        android:layout_width="match_parent"
+		        android:layout_height="wrap_content"
+		        android:layout_below="@id/dashboard_anggaran_nominal_bawah"
+		        android:paddingLeft="10dp"
+		        android:paddingRight="10dp"
+		        android:layout_marginTop="10dp"
+		        style="@android:style/Widget.ProgressBar.Horizontal"
+		        android:max="100"
+		        android:progress="50"/>
+    </RelativeLayout>
+    
+    <!-- LINE PEMBATAS 
+    <View
+        android:id="@+id/dashboard_line_2"
+		android:layout_width="match_parent"
+		android:layout_height="1dp"
+		android:layout_below="@id/dashboard_anggaran_layout"		
+		android:background="@drawable/gradient_line"  />
+	-->
+    
+    <!-- TAGIHAN -->
+    <RelativeLayout 
+        android:id="@+id/dashboard_tagihan_layout"
+       	android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/dashboard_anggaran_layout"
+        android:layout_marginTop="30dp"                
+        android:background="@color/sunday_2">  
+        
+        	<View             
+		        android:id="@+id/dashboard_tagihan_block"
+		        android:layout_width="150dp"
+		        android:layout_height="50dp"
+		        android:clickable="true"        	               
+		        android:background="@drawable/dashboard_block_clickable_selector" />
+        	
+		    <TextView 
+		        android:id="@+id/dashboard_tagihan_text"
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"		        		       	       
+		        android:layout_marginLeft="15dp"        	        
+		        android:paddingTop="15dp"
+	        	android:paddingBottom="15dp"        	  
+		        android:textSize="18dip"
+		        android:textColor="@android:color/white"        
+		        android:text="TAGIHAN"/>
+		    
+		    <TextView 
+		        android:id="@+id/dashboard_tagihan_terdekat_text"
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+		        android:layout_below="@id/dashboard_tagihan_text"
+		        android:layout_marginTop="5dp"
+		        android:layout_marginLeft="20dp"
+		        android:textSize="18dip"        
+		        android:textColor="@android:color/black"
+		        android:textStyle="bold"
+		        android:text="Tagihan Terdekat :"/>
+		    
+		    <TextView
+		        android:id="@+id/dashboard_tagihan_terdekat_judul"
+		        android:layout_width="wrap_content"
+		        android:maxWidth="180dp"		        		       
+		        android:layout_height="wrap_content"
+		        android:layout_below="@id/dashboard_tagihan_terdekat_text"
+		        android:layout_marginTop="5dp"
+		        android:layout_marginLeft="20dp"		        
+		        android:textSize="16dip"		
+		        android:textColor="@color/text_black_soft"        
+		        android:text="INTERNET dengan nama yang sangat panjang sekali nanti jadi gimana donk aku juga ngk tau nanti jadi bagaimana aapa aku batasi di inputannya aja ya"/>
+		    
+		    <TextView 
+		        android:id="@+id/dashboard_tagihan_terdekat_tanggal"
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+		        android:layout_below="@id/dashboard_tagihan_terdekat_judul"        
+		        android:layout_marginLeft="20dp"
+		        android:paddingBottom="15dp"
+		        android:textSize="18dip"		        
+		        android:textColor="@color/text_red"
+		        android:text="18-10-2012"/>
+		    
+		    <TextView 
+		        android:id="@+id/dashboard_tagihan_terdekat_nominal"
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+		        android:layout_below="@id/dashboard_tagihan_terdekat_judul"        
+		        android:layout_toRightOf="@id/dashboard_tagihan_terdekat_tanggal"
+		        android:layout_marginLeft="20dp"
+		        android:textColor="@color/text_green"
+		        android:textSize="20dip"
+		        android:text="2.000.000.000"/>
+    </RelativeLayout>
+        
+    
+    <!-- HUTANG -->
+    <RelativeLayout 
+        android:id="@+id/dashboard_hutang_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/dashboard_tagihan_layout"
+        android:layout_marginTop="15dp"                
+        android:background="@color/sunday_2">  
+        
+       		<View             
+		        android:id="@+id/dashboard_hutang_block"
+		        android:layout_width="150dp"
+		        android:layout_height="50dp"
+		        android:clickable="true"        	               
+		        android:background="@drawable/dashboard_block_clickable_selector" />
+       		
+		    <TextView 
+		        android:id="@+id/dashboard_hutang_text"
+		      	android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"		        		       	       
+		        android:layout_marginLeft="15dp"        	        
+		        android:paddingTop="15dp"
+	        	android:paddingBottom="15dp"        	  
+		        android:textSize="18dip"
+		        android:textColor="@android:color/white"         
+		        android:text="HUTANG"/>
+		    
+		    <TextView 
+		        android:id="@+id/dashboard_hutang_terdekat_text"
+		         android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+		        android:layout_below="@id/dashboard_hutang_text"
+		        android:layout_marginTop="5dp"
+		        android:layout_marginLeft="20dp"
+		        android:textSize="18dip"     
+		        android:textColor="@android:color/black"
+		        android:textStyle="bold"        
+		        android:text="Hutang Terdekat"/>
+		    
+		    <TextView
+		        android:id="@+id/dashboard_hutang_terdekat_judul"
+		        android:layout_width="wrap_content"
+		        android:maxWidth="180dp"		        		       
+		        android:layout_height="wrap_content"
+		        android:layout_below="@id/dashboard_hutang_terdekat_text"
+		        android:layout_marginTop="5dp"
+		        android:layout_marginLeft="20dp"		        
+		        android:textSize="16dip"		
+		        android:textColor="@color/text_black_soft"    
+		        android:text="Hutang ke Budi"/>
+		    
+		    <TextView 
+		        android:id="@+id/dashboard_hutang_terdekat_tanggal"
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+		        android:layout_below="@id/dashboard_hutang_terdekat_judul"        
+		        android:layout_marginLeft="20dp"
+		        android:paddingBottom="15dp"
+		        android:textSize="18dip"		        
+		        android:textColor="@color/text_red"
+		        android:text="18-10-2012"/>
+		    
+		    <TextView 
+		        android:id="@+id/dashboard_hutang_terdekat_nominal"
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+		        android:layout_below="@id/dashboard_hutang_terdekat_judul"        
+		        android:layout_toRightOf="@id/dashboard_hutang_terdekat_tanggal"
+		        android:layout_marginLeft="20dp"
+		        android:textColor="@color/text_green"
+		        android:textSize="20dip"
+		        android:text="200.000"/>
+    </RelativeLayout>
+       
+    
+    <!-- TABUNGAN -->
+    <RelativeLayout 
+        android:id="@+id/dashboard_tabungan_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/dashboard_hutang_layout"
+        android:layout_marginTop="15dp"                
+        android:background="@color/sunday_2"> 
+        
+        	<View             
+		        android:id="@+id/dashboard_tabungan_block"
+		        android:layout_width="150dp"
+		        android:layout_height="50dp"
+		        android:clickable="true"        	               
+		        android:background="@drawable/dashboard_block_clickable_selector" />
+        	
+		    <TextView 
+		        android:id="@+id/dashboard_tabungan_text"
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"		        		       	       
+		        android:layout_marginLeft="15dp"        	        
+		        android:paddingTop="15dp"
+	        	android:paddingBottom="15dp"        	  
+		        android:textSize="18dip"
+		        android:textColor="@android:color/white"     
+		        android:text="TABUNGAN"/>
+	</RelativeLayout>
+	
+</RelativeLayout>
+</ScrollView>

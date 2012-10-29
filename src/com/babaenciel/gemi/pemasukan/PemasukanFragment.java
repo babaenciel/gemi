@@ -75,7 +75,7 @@ public class PemasukanFragment extends SherlockFragment {
 		Log.d("year", year);
 		
 		//inflate view
-		View view = inflater.inflate(com.babaenciel.gemi.R.layout.activity_pemasukan, null);
+		View view = inflater.inflate(com.babaenciel.gemi.R.layout.pemasukan_fragment_1, null);
 		
 		//initialisasi database
 		db = new PemasukanDatabase(getActivity());
@@ -104,9 +104,9 @@ public class PemasukanFragment extends SherlockFragment {
 		db.dbClose();
 		
 		ListView list = (ListView) view.findViewById(R.id.pemasukan_list);
-		int[] colors = {0, R.color.black_soft, 0};
+		/*int[] colors = {0, R.color.black_soft, 0};
 		list.setDivider(new GradientDrawable(Orientation.RIGHT_LEFT, colors));
-		list.setDividerHeight(1);
+		list.setDividerHeight(1);*/
 		//ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), R.layout.list_rows_pemasukan, values);
 		final PemasukanListAdapter adapter = new PemasukanListAdapter(getActivity(), R.layout.list_rows_pemasukan, values, db);
 		list.setAdapter(adapter);
@@ -141,6 +141,8 @@ public class PemasukanFragment extends SherlockFragment {
 				    		AlertDialog alertDialog = alertDialogBuilder.create();				 
 				    		alertDialog.show();
 				    		
+				    	}else {
+				    		childListener.onUpdateChild(idRow, 1);
 				    	}				        
 				    }
 				});

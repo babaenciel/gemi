@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/sunday_2">
+    
+    <TextView 
+        android:id="@+id/bulan_pemasukan"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="15dp"
+        android:paddingBottom="15dp"
+        android:gravity="center_horizontal"
+        android:background="@color/sunday_3"
+        android:textColor="@android:color/white"
+        android:textSize="18sp" />
+            
+    <View 
+        android:id="@+id/pemasukan_total_block"
+        android:layout_width="130dp"
+        android:layout_height="50dp"
+        android:layout_below="@id/bulan_pemasukan"
+        android:background="@color/sunday_5"/>
+    
+    <TextView 
+		android:id="@+id/pemasukan_total_text"
+		android:layout_width="wrap_content"
+		android:maxWidth="180dp"
+		android:layout_height="wrap_content"				   
+		android:layout_marginLeft="15dp"
+		android:layout_below="@id/bulan_pemasukan"    		        
+		android:textSize="18sp"
+		android:textColor="@android:color/white"       
+		android:text="Total\nPemasukan"/>
+    
+    <TextView
+		android:id="@+id/pemasukan_total_nominal"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_toRightOf="@id/pemasukan_total_block"
+		android:layout_below="@id/bulan_pemasukan"		
+		android:layout_marginTop="10dp"
+		android:layout_marginLeft="15dp"	         		       
+		android:textSize="18sp"
+		android:textColor="@android:color/black"/>
+    
+    <ExpandableListView 
+        android:id="@+id/pemasukan_expandablelist"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/pemasukan_total_block"
+        />
+
+</RelativeLayout>

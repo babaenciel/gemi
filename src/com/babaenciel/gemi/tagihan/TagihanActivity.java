@@ -15,7 +15,7 @@ import com.actionbarsherlock.view.MenuItem;
 import com.actionbarsherlock.view.SubMenu;
 import com.babaenciel.gemi.R;
 import com.babaenciel.gemi.pemasukan.PemasukanFragmentPagerAdapter;
-import com.babaenciel.gemi.pemasukan.PemasukanInsert;
+import com.babaenciel.gemi.pemasukan.PemasukanInsertActivity;
 
 public class TagihanActivity extends SherlockFragmentActivity implements TagihanInterface {
 	private static final int THEME = R.style.Theme_Sherlock;

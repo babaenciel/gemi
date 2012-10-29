@@ -5,7 +5,7 @@
     <item android:state_pressed="true"
         android:drawable="@color/green_terang" />   
     <item android:state_selected="false"
-        android:drawable="@drawable/altercolor1"/>
+        android:drawable="@color/sunday_2"/>
     
 
 </selector>

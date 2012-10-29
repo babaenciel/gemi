@@ -15,7 +15,7 @@ import com.actionbarsherlock.view.MenuItem;
 import com.actionbarsherlock.view.SubMenu;
 
 
-public class HutangActivity extends SherlockFragmentActivity {
+public class HutangActivity extends SherlockFragmentActivity implements HutangInterface {
 	private static final int THEME = R.style.Theme_Sherlock;
 	
     @Override
@@ -31,6 +31,12 @@ public class HutangActivity extends SherlockFragmentActivity {
         db.insertHutang("hutang pada tejo", 0, 1000000, "2012-10-30");
         db.insertHutang("hutang pada dengkul", 0, 1000000, "2012-10-30");
         db.insertHutang("hutang pada tedi", 0, 1000000, "2012-10-30");*/
+        
+        /*HutangCicilanDatabase db = new HutangCicilanDatabase(this);
+		db.insertHutangCicilan("cicilan 1 nich", 100000, "2012-10-10", 1);
+		db.insertHutangCicilan("cicilan 2 nich", 200000, "2012-10-10", 1);
+		db.insertHutangCicilan("cicilan 3 nich", 300000, "2012-10-10", 1);
+        db.dbClose();*/
         
         ViewPager pager = (ViewPager) findViewById(R.id.hutang_activity_pager);
         HutangFragmentPagerAdapter adapter = new HutangFragmentPagerAdapter(getSupportFragmentManager());
@@ -54,9 +60,17 @@ public class HutangActivity extends SherlockFragmentActivity {
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		if(item.getTitle().equals("Set Hutang Baru")) {
-			/*Intent i = new Intent(this, HutangInsertFormActivity.class);
-			startActivity(i);*/			
+			Intent i = new Intent(this, HutangInsertFormActivity.class);
+			startActivity(i);			
 		}
 		return true;
+	}
+
+	@Override
+	public void onCicilan(int id_hutang) {
+		Intent i = new Intent(this, HutangCicilanActivity.class);
+		i.putExtra("id_hutang", id_hutang);
+		startActivity(i);
+		
 	}
 }

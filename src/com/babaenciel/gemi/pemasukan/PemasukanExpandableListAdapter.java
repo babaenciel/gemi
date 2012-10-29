@@ -75,6 +75,13 @@ public class PemasukanExpandableListAdapter extends BaseExpandableListAdapter {
 		judulChild.setText(children.get(groupPosition).get(childPosition).nama);
 		tanggalChild.setText(children.get(groupPosition).get(childPosition).tanggal);		
 		nominalChild.setText(customFormat.format(children.get(groupPosition).get(childPosition).nominal));
+		
+		//membuat warna zebra di rows
+		if (childPosition % 2 == 0){
+			convertView.setBackgroundResource(R.drawable.listview_rows_color_1);
+		} else {
+			convertView.setBackgroundResource(R.drawable.listview_rows_color_2);
+		}		
 		return convertView;
 	}
 
@@ -122,7 +129,10 @@ public class PemasukanExpandableListAdapter extends BaseExpandableListAdapter {
 		//groupHolder.judul.setText(groups[groupPosition]);
 		judulGroup = (TextView) convertView.findViewById(R.id.pemasukan_expandablelist_group_text);
 		//judulGroup.setText(groups[groupPosition]);
-		judulGroup.setText(groups.get(groupPosition));
+		judulGroup.setText(groups.get(groupPosition));		
+		
+		convertView.setBackgroundResource(R.drawable.listview_group_color_1);
+		
 		return convertView;
 	}
 

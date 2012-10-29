@@ -98,12 +98,12 @@ public class PemasukanListAdapter extends BaseAdapter {
 			}
 		});*/
 		
-		/*//membuat warna zebra di rows
+		//membuat warna zebra di rows
 		if (position % 2 == 0){
 		    convertView.setBackgroundResource(R.drawable.listview_rows_color_1);
 		} else {
 		    convertView.setBackgroundResource(R.drawable.listview_rows_color_2);
-		}*/
+		}
 		return convertView;
 	}
 	

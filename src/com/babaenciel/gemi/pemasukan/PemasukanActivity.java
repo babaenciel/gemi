@@ -33,14 +33,14 @@ public class PemasukanActivity extends SherlockFragmentActivity implements Pemas
 	//public static DBAdapter dbAdapter;
 	public PemasukanFragmentPagerAdapter adapter;
 	ViewPager pager;
-	int viewToggle = 1;
+	int viewToggle = 2;
 		
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		setTheme(THEME);
 		setTitle("PEMASUKAN");
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_pemasukan_pager);
+		setContentView(R.layout.pemasukan_activity);
 		
 		//initialize database
 		/*KategoriDatabase db2 = new KategoriDatabase(this);
@@ -79,7 +79,7 @@ public class PemasukanActivity extends SherlockFragmentActivity implements Pemas
         subMenu1.add("Change View by Category");
 
         MenuItem subMenu1Item = subMenu1.getItem();
-        subMenu1Item.setIcon(R.drawable.ic_launcher);
+        subMenu1Item.setIcon(R.drawable.abs__ic_menu_moreoverflow_normal_holo_dark);
         subMenu1Item.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS | MenuItem.SHOW_AS_ACTION_WITH_TEXT);
 
         /*SubMenu subMenu2 = menu.addSubMenu("Overflow Item");
@@ -97,7 +97,7 @@ public class PemasukanActivity extends SherlockFragmentActivity implements Pemas
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		if(item.getTitle().equals("Insert Pemasukan")) {
-			Intent i = new Intent(this, PemasukanInsert.class);			
+			Intent i = new Intent(this, PemasukanInsertActivity.class);			
 			startActivity(i);
 		}else if(item.getTitle().equals("Change View by Category")) {
 			item.setTitle("Change View by Date");
@@ -131,7 +131,9 @@ public class PemasukanActivity extends SherlockFragmentActivity implements Pemas
 	//ini digunakan untuk memanggil activity baru untuk menampilkan form update pemasukan.
 	@Override
 	public void onUpdateChild(int idChild, int viewToggle) {	
-		
+		Intent i = new Intent(this, PemasukanUpdateActivity.class);
+		i.putExtra("id_pemasukan", idChild);
+		startActivity(i);
 	}
 
 	

@@ -2,6 +2,7 @@ package com.babaenciel.gemi.hutang;
 
 import java.util.ArrayList;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
@@ -20,6 +21,7 @@ import com.babaenciel.gemi.utils.MyDate;
 
 public class HutangFragment extends SherlockFragment {
 	private static final CharSequence[] hutangMenuItem = {"Cicilan", "Edit", "Delete"};
+	private HutangInterface hutangInterface;
 	
 	public static HutangFragment newInstance(MyDate myDate) {
 		HutangFragment f = new HutangFragment();
@@ -41,12 +43,26 @@ public class HutangFragment extends SherlockFragment {
 		String month = getArguments().getString("month");
 		String year = Integer.toString(getArguments().getInt("year"));
 		
+		//inflate view
 		View view = inflater.inflate(R.layout.hutang_fragment, null);
 		
+		//db
+		HutangDatabase db = new HutangDatabase(getActivity());
+		
+		//set bulan text
 		TextView bulanView = (TextView) view.findViewById(R.id.hutang_bulan);
 		bulanView.setText(getArguments().getString("monthText"));
 		
-		HutangDatabase db = new HutangDatabase(getActivity());
+		//set total cicilan
+		int jumlah_cicilan = db.getJumlahCicilan(month, year);
+		TextView nominal_atas = (TextView) view.findViewById(R.id.hutang_total_nominal_atas);
+		nominal_atas.setText(Integer.toString(jumlah_cicilan));
+		
+		//set total hutang
+		int jumlah_hutang = db.getJumlahHutang(month, year);
+		TextView nominal_bawah = (TextView) view.findViewById(R.id.hutang_total_nominal_bawah);
+		nominal_bawah.setText(Integer.toString(jumlah_hutang));
+		
 		ArrayList<HutangObject> values = db.getHutangFromMonthYear(month, year);
 		
 		ListView list = (ListView) view.findViewById(R.id.hutang_list);
@@ -63,8 +79,9 @@ public class HutangFragment extends SherlockFragment {
 				
 				AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 				builder.setTitle("sub Menu");
-				builder.setItems(hutangMenuItem, new DialogInterface.OnClickListener() {
-				    public void onClick(DialogInterface dialog, int item) {
+				builder.setItems(hutangMenuItem, new DialogInterface.OnClickListener() {				    
+
+					public void onClick(DialogInterface dialog, int item) {
 				    	if(hutangMenuItem[item].equals("Delete")) {
 				    		AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getActivity());
 				    		alertDialogBuilder.setTitle("Konfirmasi Delete");
@@ -88,7 +105,7 @@ public class HutangFragment extends SherlockFragment {
 				    	}else if(hutangMenuItem[item].equals("Edit")) {
 				    		Toast.makeText(getActivity(), "Edit", Toast.LENGTH_SHORT).show();
 				    	}else {
-				    		//hutangInterface.onDetail(idRow);
+				    		hutangInterface.onCicilan(id_hutang);
 				    		Toast.makeText(getActivity(), "Cicilan", Toast.LENGTH_SHORT).show();
 				    	}				        
 				    }
@@ -100,5 +117,14 @@ public class HutangFragment extends SherlockFragment {
 		});
 		
 		return view;
+	}
+	
+	@Override
+	public void onAttach(Activity activity) {		
+		super.onAttach(activity);
+		if(hutangInterface == null) {
+			hutangInterface = (HutangInterface) activity;
+		}
+				
 	}
 }

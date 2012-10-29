@@ -3,7 +3,7 @@
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:background="@android:color/white">    
+    android:background="@color/sunday_2">    
     
     <ImageView 
         android:clickable="false"
@@ -23,18 +23,19 @@
 		android:layout_toRightOf="@id/bullet"
 		android:layout_alignParentTop="true"
 		android:paddingTop="10dp"		
-		android:textColor="@color/black_soft"   
-		android:textSize="18dip"/>
+		android:textColor="@android:color/black"   
+		android:textSize="18sp"/>
         
     <TextView
     	android:id="@+id/nominal_pemasukan"    	
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
-		android:layout_alignParentRight="true"
-		android:layout_marginRight="10dp"
-		android:paddingTop="10dp"		        
-		android:textColor="@color/blue_modern"  		        
-		android:textSize="16dip" />
+		android:layout_below="@id/judul_pemasukan"
+		android:layout_toRightOf="@id/tanggal_pemasukan"		
+		android:layout_marginLeft="15dp"				
+		android:paddingBottom="10dp"       
+		android:textColor="@color/text_green"	        
+		android:textSize="16sp" />
 		        
     <TextView        
         android:id="@+id/tanggal_pemasukan"
@@ -43,8 +44,8 @@
         android:layout_toRightOf="@id/bullet"
         android:paddingBottom="10dp"
         android:layout_below="@id/judul_pemasukan"
-        android:textSize="16dip"
-        android:textColor="@color/black_soft"   />
+        android:textSize="16sp"
+        android:textColor="@color/text_red"   />
     
 
 </RelativeLayout>

@@ -47,4 +47,44 @@ public class HutangDatabase {
 		
 		return object;		
 	}
+	
+	public int getJumlahCicilan(String month, String year) {
+		SQLiteDatabase db = dbAdapter.getReadableDatabase();
+		String query = "select sum(jumlah_cicilan) from Hutang where " +
+				"strftime('%m', tanggal_deadline) = '" + month + "' and " +
+				"strftime('%Y', tanggal_deadline) = '" + year + "'";
+		Cursor cursor = db.rawQuery(query, null);
+		int jumlah_cicilan = 0;
+		if(cursor.moveToFirst()) {
+			jumlah_cicilan = cursor.getInt(0);
+		}
+		
+		cursor.close();
+		db.close();
+		
+		return jumlah_cicilan;
+		
+	}
+	
+	public int getJumlahHutang(String month, String year) {
+		SQLiteDatabase db = dbAdapter.getReadableDatabase();
+		String query = "select sum(jumlah_hutang) from Hutang where " +
+				"strftime('%m', tanggal_deadline) = '" + month + "' and " +
+				"strftime('%Y', tanggal_deadline) = '" + year + "'";
+		Cursor cursor = db.rawQuery(query, null);
+		int jumlah_hutang = 0;
+		if(cursor.moveToFirst()) {
+			jumlah_hutang = cursor.getInt(0);
+		}
+		
+		cursor.close();
+		db.close();
+		
+		return jumlah_hutang;
+		
+	}
+	
+	public void dbClose() {
+		dbAdapter.close();
+	}
 }

@@ -8,6 +8,7 @@ public class PemasukanObject {
 	public String tanggal;
 	public int nominal;
 	public int id_kategori;
+	public String nama_kategori;
 	
 	public PemasukanObject(int id, String nama, String tanggal, int nominal, int id_kategori) {
 		this.id_pemasukan = id;
@@ -19,6 +20,10 @@ public class PemasukanObject {
 	
 	public PemasukanObject() {
 		
+	}
+	
+	public void setNamaKategori(String nama_kategori) {
+		this.nama_kategori = nama_kategori;
 	}
 	
 	//digunakan untuk transfer object antar activity

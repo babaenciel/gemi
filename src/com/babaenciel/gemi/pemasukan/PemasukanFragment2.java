@@ -79,7 +79,7 @@ public class PemasukanFragment2 extends SherlockFragment {
 		//yearText = getArguments().getString("yearText");
 		
 		//inflate view
-		final View view = inflater.inflate(com.babaenciel.gemi.R.layout.activity_pemasukan2, null);
+		final View view = inflater.inflate(com.babaenciel.gemi.R.layout.pemasukan_fragment_2, null);
 		
 		//inisiasi database
 		db = new PemasukanDatabase(getActivity());
@@ -98,11 +98,11 @@ public class PemasukanFragment2 extends SherlockFragment {
 		
 		//set data list
 		list = (ExpandableListView) view.findViewById(R.id.pemasukan_expandablelist);
-		int[] colors = {0, R.color.black_soft, 0};					
+		/*int[] colors = {0, R.color.black_soft, 0};					
 		int[] colors2 = {0, R.color.blue_modern, 0};				
 		list.setDivider(new GradientDrawable(Orientation.RIGHT_LEFT, colors2));
 		list.setChildDivider(new GradientDrawable(Orientation.RIGHT_LEFT, colors2));
-		list.setDividerHeight(1);
+		list.setDividerHeight(1);*/
 		
 		//set data list - set groups
 		ArrayList<String> groups = new ArrayList<String>();

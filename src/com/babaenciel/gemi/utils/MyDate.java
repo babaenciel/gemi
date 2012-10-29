@@ -39,6 +39,11 @@ public class MyDate {
 		dateFull2 = year+"-"+month+"-"+date;
 	}
 	
+	//yyyy-mm-dd
+	public String getTanggalUtuh() {
+		return ""+year+"-"+month+"-"+date;
+	}
+	
 	/*algoritma agak rumit.
 	jadi intinya adalah menambahkan bulan dengan posisi ketika diswipe.
 	jika swipe kekanan maka counter akan berincrement, dsb.

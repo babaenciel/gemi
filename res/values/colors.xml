@@ -5,6 +5,23 @@
 	<color name="grey_line">#dededd</color>
 	<color name="black_soft">#686862</color>
 	<color name="blue_modern">#4bcbfa</color>
+	<color name="text_black_soft">#363636</color>
+	<color name="text_red">#ff0000</color>
+	<color name="text_green">#2bb52b</color>
+	
+	<color name="navy_blue_3">#101326</color>
+	<color name="navy_blue_2">#141A40</color>
+	<color name="navy_grey_1">#8C8489</color>
+	<color name="navy_blue_4">#61788C</color>
+	<color name="navy_white_5">#F2F2F0</color>
+	
+	<color name="sunday_1">#FF9966</color>
+	<color name="sunday_2">#E5EBC3</color>
+	<color name="sunday_2_2">#d3d7ba</color>
+	<color name="sunday_2_3">#a0a48a</color>	
+	<color name="sunday_3">#7ebadc</color>
+	<color name="sunday_4">#62AEBF</color>
+	<color name="sunday_5">#667A70</color>
 	
     <drawable name="transparent">#00ffffff</drawable>
     <drawable name="altercolor1">#80ffffff</drawable>

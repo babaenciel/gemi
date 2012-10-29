@@ -42,6 +42,25 @@ public class PemasukanDatabase {
 		return cursor;
 	}
 	
+	public PemasukanObject getPemasukanSingle(int id_pemasukan) {
+		SQLiteDatabase db = dbAdapter.getReadableDatabase();
+		String query = "select * from Pemasukan, Kategori where id_pemasukan = " + id_pemasukan + " and " +
+				"Pemasukan.id_kategori = Kategori.id_kategori";
+		Cursor cursor = db.rawQuery(query, null);		
+		PemasukanObject object = null;
+		
+		if(cursor.moveToFirst()) {
+			object = new PemasukanObject(cursor.getInt(0), cursor.getString(1), cursor.getString(3), cursor.getInt(2), cursor.getInt(4));
+			object.setNamaKategori(cursor.getString(6));
+		}
+		
+		cursor.close();
+		db.close();
+		
+		return object;
+		
+	}
+	
 	//untuk view by categori
 	public Cursor getPemasukanFromMonthYear2(String month, String year) {
 		SQLiteDatabase db = dbAdapter.getReadableDatabase();
@@ -135,12 +154,13 @@ public class PemasukanDatabase {
 		return id;
 	}
 	
-	public void updatePemasukan(int id, String nama, int nominal, String tanggal) {
+	public void updatePemasukan(int id, String nama, int nominal, String tanggal, int id_kategori) {
 		SQLiteDatabase db = dbAdapter.getWritableDatabase();
 		ContentValues cv = new ContentValues();		
 		cv.put("nama", nama);
 		cv.put("nominal", nominal);
 		cv.put("tanggal", tanggal);
+		cv.put("id_kategori", id_kategori);
 		db.update("Pemasukan", cv, "id_pemasukan = "+id, null);
 	}
 	
