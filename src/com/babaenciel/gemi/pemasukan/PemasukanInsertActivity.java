@@ -6,31 +6,32 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
-
-import com.actionbarsherlock.app.SherlockActivity;
-import com.babaenciel.gemi.R;
-import com.babaenciel.gemi.lib.DateSlider;
-import com.babaenciel.gemi.lib.DefaultDateSlider;
-import com.babaenciel.gemi.utils.MyDate;
-
-import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
-import android.support.v4.widget.SimpleCursorAdapter;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.View.OnFocusChangeListener;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.SimpleCursorAdapter;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
+
+import com.actionbarsherlock.app.SherlockActivity;
+import com.babaenciel.gemi.R;
+import com.babaenciel.gemi.lib.DateSlider;
+import com.babaenciel.gemi.lib.DefaultDateSlider;
+import com.babaenciel.gemi.utils.MyDate;
 
 public class PemasukanInsertActivity extends SherlockActivity {
 	protected static final int DEFAULTDATESELECTOR_ID = 0;
@@ -43,45 +44,75 @@ public class PemasukanInsertActivity extends SherlockActivity {
 	Spinner spinnerKategori;
 	MyDate myDate;
 	PemasukanDatabase db;
+	int id_pemasukan_autocomplete;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		setTheme(THEME);
-		setTitle("PEMASUKAN Insert");
+		setTitle("PEMASUKAN INSERT");
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.pemasukan_insert_form);
 		
-		db = new PemasukanDatabase(this);
-		
-		//ArrayList<String> valuesNama = new ArrayList<String>();
-		Cursor cursor = db.getPemasukanNamaAll();
 		nama = (AutoCompleteTextView) findViewById(R.id.pemasukan_form_edittext_nama);
+		spinnerKategori = (Spinner) findViewById(R.id.pemasukan_form_spinner_kategori);
+		tanggal = (EditText) findViewById(R.id.pemasukan_form_edittext_tanggal);
+		nominal = (EditText) findViewById(R.id.pemasukan_form_edittext_nominal);
+		
+		db = new PemasukanDatabase(this);						
+
+		//set spinner for kategori
 		String[] from = new String[] {"nama"};
 	    int[] to = new int[] {android.R.id.text1};
-		//ArrayAdapter<String> adapterNama = new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line, valuesNama);		
-	    SimpleCursorAdapter sca = new SimpleCursorAdapter(this, android.R.layout.simple_dropdown_item_1line, cursor, from, to, SimpleCursorAdapter.NO_SELECTION);
-		nama.setAdapter(sca);
+		Cursor cursorKategori = db.getKategori();				
+		final SimpleCursorAdapter sca = new SimpleCursorAdapter(this, android.R.layout.simple_spinner_item, cursorKategori, from, to);	    	    
+		sca.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);		
+		spinnerKategori.setAdapter(sca);
+		
+		//set nama with autocomplete
+		ArrayList<String> valuesNama = db.getPemasukanNamaAll();
+		ArrayAdapter<String> adapterNama = new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line, valuesNama);
+		nama.setAdapter(adapterNama);
 		nama.setOnItemClickListener(new OnItemClickListener() {
 
 			@Override
 			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
 					long arg3) {
-				//arg1.get
-				Toast.makeText(context, ""+arg3, Toast.LENGTH_SHORT).show();				
+				String namaString = ((TextView)arg1).getText().toString();
+				int id_pemasukan = db.getPemasukanIdFromNama(namaString);
+				PemasukanObject object = db.getPemasukanSingle(id_pemasukan);
+				
+				for(int i = 0; i < sca.getCount(); i++) {
+					if(sca.getItemId(i) == object.id_kategori) {
+						spinnerKategori.setSelection(i);
+					}
+				}
+				
+				nominal.setText(Integer.toString(object.nominal));
+				
+				if(getCurrentFocus()!=null && getCurrentFocus() instanceof EditText){
+			        InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+			        imm.hideSoftInputFromWindow(nama.getWindowToken(), 0);
+			    }
+			}
+			
+		});		
+		
+		
+		nominal.setOnFocusChangeListener(new OnFocusChangeListener() {
+			
+			@Override
+			public void onFocusChange(View v, boolean hasFocus) {
+				if(hasFocus) {
+					nominal.setText("");
+				}
 				
 			}
 		});
 		
-		ArrayList<String> kategori = db.getKategori();
-		//Log.d("kategori", kategori.get(0));
-		ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, kategori);
-		adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-		spinnerKategori = (Spinner) findViewById(R.id.pemasukan_form_spinner_kategori);
-		spinnerKategori.setAdapter(adapter);
-		
+		//set tanggal. default langsung terisi now.
 		myDate = new MyDate();
 		myDate.setNow();
-		tanggal = (EditText) findViewById(R.id.pemasukan_form_edittext_tanggal);
+		
 		tanggal.setText(myDate.dateFull1);
 		tanggal.setOnClickListener(new OnClickListener() {
 			
@@ -92,7 +123,7 @@ public class PemasukanInsertActivity extends SherlockActivity {
 			}
 		});
 		
-		nominal = (EditText) findViewById(R.id.pemasukan_form_edittext_nominal);
+		
 		
 		Button submit = (Button) findViewById(R.id.pemasukan_form_submit_button);
 		submit.setOnClickListener(new OnClickListener() {
@@ -100,7 +131,7 @@ public class PemasukanInsertActivity extends SherlockActivity {
 			@Override
 			public void onClick(View v) {
 				String namaText = nama.getText().toString();
-				String spinnerText = (String) spinnerKategori.getSelectedItem();
+				String spinnerText = ((TextView) spinnerKategori.getSelectedView()).getText().toString();
 				Log.d("spinnertext", spinnerText);
 				int nominalAngka = Integer.parseInt(nominal.getText().toString());
 				String tanggalText = tanggal.getText().toString();

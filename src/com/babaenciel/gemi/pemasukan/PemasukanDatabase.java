@@ -43,12 +43,40 @@ public class PemasukanDatabase {
 	}
 	
 	//untuk autocomplete
-	public Cursor getPemasukanNamaAll() {
+	public ArrayList<String> getPemasukanNamaAll() {
 		SQLiteDatabase db = dbAdapter.getReadableDatabase();
-		String query = "select id_pemasukan as _id, nama from Pemasukan";
-		Cursor cursor = db.rawQuery(query, null);				
-		return cursor;
+		String query = "select nama from Pemasukan";
+		Cursor cursor = db.rawQuery(query, null);
+		ArrayList<String> nama = new ArrayList<String>();
+		
+		if(cursor.moveToFirst()) {
+			do {
+				nama.add(cursor.getString(0));
+			}while(cursor.moveToNext());
+		}
+		
+		cursor.close();
+		db.close();
+		
+		return nama;
 	}
+	
+	public int getPemasukanIdFromNama(String nama) {
+		SQLiteDatabase db = dbAdapter.getReadableDatabase();
+		String query = "select id_pemasukan from Pemasukan where nama = '" + nama + "'";
+		Cursor cursor = db.rawQuery(query, null);
+		int id = 0;
+		
+		if(cursor.moveToFirst()) {
+			id = cursor.getInt(0);
+		}
+		
+		cursor.close();
+		db.close();
+		
+		return id;
+	}
+		
 	
 	public PemasukanObject getPemasukanSingle(int id_pemasukan) {
 		SQLiteDatabase db = dbAdapter.getReadableDatabase();
@@ -132,10 +160,28 @@ public class PemasukanDatabase {
 		return kategori;		
 	}
 	
-	public ArrayList<String> getKategori() {
+	public Cursor getKategori() {
+		SQLiteDatabase db = dbAdapter.getReadableDatabase();
+		String query = "select id_kategori as _id, nama from Kategori";
+		Cursor cursor = db.rawQuery(query, null);
+		return cursor;
+		/*ArrayList<String> kategori = new ArrayList<String>();
+		
+		if(cursor.moveToFirst()) {
+			do {
+				kategori.add(cursor.getString(0));
+			}while(cursor.moveToNext());			
+		}
+		
+		cursor.close();
+		db.close();
+		return kategori;*/
+	}
+	
+	public ArrayList<String> getKategoriNama() {
 		SQLiteDatabase db = dbAdapter.getReadableDatabase();
 		String query = "select nama from Kategori";
-		Cursor cursor = db.rawQuery(query, null);
+		Cursor cursor = db.rawQuery(query, null);		
 		ArrayList<String> kategori = new ArrayList<String>();
 		
 		if(cursor.moveToFirst()) {
@@ -148,6 +194,7 @@ public class PemasukanDatabase {
 		db.close();
 		return kategori;
 	}
+		
 	
 	public int getIdKategori(String nama) {
 		SQLiteDatabase db = dbAdapter.getReadableDatabase();

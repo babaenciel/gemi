@@ -53,7 +53,7 @@ public class PemasukanUpdateActivity extends SherlockActivity {
 		nama = (EditText) findViewById(R.id.pemasukan_form_edittext_nama);
 		nama.setText(object.nama);
 		
-		ArrayList<String> kategori = db.getKategori();
+		ArrayList<String> kategori = db.getKategoriNama();
 		//Log.d("kategori", kategori.get(0));
 		ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, kategori);
 		adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -84,7 +84,7 @@ public class PemasukanUpdateActivity extends SherlockActivity {
 			@Override
 			public void onClick(View v) {
 				String namaText = nama.getText().toString();
-				String spinnerText = (String) spinnerKategori.getSelectedItem();
+				String spinnerText = ((EditText) spinnerKategori.getSelectedView()).getText().toString();
 				Log.d("spinnertext", spinnerText);
 				int nominalAngka = Integer.parseInt(nominal.getText().toString());
 				String tanggalText = tanggal.getText().toString();
