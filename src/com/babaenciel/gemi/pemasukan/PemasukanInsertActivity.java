@@ -68,7 +68,7 @@ public class PemasukanInsertActivity extends SherlockActivity {
 		sca.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);		
 		spinnerKategori.setAdapter(sca);
 		
-		//set nama with autocomplete
+		//set nama with autocomplete		
 		ArrayList<String> valuesNama = db.getPemasukanNamaAll();
 		ArrayAdapter<String> adapterNama = new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line, valuesNama);
 		nama.setAdapter(adapterNama);
@@ -89,6 +89,7 @@ public class PemasukanInsertActivity extends SherlockActivity {
 				
 				nominal.setText(Integer.toString(object.nominal));
 				
+				//ini untuk menutup keyboard setelah user memilih list autocompletenya
 				if(getCurrentFocus()!=null && getCurrentFocus() instanceof EditText){
 			        InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
 			        imm.hideSoftInputFromWindow(nama.getWindowToken(), 0);
@@ -98,6 +99,7 @@ public class PemasukanInsertActivity extends SherlockActivity {
 		});		
 		
 		
+		//set nominal
 		nominal.setOnFocusChangeListener(new OnFocusChangeListener() {
 			
 			@Override
@@ -124,28 +126,30 @@ public class PemasukanInsertActivity extends SherlockActivity {
 		});
 		
 		
-		
+		//submit
 		Button submit = (Button) findViewById(R.id.pemasukan_form_submit_button);
 		submit.setOnClickListener(new OnClickListener() {
 			
 			@Override
 			public void onClick(View v) {
-				String namaText = nama.getText().toString();
-				String spinnerText = ((TextView) spinnerKategori.getSelectedView()).getText().toString();
-				Log.d("spinnertext", spinnerText);
-				int nominalAngka = Integer.parseInt(nominal.getText().toString());
-				String tanggalText = tanggal.getText().toString();
-				String konversiTanggalText = myDate.konversiTanggal1(tanggalText);
-				int id_kategori = db.getIdKategori(spinnerText);
-				
-				db.insertPemasukan(namaText, nominalAngka, konversiTanggalText, id_kategori);
-				
-				Toast.makeText(context, "insert : "+namaText+" sukses", Toast.LENGTH_SHORT).show();
-				pemasukanInsert.finish();				
-				Intent i = new Intent(context, PemasukanActivity.class);				
-				i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
-				startActivity(i);
-				
+				if(nama.getText().toString().equals("") || nominal.getText().toString().equals("") || tanggal.getText().toString().equals("")) {
+					Toast.makeText(getApplicationContext(), "semua kolom harus terisi", Toast.LENGTH_SHORT).show();							
+				}else {
+					String namaText = nama.getText().toString();
+					String spinnerText = ((TextView) spinnerKategori.getSelectedView()).getText().toString();
+					Log.d("spinnertext", spinnerText);
+					int nominalAngka = Integer.parseInt(nominal.getText().toString());
+					String tanggalText = tanggal.getText().toString();
+					String konversiTanggalText = myDate.konversiTanggal1(tanggalText);
+					int id_kategori = db.getIdKategori(spinnerText);
+					db.insertPemasukan(namaText, nominalAngka, konversiTanggalText, id_kategori);
+					
+					Toast.makeText(context, "insert : "+namaText+" sukses", Toast.LENGTH_SHORT).show();
+					pemasukanInsert.finish();				
+					Intent i = new Intent(context, PemasukanActivity.class);				
+					i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+					startActivity(i);
+				}
 			}
 		});
 	}
