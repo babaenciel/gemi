@@ -17,11 +17,16 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
+import android.support.v4.widget.SimpleCursorAdapter;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
@@ -32,7 +37,7 @@ public class PemasukanInsertActivity extends SherlockActivity {
 	public static int THEME = R.style.Theme_Sherlock;
 	Context context = this;
 	PemasukanInsertActivity pemasukanInsert = this;
-	EditText nama;
+	AutoCompleteTextView nama;
 	EditText tanggal;
 	EditText nominal;
 	Spinner spinnerKategori;
@@ -48,7 +53,24 @@ public class PemasukanInsertActivity extends SherlockActivity {
 		
 		db = new PemasukanDatabase(this);
 		
-		nama = (EditText) findViewById(R.id.pemasukan_form_edittext_nama);
+		//ArrayList<String> valuesNama = new ArrayList<String>();
+		Cursor cursor = db.getPemasukanNamaAll();
+		nama = (AutoCompleteTextView) findViewById(R.id.pemasukan_form_edittext_nama);
+		String[] from = new String[] {"nama"};
+	    int[] to = new int[] {android.R.id.text1};
+		//ArrayAdapter<String> adapterNama = new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line, valuesNama);		
+	    SimpleCursorAdapter sca = new SimpleCursorAdapter(this, android.R.layout.simple_dropdown_item_1line, cursor, from, to, SimpleCursorAdapter.NO_SELECTION);
+		nama.setAdapter(sca);
+		nama.setOnItemClickListener(new OnItemClickListener() {
+
+			@Override
+			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
+					long arg3) {
+				//arg1.get
+				Toast.makeText(context, ""+arg3, Toast.LENGTH_SHORT).show();				
+				
+			}
+		});
 		
 		ArrayList<String> kategori = db.getKategori();
 		//Log.d("kategori", kategori.get(0));

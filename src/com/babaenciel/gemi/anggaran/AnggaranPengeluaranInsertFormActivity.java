@@ -22,6 +22,9 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
+import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.SimpleCursorAdapter;
@@ -44,6 +47,7 @@ public class AnggaranPengeluaranInsertFormActivity extends SherlockActivity {
 	AnggaranPengeluaranInsertFormActivity activity = this;
 	int id_baru;
 	int id_anggaran;
+	int id_anggaran_spinner;
 	MyDate date = new MyDate();
 	
 	@Override
@@ -54,7 +58,7 @@ public class AnggaranPengeluaranInsertFormActivity extends SherlockActivity {
 		setContentView(R.layout.anggaran_pengeluaran_insert_form_activity);
 		
 		id_anggaran = getIntent().getExtras().getInt("id_anggaran");
-		
+				
 		db = new AnggaranPengeluaranDatabase(this);
 		String tanggalAnggaran = db.getAnggaranTanggal(id_anggaran);
 		Cursor cursor = db.getAnggaranNamaAll(tanggalAnggaran);
@@ -67,6 +71,27 @@ public class AnggaranPengeluaranInsertFormActivity extends SherlockActivity {
 	    
 	    Spinner spinner = (Spinner) findViewById(R.id.anggaran_pengeluaran_form_spinner);
 	    spinner.setAdapter(sca);
+	    
+	    for(int i = 0; i < sca.getCount(); i++) {
+			if(sca.getItemId(i) == id_anggaran) {
+				spinner.setSelection(i);
+			}
+		}
+	    
+	    spinner.setOnItemSelectedListener(new OnItemSelectedListener() {
+
+			@Override
+			public void onItemSelected(AdapterView<?> arg0, View arg1,
+					int arg2, long arg3) {
+				id_anggaran_spinner = (int) arg3;				
+			}
+
+			@Override
+			public void onNothingSelected(AdapterView<?> arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
 	    
 	    tanggal = (EditText) findViewById(R.id.anggaran_pengeluaran_form_edittext_tanggal);
 	    tanggal.setOnClickListener(new OnClickListener() {
@@ -85,7 +110,7 @@ public class AnggaranPengeluaranInsertFormActivity extends SherlockActivity {
 				EditText nama = (EditText) findViewById(R.id.anggaran_pengeluaran_form_edittext_nama);
 				EditText nominal = (EditText) findViewById(R.id.anggaran_pengeluaran_form_edittext_nominal);				
 				String tanggalKonversi = date.konversiTanggal1(tanggal.getText().toString());
-				id_baru = db.insertAnggaranPengeluaran(nama.getText().toString(), Integer.parseInt(nominal.getText().toString()), tanggalKonversi, id_anggaran);								
+				id_baru = db.insertAnggaranPengeluaran(nama.getText().toString(), Integer.parseInt(nominal.getText().toString()), tanggalKonversi, id_anggaran_spinner);								
 				cekStatusAnggaran();
 				/*activity.finish();	
 				Intent i = new Intent(context, AnggaranPengeluaranActivity.class);
@@ -107,13 +132,13 @@ public class AnggaranPengeluaranInsertFormActivity extends SherlockActivity {
 		DecimalFormat customFormat = new DecimalFormat("###,###,###",simbol);
 		
 		//menghitung sisa anggaran
-		AnggaranObject object = db.getAnggaranJumlahAnggaranDanPengeluaran(id_anggaran); 				
+		AnggaranObject object = db.getAnggaranJumlahAnggaranDanPengeluaran(id_anggaran_spinner); 				
 		int selisih = object.nominalBawah - object.nominalAtas;
 		String selisihFormatted = customFormat.format(selisih);
 		
 		//menghitung sisa anggaran per hari
 		date.setNow();	//set waktu sekarang
-		String tanggal = db.getAnggaranTanggal(id_anggaran);		
+		String tanggal = db.getAnggaranTanggal(id_anggaran_spinner);		
 		String delims = "[-]";
 		String[] tokens = tanggal.split(delims);
 		String bulan = tokens[1];		
@@ -127,7 +152,7 @@ public class AnggaranPengeluaranInsertFormActivity extends SherlockActivity {
 		String sisaAnggaranPerHari = customFormat.format(selisih / selisihHari);
 		
 		//get nama anggaran
-		String namaAnggaran = db.getAnggaranNamaSingle(id_anggaran);
+		String namaAnggaran = db.getAnggaranNamaSingle(id_anggaran_spinner);
 		
 		TextView text = (TextView) layout.findViewById(R.id.anggaran_insert_pengeluaran_custom_toast_text);
 		text.setText("Insert Sukses \n Anggaran \""+ namaAnggaran +"\" yang tersisa = " + selisihFormatted + "\n" + 

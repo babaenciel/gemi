@@ -42,6 +42,14 @@ public class PemasukanDatabase {
 		return cursor;
 	}
 	
+	//untuk autocomplete
+	public Cursor getPemasukanNamaAll() {
+		SQLiteDatabase db = dbAdapter.getReadableDatabase();
+		String query = "select id_pemasukan as _id, nama from Pemasukan";
+		Cursor cursor = db.rawQuery(query, null);				
+		return cursor;
+	}
+	
 	public PemasukanObject getPemasukanSingle(int id_pemasukan) {
 		SQLiteDatabase db = dbAdapter.getReadableDatabase();
 		String query = "select * from Pemasukan, Kategori where id_pemasukan = " + id_pemasukan + " and " +

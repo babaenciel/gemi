@@ -6,6 +6,7 @@
     android:orientation="vertical"
     android:padding="0dip">
    
+    <!--  
     <EditText 
         android:id="@+id/pemasukan_form_edittext_nama"
         android:layout_width="match_parent"
@@ -15,6 +16,18 @@
         android:hint="masukkan nama pemasukan"
         android:singleLine="true"
         android:textSize="18dip"
+        android:inputType="text"/>
+        -->
+        
+    <AutoCompleteTextView 
+        android:id="@+id/pemasukan_form_edittext_nama"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"        
+        android:layout_marginTop="20dip"
+        android:background="@drawable/edittext_custom"
+        android:hint="masukkan nama pemasukan"
+        android:singleLine="true"
+        android:textSize="18dip"        
         android:inputType="text"/>
     
    	<Spinner 
