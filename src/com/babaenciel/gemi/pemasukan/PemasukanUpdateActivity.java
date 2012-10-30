@@ -45,6 +45,7 @@ public class PemasukanUpdateActivity extends SherlockActivity {
 	private MyDate myDate;
 	Context context = this;
 	PemasukanUpdateActivity activity = this;
+	private int view_toggle;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -54,6 +55,7 @@ public class PemasukanUpdateActivity extends SherlockActivity {
 		setContentView(R.layout.pemasukan_insert_form);
 		
 		id_pemasukan = getIntent().getExtras().getInt("id_pemasukan");
+		view_toggle = getIntent().getExtras().getInt("view_toggle");
 		
 		nama = (AutoCompleteTextView) findViewById(R.id.pemasukan_form_edittext_nama);
 		spinnerKategori = (Spinner) findViewById(R.id.pemasukan_form_spinner_kategori);
@@ -158,7 +160,8 @@ public class PemasukanUpdateActivity extends SherlockActivity {
 					
 					Toast.makeText(context, "update : "+namaText+" sukses", Toast.LENGTH_SHORT).show();
 					activity.finish();				
-					Intent i = new Intent(context, PemasukanActivity.class);				
+					Intent i = new Intent(context, PemasukanActivity.class);	
+					i.putExtra("view_toggle", view_toggle);
 					i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
 					startActivity(i);
 				}

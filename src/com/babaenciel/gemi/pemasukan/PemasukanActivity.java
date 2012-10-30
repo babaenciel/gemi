@@ -62,25 +62,36 @@ public class PemasukanActivity extends SherlockFragmentActivity implements Pemas
 		db.insertPemasukan("gajian aja", 200000, "2012-10-01", 2);
 		db.dbClose();*/
 		
+		if(getIntent().hasExtra("view_toggle")) {
+			viewToggle = getIntent().getExtras().getInt("view_toggle");
+		}else {
+			
+		}
+		
 		//create pager
 		adapter = new PemasukanFragmentPagerAdapter(getSupportFragmentManager(), this, viewToggle);
 		pager = (ViewPager) findViewById(R.id.pemasukan_pager);
 		pager.setAdapter(adapter);
-		pager.setCurrentItem(adapter.getCount() / 2);
-		
-		PemasukanListInterface childListener;
+		pager.setCurrentItem(adapter.getCount() / 2);				
 		//childListener.onListSelected()
 	}
 		
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		SubMenu subMenu1 = menu.addSubMenu("Action Item");
-        subMenu1.add("Insert Pemasukan");     
-        subMenu1.add("Change View by Category");
-
-        MenuItem subMenu1Item = subMenu1.getItem();
+		SubMenu subMenu1 = menu.addSubMenu("Menu");
+		
+		if(viewToggle == 2) {			
+	        subMenu1.add("Insert Pemasukan");     
+	        subMenu1.add("Tampilan Berdasarkan Tanggal");	        
+		}else {			
+	        subMenu1.add("Insert Pemasukan");     
+	        subMenu1.add("Tampilan Berdasarkan Kategori");
+		}
+		
+		MenuItem subMenu1Item = subMenu1.getItem();
         subMenu1Item.setIcon(R.drawable.abs__ic_menu_moreoverflow_normal_holo_dark);
         subMenu1Item.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS | MenuItem.SHOW_AS_ACTION_WITH_TEXT);
+		
 
         /*SubMenu subMenu2 = menu.addSubMenu("Overflow Item");
         subMenu2.add("These");
@@ -97,16 +108,17 @@ public class PemasukanActivity extends SherlockFragmentActivity implements Pemas
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		if(item.getTitle().equals("Insert Pemasukan")) {
-			Intent i = new Intent(this, PemasukanInsertActivity.class);			
+			Intent i = new Intent(this, PemasukanInsertActivity.class);	
+			i.putExtra("view_toggle", viewToggle);
 			startActivity(i);
-		}else if(item.getTitle().equals("Change View by Category")) {
-			item.setTitle("Change View by Date");
+		}else if(item.getTitle().equals("Tampilan Berdasarkan Kategori")) {
+			item.setTitle("Tampilan Berdasarkan Tanggal");
 			viewToggle = 2;
 			adapter = new PemasukanFragmentPagerAdapter(getSupportFragmentManager(), this, viewToggle);
 			pager.setAdapter(adapter);
 			pager.setCurrentItem(adapter.getCount() / 2);
-		}else if(item.getTitle().equals("Change View by Date")) {
-			item.setTitle("Change View by Category");
+		}else if(item.getTitle().equals("Tampilan Berdasarkan Tanggal")) {
+			item.setTitle("Tampilan Berdasarkan Kategori");
 			viewToggle = 1;
 			adapter = new PemasukanFragmentPagerAdapter(getSupportFragmentManager(), this, viewToggle);
 			pager.setAdapter(adapter);
@@ -133,6 +145,7 @@ public class PemasukanActivity extends SherlockFragmentActivity implements Pemas
 	public void onUpdateChild(int idChild, int viewToggle) {	
 		Intent i = new Intent(this, PemasukanUpdateActivity.class);
 		i.putExtra("id_pemasukan", idChild);
+		i.putExtra("view_toggle", viewToggle);
 		startActivity(i);
 	}
 

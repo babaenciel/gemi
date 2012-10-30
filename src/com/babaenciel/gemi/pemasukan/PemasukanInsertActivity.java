@@ -45,6 +45,7 @@ public class PemasukanInsertActivity extends SherlockActivity {
 	MyDate myDate;
 	PemasukanDatabase db;
 	int id_pemasukan_autocomplete;
+	private int viewToggle;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +54,10 @@ public class PemasukanInsertActivity extends SherlockActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.pemasukan_insert_form);
 		
+		//get intent
+		if(getIntent().hasExtra("view_toggle")) {
+			viewToggle = getIntent().getExtras().getInt("view_toggle");
+		}
 		nama = (AutoCompleteTextView) findViewById(R.id.pemasukan_form_edittext_nama);
 		spinnerKategori = (Spinner) findViewById(R.id.pemasukan_form_spinner_kategori);
 		tanggal = (EditText) findViewById(R.id.pemasukan_form_edittext_tanggal);
@@ -98,19 +103,7 @@ public class PemasukanInsertActivity extends SherlockActivity {
 			
 		});		
 		
-		
-		//set nominal
-		nominal.setOnFocusChangeListener(new OnFocusChangeListener() {
-			
-			@Override
-			public void onFocusChange(View v, boolean hasFocus) {
-				if(hasFocus) {
-					nominal.setText("");
-				}
 				
-			}
-		});
-		
 		//set tanggal. default langsung terisi now.
 		myDate = new MyDate();
 		myDate.setNow();
@@ -146,7 +139,8 @@ public class PemasukanInsertActivity extends SherlockActivity {
 					
 					Toast.makeText(context, "insert : "+namaText+" sukses", Toast.LENGTH_SHORT).show();
 					pemasukanInsert.finish();				
-					Intent i = new Intent(context, PemasukanActivity.class);				
+					Intent i = new Intent(context, PemasukanActivity.class);		
+					i.putExtra("view_toggle", viewToggle);
 					i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
 					startActivity(i);
 				}
