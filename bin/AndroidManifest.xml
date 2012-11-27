@@ -34,10 +34,13 @@
         <activity android:name="com.babaenciel.gemi.anggaran.AnggaranActivity"></activity>
         <activity android:name="com.babaenciel.gemi.anggaran.AnggaranPengeluaranActivity"></activity>
         <activity android:name="com.babaenciel.gemi.anggaran.AnggaranInsertFormActivity"></activity>
+        <activity android:name="com.babaenciel.gemi.anggaran.AnggaranUpdateActivity"></activity>
         <activity android:name="com.babaenciel.gemi.anggaran.AnggaranPengeluaranInsertFormActivity"></activity>
         <activity android:name="com.babaenciel.gemi.anggaran.AnggaranPengeluaranInsertFormFromWidgetActivity"></activity>
+        <activity android:name="com.babaenciel.gemi.anggaran.AnggaranPengeluaranUpdateActivity"></activity>
         <activity android:name="com.babaenciel.gemi.tagihan.TagihanActivity"></activity>
         <activity android:name="com.babaenciel.gemi.tagihan.TagihanInsertActivity"></activity>
+        <activity android:name="com.babaenciel.gemi.tagihan.TagihanUpdateActivity"></activity>
         <activity android:name="com.babaenciel.gemi.hutang.HutangActivity"></activity>
         <activity android:name="com.babaenciel.gemi.hutang.HutangInsertFormActivity"></activity>
         <activity android:name="com.babaenciel.gemi.hutang.HutangCicilanActivity"></activity>

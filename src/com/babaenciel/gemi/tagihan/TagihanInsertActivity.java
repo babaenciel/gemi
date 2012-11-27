@@ -2,6 +2,7 @@ package com.babaenciel.gemi.tagihan;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -14,10 +15,15 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.AdapterView.OnItemClickListener;
 
 import com.actionbarsherlock.app.SherlockActivity;
 import com.babaenciel.gemi.R;
@@ -29,11 +35,12 @@ public class TagihanInsertActivity extends SherlockActivity {
 	private static final int THEME = R.style.Theme_Sherlock;
 	private static final int DEFAULTDATESELECTOR_ID = 0;
 	TextView tanggal_deadline;
-	EditText namaView;
+	AutoCompleteTextView namaView;
 	EditText jumlahView;
 	Context context = this;
 	TagihanInsertActivity activity = this;
 	MyDate date;
+	TagihanDatabase db;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -44,7 +51,37 @@ public class TagihanInsertActivity extends SherlockActivity {
 		
 		date = new MyDate();
 		
+		db = new TagihanDatabase(context);
+		
+		namaView = (AutoCompleteTextView) findViewById(R.id.tagihan_insert_edittext_nama);
+		jumlahView = (EditText) findViewById(R.id.tagihan_insert_edittext_nominal);
 		tanggal_deadline = (TextView) findViewById(R.id.tagihan_insert_edittext_tanggal);
+				
+		//set nama with autocomplete		
+		ArrayList<String> valuesNama = db.getTagihanNamaAll();
+		Log.d("valuesnama", valuesNama.get(0));
+		ArrayAdapter<String> adapterNama = new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line, valuesNama);
+		namaView.setAdapter(adapterNama);
+		namaView.setOnItemClickListener(new OnItemClickListener() {
+
+			@Override
+			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
+					long arg3) {
+				String namaString = ((TextView)arg1).getText().toString();
+				int id_tagihan_temp = db.getTagihanIdFromNama(namaString);
+				TagihanObject object = db.getTagihanById(id_tagihan_temp);				
+				
+				jumlahView.setText(Integer.toString(object.jumlah));				
+				tanggal_deadline.setText(date.konversiTanggal2(object.tanggal_deadline));
+				//ini untuk menutup keyboard setelah user memilih list autocompletenya
+				if(getCurrentFocus()!=null && getCurrentFocus() instanceof EditText){
+			        InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+			        imm.hideSoftInputFromWindow(namaView.getWindowToken(), 0);
+			    }
+			}
+			
+		});		
+		
 		tanggal_deadline.setOnClickListener(new OnClickListener() {
 			
 			@Override
@@ -58,26 +95,27 @@ public class TagihanInsertActivity extends SherlockActivity {
 		submit.setOnClickListener(new OnClickListener() {
 			
 			@Override
-			public void onClick(View v) {
-				namaView = (EditText) findViewById(R.id.tagihan_insert_edittext_nama);
-				jumlahView = (EditText) findViewById(R.id.tagihan_insert_edittext_nominal);
-				String nama = namaView.getText().toString();
-				String jumlah = jumlahView.getText().toString();
-								
-				String tanggalString = date.konversiTanggal1(tanggal_deadline.getText().toString());
-				
-				TagihanDatabase db = new TagihanDatabase(context);
-				db.insertTagihan(nama, Integer.parseInt(jumlah), tanggalString, 0);
-				
-				setAlarm(tanggalString);
-				
-				//Toast.makeText(context, "insert tagihan : " + nama + " sukses", Toast.LENGTH_LONG).show();
-				
-				Intent i = new Intent(context, TagihanActivity.class);
-				i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
-				activity.finish();
-				startActivity(i);
-				
+			public void onClick(View v) {			
+				if(namaView.getText().toString().equals("") || jumlahView.getText().toString().equals("") || tanggal_deadline.getText().toString().equals("")) {
+					Toast.makeText(context, "semua kolom harus terisi", Toast.LENGTH_LONG).show();
+				}else {
+					String nama = namaView.getText().toString();
+					String jumlah = jumlahView.getText().toString();
+									
+					String tanggalString = date.konversiTanggal1(tanggal_deadline.getText().toString());
+										
+					db.insertTagihan(nama, Integer.parseInt(jumlah), tanggalString, 0);
+					
+					setAlarm(tanggalString);
+					
+					//Toast.makeText(context, "insert tagihan : " + nama + " sukses", Toast.LENGTH_LONG).show();
+					
+					Intent i = new Intent(context, TagihanActivity.class);
+					i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+					activity.finish();
+					startActivity(i);
+				}
+	
 			}
 		});
 	}

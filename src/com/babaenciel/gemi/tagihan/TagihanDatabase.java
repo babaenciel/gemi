@@ -54,6 +54,87 @@ public class TagihanDatabase {
 		
 		return object;
 	}
+	
+	public int getTagihanTotalFromMonthYear(String month, String year) {
+		SQLiteDatabase db = dbAdapter.getReadableDatabase();
+		String query = "select sum(jumlah) from Tagihan where " +
+				"strftime('%m', tanggal_deadline) = '"+month+"' and " +
+				"strftime('%Y', tanggal_deadline) = '"+year+"' and " +
+				"lunas = 0 " +				
+				"order by strftime('%d', tanggal_deadline) desc";
+		Cursor cursor = db.rawQuery(query, null);
+		int total = 0;
+		if(cursor.moveToFirst()) {
+			total = cursor.getInt(0);
+		}
+		
+		cursor.close();
+		db.close();
+		
+		return total;
+	}
+	
+	public TagihanObject getTagihanById(int id_tagihan) {
+		SQLiteDatabase db = dbAdapter.getReadableDatabase();
+		String query = "select * from Tagihan where id_tagihan = " + id_tagihan;
+		Cursor cursor = db.rawQuery(query, null);
+		TagihanObject object = null;
+		if(cursor.moveToFirst()) {
+			object = new TagihanObject(cursor.getInt(0),
+					cursor.getString(1),
+					cursor.getInt(2),
+					cursor.getString(3),
+					cursor.getInt(4));
+		}
+		
+		cursor.close();
+		db.close();
+		
+		return object;
+	}
+	
+	public ArrayList<String> getTagihanNamaAll() {
+		SQLiteDatabase db = dbAdapter.getReadableDatabase();
+		String query = "select nama from Tagihan";
+		Cursor cursor = db.rawQuery(query, null);
+		ArrayList<String> list = new ArrayList<String>();
+		if(cursor.moveToFirst()) {
+			do {
+				list.add(cursor.getString(0));
+			}while(cursor.moveToNext());			
+		}
+		
+		cursor.close();
+		db.close();
+		
+		return list;
+	}
+	
+	public int getTagihanIdFromNama(String nama) {
+		SQLiteDatabase db = dbAdapter.getReadableDatabase();
+		String query = "select id_tagihan from Tagihan where nama = '" + nama + "'";
+		Cursor cursor = db.rawQuery(query, null);
+		int id = 0;
+		
+		if(cursor.moveToFirst()) {
+			id = cursor.getInt(0);
+		}
+		
+		cursor.close();
+		db.close();
+		
+		return id;
+	}
+	
+	public void updateTagihan(int id_tagihan, String nama, int jumlah, String tanggal) {
+		SQLiteDatabase db = dbAdapter.getWritableDatabase();
+		ContentValues cv = new ContentValues();
+		cv.put("nama", nama);
+		cv.put("jumlah", jumlah);
+		cv.put("tanggal_deadline", tanggal);
+		db.update("Tagihan", cv, "id_tagihan = " + id_tagihan, null);
+		db.close();
+	}
 
     public void deleteTagihan(int id_tagihan) {
         SQLiteDatabase db = dbAdapter.getWritableDatabase();

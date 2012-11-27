@@ -74,7 +74,7 @@ public class TagihanFragmentListAdapter extends BaseAdapter {
 		if(values.get(pos).lunas == 1) {			
 			convertView.setBackgroundResource(R.color.black_soft);			
 		}else {
-			convertView.setBackgroundResource(android.R.color.white);
+			convertView.setBackgroundResource(R.color.sunday_2);
 		}
 			
 		

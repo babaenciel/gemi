@@ -42,8 +42,8 @@ public class PemasukanActivity extends SherlockFragmentActivity implements Pemas
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.pemasukan_activity);
 		
-		//initialize database
-		/*KategoriDatabase db2 = new KategoriDatabase(this);
+/*		//initialize database
+		KategoriDatabase db2 = new KategoriDatabase(this);
 		db2.insertKategori("Gaji");
 		db2.insertKategori("Penjualan");
 		db2.insertKategori("Hadiah");*/

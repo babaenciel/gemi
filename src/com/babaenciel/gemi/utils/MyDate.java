@@ -180,12 +180,21 @@ public class MyDate {
 	}
 	
 	//ini untuk inputan yang nggak pake tanggal seperti di form input anggaran
-	public String konversiBulanTahunKeCompleteTanggal(String bulanTahun) {
+	public String konversiBulanTahunKeCompleteTanggal(String bulanTahun) {		
 		String delims = "[-]";
 		String[] tokens = bulanTahun.split(delims);
 		String complete = tokens[1] + "-" + tokens[0] + "-" + "01";
 		return complete;
 	}
+	
+	//ini untuk menghilangkan tanggal pada tanggal komplit seperti di form input anggaran
+	public String konversiTanggalCompleteDihilangiTanggalnya(String tanggalCompleteYYYY) {
+		String delims = "[-]";
+		String[] tokens = tanggalCompleteYYYY.split(delims);
+		String tanggal = tokens[1] + "-" + tokens[0];
+		return tanggal;
+	}
+	
 	
 	public String konversiBulanKeText(int monthDigit) {
 		if(monthDigit == 1) {

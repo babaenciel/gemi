@@ -44,26 +44,12 @@ public class AnggaranPengeluaranDatabase {
 		
 		return (int) id;
 	}
-	
-	public AnggaranPengeluaranObject getSingleAnggaranPengeluaran(int id_anggaran_pengeluaran) {
-		SQLiteDatabase db = dbAdapter.getReadableDatabase();
-		String query = "select * from Anggaran_Pengeluaran where id_anggaran_pengeluaran = " + id_anggaran_pengeluaran;
-		Cursor cursor = db.rawQuery(query, null);
-		AnggaranPengeluaranObject object = null;
-		if(cursor.moveToFirst()) {
-			object = new AnggaranPengeluaranObject(cursor.getInt(0), 
-					cursor.getString(1),
-					cursor.getInt(2),
-					cursor.getString(3),
-					cursor.getInt(4));
-		}
 		
-		return object;
-	}
 	
 	public ArrayList<AnggaranPengeluaranObject> getAnggaranPengeluaranById(int id_anggaran) {
 		SQLiteDatabase db = dbAdapter.getReadableDatabase();
-		String query = "select * from Anggaran_Pengeluaran where id_anggaran = " + id_anggaran;
+		String query = "select * from Anggaran_Pengeluaran where id_anggaran = " + id_anggaran + " and " +
+				"order by strftime('%d', tanggal) desc";
 		Cursor cursor = db.rawQuery(query, null);
 		
 		ArrayList<AnggaranPengeluaranObject> values = new ArrayList<AnggaranPengeluaranObject>();
@@ -78,6 +64,21 @@ public class AnggaranPengeluaranDatabase {
 		db.close();
 		
 		return values;
+	}
+	
+	public AnggaranPengeluaranObject getAnggaranPengeluaranSingle(int id_anggaran_pengeluaran) {
+		SQLiteDatabase db = dbAdapter.getReadableDatabase();
+		String query = "select * from Anggaran_Pengeluaran where id_anggaran_pengeluaran = " + id_anggaran_pengeluaran;
+		Cursor cursor = db.rawQuery(query, null);
+		AnggaranPengeluaranObject object = null;
+		
+		if(cursor.moveToFirst()) {
+			object = new AnggaranPengeluaranObject(cursor.getInt(0), cursor.getString(1), cursor.getInt(2), cursor.getString(3), cursor.getInt(4));
+		}
+		
+		cursor.close();
+		db.close();
+		return object;
 	}
 	
 	public int getAnggaranPengeluaranTotal(int id_anggaran) {
@@ -125,6 +126,42 @@ public class AnggaranPengeluaranDatabase {
 		Cursor cursor = db.rawQuery(query, null);
 		return cursor;
 	}
+	
+	//digunakan pada autocomplete insert form. untuk mengambil semua nama anggaran pengeluaran yg ada.
+	public ArrayList<String> getAnggaranPengeluaranNamaAll() {
+		SQLiteDatabase db = dbAdapter.getReadableDatabase();
+		String query = "select nama from Anggaran_Pengeluaran";
+		Cursor cursor = db.rawQuery(query, null);
+		ArrayList<String> nama = new ArrayList<String>();
+		
+		if(cursor.moveToFirst()) {
+			do {
+				nama.add(cursor.getString(0));
+			}while(cursor.moveToNext());
+		}
+		
+		cursor.close();
+		db.close();
+		
+		return nama;
+	}
+	
+	//digunakan pada autocomplete insert form.
+	//biasanya digunakan setelah getAnggaranPengeluaranNamaAll
+	public int getAnggaranPengeluaranIdFromNama(String nama) {
+		SQLiteDatabase db = dbAdapter.getReadableDatabase();
+		String query = "select id_anggaran_pengeluaran from Anggaran_Pengeluaran where " +
+				"nama = '" + nama + "'";
+		Cursor cursor = db.rawQuery(query, null);
+		int id = 0;
+		
+		if(cursor.moveToFirst()) {
+			id = cursor.getInt(0);
+		}
+		
+		return id;
+	}
+		
 	
 	public String getAnggaranNamaSingle(int id_anggaran) {
 		SQLiteDatabase db = dbAdapter.getReadableDatabase();

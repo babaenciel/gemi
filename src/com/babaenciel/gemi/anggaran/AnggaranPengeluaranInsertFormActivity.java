@@ -22,9 +22,12 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemSelectedListener;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.SimpleCursorAdapter;
@@ -42,13 +45,16 @@ public class AnggaranPengeluaranInsertFormActivity extends SherlockActivity {
 	private static final int THEME = R.style.Theme_Sherlock;
 	private static final int DEFAULTDATESELECTOR_ID = 0;
 	AnggaranPengeluaranDatabase db;
+	AutoCompleteTextView nama;
 	EditText tanggal;
+	EditText nominal;
+	Spinner spinner;
 	Context context = this;
 	AnggaranPengeluaranInsertFormActivity activity = this;
 	int id_baru;
 	int id_anggaran;
 	int id_anggaran_spinner;
-	MyDate date = new MyDate();
+	MyDate myDate = new MyDate();
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -58,18 +64,25 @@ public class AnggaranPengeluaranInsertFormActivity extends SherlockActivity {
 		setContentView(R.layout.anggaran_pengeluaran_insert_form_activity);
 		
 		id_anggaran = getIntent().getExtras().getInt("id_anggaran");
-				
+		
+		nama = (AutoCompleteTextView) findViewById(R.id.anggaran_pengeluaran_form_edittext_nama);
+		nominal = (EditText) findViewById(R.id.anggaran_pengeluaran_form_edittext_nominal);
+		spinner = (Spinner) findViewById(R.id.anggaran_pengeluaran_form_spinner);
+		tanggal = (EditText) findViewById(R.id.anggaran_pengeluaran_form_edittext_tanggal);
+		Button button = (Button) findViewById(R.id.anggaran_pengeluaran_form_submit_button);
+		
 		db = new AnggaranPengeluaranDatabase(this);
-		String tanggalAnggaran = db.getAnggaranTanggal(id_anggaran);
-		Cursor cursor = db.getAnggaranNamaAll(tanggalAnggaran);
+
+		//spinner set
+		String tanggalAnggaran = db.getAnggaranTanggal(id_anggaran);	//get tanggal yang sama dari suatu anggaran
+		Cursor cursor = db.getAnggaranNamaAll(tanggalAnggaran);			// lalu tanggal digunakan untuk mengambil anggaran yang lain
 		
 		String[] from = new String[] {"nama"};
 	    int[] to = new int[] {android.R.id.text1};
 	    
-	    SimpleCursorAdapter sca = new SimpleCursorAdapter(this, android.R.layout.simple_spinner_item, cursor, from, to);	    
+	    final SimpleCursorAdapter sca = new SimpleCursorAdapter(this, android.R.layout.simple_spinner_item, cursor, from, to);	    
 	    sca.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);	    
-	    
-	    Spinner spinner = (Spinner) findViewById(R.id.anggaran_pengeluaran_form_spinner);
+
 	    spinner.setAdapter(sca);
 	    
 	    for(int i = 0; i < sca.getCount(); i++) {
@@ -93,7 +106,38 @@ public class AnggaranPengeluaranInsertFormActivity extends SherlockActivity {
 			}
 		});
 	    
-	    tanggal = (EditText) findViewById(R.id.anggaran_pengeluaran_form_edittext_tanggal);
+		//set nama with autocomplete
+		ArrayList<String> namaAll = db.getAnggaranPengeluaranNamaAll();
+		ArrayAdapter<String> adapterNama = new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line, namaAll);
+		nama.setAdapter(adapterNama);
+		nama.setOnItemClickListener(new OnItemClickListener() {
+
+			@Override
+			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
+					long arg3) {
+				String namaString = ((TextView)arg1).getText().toString();
+				int id_anggaran_pengeluaran = db.getAnggaranPengeluaranIdFromNama(namaString);
+				AnggaranPengeluaranObject object = db.getAnggaranPengeluaranSingle(id_anggaran_pengeluaran);
+				
+				for(int i = 0; i < sca.getCount(); i++) {
+					if(sca.getItemId(i) == object.id_anggaran) {
+						spinner.setSelection(i);
+					}
+				}
+				
+				nominal.setText(Integer.toString(object.nominal));
+				
+				//ini untuk menutup keyboard setelah user memilih list autocompletenya
+				if(getCurrentFocus()!=null && getCurrentFocus() instanceof EditText){
+			        InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+			        imm.hideSoftInputFromWindow(nama.getWindowToken(), 0);
+			    }					
+			}
+		});
+		   
+	    //set tanggal
+	    myDate.setNow();
+	    tanggal.setText(myDate.dateFull1);
 	    tanggal.setOnClickListener(new OnClickListener() {
 			
 			@Override
@@ -102,16 +146,18 @@ public class AnggaranPengeluaranInsertFormActivity extends SherlockActivity {
 			}
 		});
 	    
-	    Button button = (Button) findViewById(R.id.anggaran_pengeluaran_form_submit_button);
+	    //submit	    
 	    button.setOnClickListener(new OnClickListener() {
 			
 			@Override
 			public void onClick(View v) {
-				EditText nama = (EditText) findViewById(R.id.anggaran_pengeluaran_form_edittext_nama);
-				EditText nominal = (EditText) findViewById(R.id.anggaran_pengeluaran_form_edittext_nominal);				
-				String tanggalKonversi = date.konversiTanggal1(tanggal.getText().toString());
-				id_baru = db.insertAnggaranPengeluaran(nama.getText().toString(), Integer.parseInt(nominal.getText().toString()), tanggalKonversi, id_anggaran_spinner);								
-				cekStatusAnggaran();
+				if(nama.getText().toString().equals("") || nominal.getText().toString().equals("") || tanggal.getText().toString().equals("")) {
+					Toast.makeText(getApplicationContext(), "semua kolom harus terisi", Toast.LENGTH_SHORT).show();							
+				}else {
+					String tanggalKonversi = myDate.konversiTanggal1(tanggal.getText().toString());
+					id_baru = db.insertAnggaranPengeluaran(nama.getText().toString(), Integer.parseInt(nominal.getText().toString()), tanggalKonversi, id_anggaran_spinner);								
+					cekStatusAnggaran();
+				}
 				/*activity.finish();	
 				Intent i = new Intent(context, AnggaranPengeluaranActivity.class);
 				i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);				
@@ -120,6 +166,16 @@ public class AnggaranPengeluaranInsertFormActivity extends SherlockActivity {
 			}
 		});
 	    	    
+	}
+	
+	public void cekStatusAnggaran() {
+		AnggaranObject object = db.getAnggaranJumlahAnggaranDanPengeluaran(id_anggaran_spinner); 						
+		if(object.nominalAtas > object.nominalBawah) {
+			showDialogWhenOverAnggaran();
+		}else {
+			showCustomToast();
+			callActivity();
+		}
 	}
 	
 	public void showCustomToast() {
@@ -137,18 +193,18 @@ public class AnggaranPengeluaranInsertFormActivity extends SherlockActivity {
 		String selisihFormatted = customFormat.format(selisih);
 		
 		//menghitung sisa anggaran per hari
-		date.setNow();	//set waktu sekarang
+		myDate.setNow();	//set waktu sekarang
 		String tanggal = db.getAnggaranTanggal(id_anggaran_spinner);		
 		String delims = "[-]";
 		String[] tokens = tanggal.split(delims);
 		String bulan = tokens[1];		
-		int jumlahHari = date.getHariDalamSuatuBulan(bulan);		
-		int selisihHari = jumlahHari - date.date;	
+		int jumlahHari = myDate.getHariDalamSuatuBulan(bulan);		
+		int selisihHari = (jumlahHari - myDate.date) + 1;	
 		Log.d("selisih hari", "" + selisihHari);
 		Log.d("jumlah hari", "" + jumlahHari);
-		Log.d("date date", "" + date.date);
+		Log.d("date date", "" + myDate.date);
 
-		//hitung sisa anggaran per hari
+		//hitung sisa anggaran per hari		
 		String sisaAnggaranPerHari = customFormat.format(selisih / selisihHari);
 		
 		//get nama anggaran
@@ -200,16 +256,7 @@ public class AnggaranPengeluaranInsertFormActivity extends SherlockActivity {
 		i.putExtra("id_anggaran", id_anggaran);
 		startActivity(i);		
 	}
-	
-	public void cekStatusAnggaran() {
-		AnggaranObject object = db.getAnggaranJumlahAnggaranDanPengeluaran(id_anggaran); 						
-		if(object.nominalAtas > object.nominalBawah) {
-			showDialogWhenOverAnggaran();
-		}else {
-			showCustomToast();
-			callActivity();
-		}
-	}
+		
 	
 	//ini fungsi untuk dateslider. hasil kopasan
 	DateSlider.OnDateSetListener mDateSetListener =

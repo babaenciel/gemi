@@ -64,18 +64,9 @@ public class TagihanActivity extends SherlockFragmentActivity implements Tagihan
         subMenu1.add("Insert Tagihan");             
 
         MenuItem subMenu1Item = subMenu1.getItem();
-        subMenu1Item.setIcon(R.drawable.ic_launcher);
+        subMenu1Item.setIcon(R.drawable.abs__ic_menu_moreoverflow_normal_holo_dark);
         subMenu1Item.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS | MenuItem.SHOW_AS_ACTION_WITH_TEXT);
-
-        /*SubMenu subMenu2 = menu.addSubMenu("Overflow Item");
-        subMenu2.add("These");
-        subMenu2.add("Are");
-        subMenu2.add("Sample");
-        subMenu2.add("Items");
-
-        MenuItem subMenu2Item = subMenu2.getItem();
-        subMenu2Item.setIcon(R.drawable.ic_action_search);*/
-
+        
         return super.onCreateOptionsMenu(menu);
 	}
 	
@@ -108,6 +99,16 @@ public class TagihanActivity extends SherlockFragmentActivity implements Tagihan
         pager.setAdapter(adapter);
         pager.setCurrentItem(adapter.getCount() / 2);
     }
+
+	@Override
+	public void onUpdate(int id_tagihan) {
+		Intent i = new Intent(this, TagihanUpdateActivity.class);
+		i.putExtra("id_tagihan", id_tagihan);
+		startActivity(i);
+		
+	}
+    
+    
 
 
 }

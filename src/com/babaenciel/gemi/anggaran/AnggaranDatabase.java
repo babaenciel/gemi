@@ -66,7 +66,7 @@ public class AnggaranDatabase {
 		cursor.close();
 		db.close();
 		return jumlah_anggaran; 
-	}
+	}	
 	
 	public int getAnggaranPengeluaranTotal(String month, String year) {
 		SQLiteDatabase db = dbAdapter.getReadableDatabase();
@@ -86,6 +86,78 @@ public class AnggaranDatabase {
 		return jumlah_pengeluaran;
 	}
 	
+	public AnggaranObject getAnggaranSingle(int id_anggaran) {
+		SQLiteDatabase db = dbAdapter.getReadableDatabase();
+		String query = "select * from Anggaran where id_anggaran = " + id_anggaran;
+		Cursor cursor = db.rawQuery(query, null);
+		AnggaranObject object = null;
+		
+		if(cursor.moveToFirst()) {
+			object = new AnggaranObject(cursor.getInt(0), cursor.getString(1), cursor.getInt(3), cursor.getInt(2), cursor.getString(4));
+		}
+		
+		cursor.close();
+		db.close();
+		
+		return object;
+	}
+	
+	public ArrayList<String> getAnggaranNamaAll() {
+		SQLiteDatabase db = dbAdapter.getReadableDatabase();
+		String query = "select nama from Anggaran";
+		Cursor cursor = db.rawQuery(query, null);
+		ArrayList<String> nama = new ArrayList<String>();
+		
+		if(cursor.moveToFirst()) {
+			do {
+				nama.add(cursor.getString(0));
+			}while(cursor.moveToNext());
+			
+		}
+		
+		cursor.close();
+		db.close();
+		
+		return nama;
+	}
+	
+	//biasanya digunakan setelah getAnggaranNamaAll.
+	//digunakan pada autocomplete insert, update	
+	public int getAnggaranIdFromNama(String nama) {
+		SQLiteDatabase db = dbAdapter.getReadableDatabase();
+		String query = "select id_anggaran from Anggaran where nama = '" + nama + "'";
+		Cursor cursor = db.rawQuery(query, null);
+		int id_anggaran = 0;
+		
+		if(cursor.moveToFirst()) {
+			id_anggaran = cursor.getInt(0);
+		}
+		
+		cursor.close();
+		db.close();
+		
+		return id_anggaran;		
+	}
+	
+	public void updateAnggaran(int id_anggaran, String nama, int jumlah_anggaran, String tanggal) {
+		SQLiteDatabase db = dbAdapter.getWritableDatabase();
+		ContentValues cv = new ContentValues();
+		cv.put("nama", nama);
+		cv.put("jumlah_anggaran", jumlah_anggaran);
+		cv.put("tanggal", tanggal);
+		db.update("Anggaran", cv, "id_anggaran = " + id_anggaran, null);
+		db.close();
+	}
+	
+	public void deleteAnggaran(int id_anggaran) {
+		SQLiteDatabase db = dbAdapter.getWritableDatabase();		
+		db.beginTransaction();
+		db.delete("Anggaran", "id_anggaran = " + id_anggaran, null);
+		db.setTransactionSuccessful();
+		db.endTransaction();
+		//db.delete("Pemasukan", "id_pemasukan = " + id, null);
+		db.close();		
+	}
 	
 	public void dbClose() {
 		dbAdapter.close();

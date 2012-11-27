@@ -5,13 +5,13 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:padding="5dp"
-    android:background="@android:color/white" >
+    android:background="@color/sunday_1" >
     
 	<TextView 
 	    android:id="@+id/anggaran_insert_pengeluaran_custom_toast_text"
 	    android:layout_width="wrap_content"
 	    android:layout_height="wrap_content"
 	    android:textSize="16dp"
-	    android:textColor="@color/blue_modern"
+	    android:textColor="@android:color/white"
 	    android:gravity="center_horizontal"/>
 </LinearLayout>

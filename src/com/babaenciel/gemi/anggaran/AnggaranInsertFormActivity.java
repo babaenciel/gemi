@@ -2,6 +2,7 @@ package com.babaenciel.gemi.anggaran;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -12,6 +13,11 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -29,18 +35,53 @@ public class AnggaranInsertFormActivity extends SherlockActivity {
 	public static int THEME = R.style.Theme_Sherlock;
 	private EditText tanggal;
 	private Button submit;
-	private EditText nama;
+	private AutoCompleteTextView nama;
 	private EditText nominal;
 	Context context = this;
+	MyDate myDate;
+	AnggaranDatabase db;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {		
 		setTheme(THEME);
-		setTitle("PEMASUKAN");
+		setTitle("ANGGARAN INSERT");
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.anggaran_form_activity);
 		
+		nama = (AutoCompleteTextView) findViewById(R.id.anggaran_form_edittext_nama);
+		nominal = (EditText) findViewById(R.id.anggaran_form_edittext_nominal);
 		tanggal = (EditText) findViewById(R.id.anggaran_form_edittext_tanggal);
+		
+		db = new AnggaranDatabase(this);
+		
+		//set nama autocomplete
+		ArrayList<String> namaAll = db.getAnggaranNamaAll();
+		ArrayAdapter<String> adapterNama = new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line, namaAll);
+		nama.setAdapter(adapterNama);
+		nama.setOnItemClickListener(new OnItemClickListener() {
+
+			@Override
+			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
+					long arg3) {
+				String namaString = ((TextView)arg1).getText().toString();
+				int id_anggaran = db.getAnggaranIdFromNama(namaString);
+				AnggaranObject object = db.getAnggaranSingle(id_anggaran);
+				
+				nominal.setText(Integer.toString(object.nominalBawah));								
+				
+				//ini untuk menutup keyboard setelah user memilih list autocompletenya
+				if(getCurrentFocus()!=null && getCurrentFocus() instanceof EditText){
+			        InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+			        imm.hideSoftInputFromWindow(nama.getWindowToken(), 0);
+			    }								
+			}
+		});		
+		
+		
+		//set tanggal
+		myDate = new MyDate();
+		myDate.setNow();		
+		tanggal.setText(myDate.konversiTanggalCompleteDihilangiTanggalnya(myDate.dateFull2));
 		tanggal.setOnClickListener(new OnClickListener() {
 			
 			@Override
@@ -52,24 +93,22 @@ public class AnggaranInsertFormActivity extends SherlockActivity {
 		
 		submit = (Button) findViewById(R.id.anggaran_form_submit_button);
 		submit.setOnClickListener(new OnClickListener() {
-			
-			
 
 			@Override
-			public void onClick(View v) {
-				nama = (EditText) findViewById(R.id.anggaran_form_edittext_nama);
-				nominal = (EditText) findViewById(R.id.anggaran_form_edittext_nominal);
-				
-				MyDate myDate = new MyDate();
-				String tanggalComplete = myDate.konversiBulanTahunKeCompleteTanggal(tanggal.getText().toString());
-				AnggaranDatabase db = new AnggaranDatabase(context);
-				db.insertAnggaran(nama.getText().toString(), Integer.parseInt(nominal.getText().toString()), 0, tanggalComplete);
-				db.dbClose();
-				Toast.makeText(context, "insert : " + nama.getText().toString() + " sukses", Toast.LENGTH_LONG).show();
-				
-				Intent i = new Intent(context, AnggaranActivity.class);
-				finish();
-				startActivity(i);
+			public void onClick(View v) {		
+				if(nama.getText().toString().equals("") || nominal.getText().toString().equals("") || tanggal.getText().toString().equals("")) {
+					Toast.makeText(getApplicationContext(), "semua kolom harus terisi", Toast.LENGTH_SHORT).show();							
+				}else {
+					String tanggalComplete = myDate.konversiBulanTahunKeCompleteTanggal(tanggal.getText().toString());
+					AnggaranDatabase db = new AnggaranDatabase(context);
+					db.insertAnggaran(nama.getText().toString(), Integer.parseInt(nominal.getText().toString()), 0, tanggalComplete);
+					db.dbClose();
+					Toast.makeText(context, "insert : " + nama.getText().toString() + " sukses", Toast.LENGTH_LONG).show();
+					
+					Intent i = new Intent(context, AnggaranActivity.class);
+					finish();
+					startActivity(i);
+				}
 			}
 		});
 		

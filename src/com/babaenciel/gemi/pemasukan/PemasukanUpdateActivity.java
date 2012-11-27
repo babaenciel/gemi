@@ -111,11 +111,9 @@ public class PemasukanUpdateActivity extends SherlockActivity {
 			
 		});						
 		
-		//set tanggal
+		//set tanggal		
 		myDate = new MyDate();
-		myDate.setNow();
-		
-		tanggal.setText(myDate.dateFull1);
+		tanggal.setText(myDate.konversiTanggal2(object.tanggal));
 		tanggal.setOnClickListener(new OnClickListener() {
 			
 			@Override

@@ -79,6 +79,13 @@ public class AnggaranFragmentByDateListAdapter extends BaseAdapter {
 		holder.seekbar.setMax(anggaranObject.nominalBawah);
 		holder.seekbar.setProgress(anggaranObject.nominalAtas);
 		
+		//membuat warna zebra di rows
+		if (position % 2 == 0){
+			convertView.setBackgroundResource(R.drawable.listview_rows_color_1);
+		} else {
+			convertView.setBackgroundResource(R.drawable.listview_rows_color_2);
+		}		
+		
 		return convertView;
 	}
 	

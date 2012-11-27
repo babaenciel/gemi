@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"        
-    android:background="@android:color/white">    
+    android:layout_height="wrap_content"            
+    android:background="@color/sunday_2">    
     
     <ImageView 
         android:clickable="false"
@@ -20,7 +20,7 @@
 		android:layout_height="wrap_content"
 		android:layout_toRightOf="@id/anggaran_fragment_by_date_list_rows_bullet"			
 		android:layout_marginTop="10dp"				
-		
+		android:textColor="@android:color/black" 
 		android:textSize="18dp"
 		android:maxWidth="200dip" />
         
@@ -28,32 +28,45 @@
 	    android:id="@+id/anggaran_fragment_by_date_list_rows_nominal_atas"        	    
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
-		android:layout_alignParentRight="true"		
-		android:layout_marginTop="10dp"        
-		android:layout_marginRight="10dp"
-			        
+		android:layout_toRightOf="@id/anggaran_fragment_by_date_list_rows_bullet"
+		android:layout_below="@id/anggaran_fragment_by_date_list_rows_judul"
+		android:layout_marginTop="10dp"        		
+		android:textColor="@color/text_green"	        
 		android:textSize="17dip"
 		android:textStyle="bold" />        	         	
 
+    <TextView
+	    android:id="@+id/anggaran_fragment_by_date_list_rows_dari_text"        	    
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_below="@id/anggaran_fragment_by_date_list_rows_judul"
+		android:layout_toRightOf="@id/anggaran_fragment_by_date_list_rows_nominal_atas"
+		android:layout_marginTop="10dp"        
+		android:layout_marginLeft="5dp"
+		android:textColor="@android:color/black"	        
+		android:textSize="15dip"
+		android:textStyle="bold"
+		android:text="dari" />        	
         	 	 	 
 	<TextView
 	    android:id="@+id/anggaran_fragment_by_date_list_rows_nominal_bawah"        	    
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
-		android:layout_below="@id/anggaran_fragment_by_date_list_rows_nominal_atas"		
-		android:layout_alignParentRight="true"		
-		android:layout_marginRight="10dp"
-		       
-		android:textSize="15dip" />    
+		android:layout_below="@id/anggaran_fragment_by_date_list_rows_judul"		
+		android:layout_toRightOf="@id/anggaran_fragment_by_date_list_rows_dari_text"
+		android:layout_marginTop="10dp"        		
+		android:layout_marginLeft="5dp"
+		android:textColor="@android:color/black"       
+		android:textSize="17dip" />    
      	
 	<ProgressBar 
         android:id="@+id/anggaran_fragment_by_date_list_rows_bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/anggaran_fragment_by_date_list_rows_judul"        
+        android:layout_below="@id/anggaran_fragment_by_date_list_rows_nominal_atas"        
         style="@android:style/Widget.ProgressBar.Horizontal"
-        android:layout_marginTop="30dp" 
-        android:paddingBottom="5dp"                                         
+        android:layout_marginTop="10dp" 
+        android:paddingBottom="10dp"                                         
         android:paddingLeft="10dp"
         android:paddingRight="10dp"/>	    
     

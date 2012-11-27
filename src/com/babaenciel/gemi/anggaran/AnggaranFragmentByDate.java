@@ -103,9 +103,8 @@ public class AnggaranFragmentByDate extends SherlockFragment {
 				    			.setCancelable(false)
 				    			.setPositiveButton("Yes",new DialogInterface.OnClickListener() {
 				    				public void onClick(DialogInterface dialog,int id) {
-				    					//db.deletePemasukan(idRow);
-								    	//childListener.onDeleteChild(idRow, 1);
-				    					Toast.makeText(getActivity(), ""+idRow, Toast.LENGTH_SHORT).show();
+				    					db.deleteAnggaran(idRow);
+								    	anggaranInterface.onDelete(idRow);				    					
 				    				}
 				    			})
 				    			.setNegativeButton("No",new DialogInterface.OnClickListener() {
@@ -117,7 +116,7 @@ public class AnggaranFragmentByDate extends SherlockFragment {
 				    		alertDialog.show();
 				    		
 				    	}else if(anggaranMenuItem[item].equals("Edit")) {
-				    		Toast.makeText(getActivity(), "Edit", Toast.LENGTH_SHORT).show();
+				    		anggaranInterface.onUpdate(idRow);				    		
 				    	}else {
 				    		anggaranInterface.onDetail(idRow);
 				    		Toast.makeText(getActivity(), "Detail", Toast.LENGTH_SHORT).show();

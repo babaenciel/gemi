@@ -39,9 +39,6 @@ public class AnggaranActivity extends SherlockFragmentActivity implements Anggar
 		db.insertAnggaranPengeluaran("makan malem banget", 50000, "2012-10-10", 1);*/
 		
 		pager = (ViewPager) findViewById(R.id.anggaran_activity_pager);
-		adapter = new AnggaranFragmentPagerAdapter(getSupportFragmentManager());
-		pager.setAdapter(adapter);
-		pager.setCurrentItem(adapter.getCount() / 2);
 	}
 	
 	@Override
@@ -50,7 +47,7 @@ public class AnggaranActivity extends SherlockFragmentActivity implements Anggar
         subMenu1.add("Set Anggaran Baru");             
 
         MenuItem subMenu1Item = subMenu1.getItem();
-        subMenu1Item.setIcon(R.drawable.ic_launcher);
+        subMenu1Item.setIcon(R.drawable.abs__ic_menu_moreoverflow_normal_holo_dark);
         subMenu1Item.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS | MenuItem.SHOW_AS_ACTION_WITH_TEXT);
         
 		return super.onCreateOptionsMenu(menu);
@@ -86,15 +83,17 @@ public class AnggaranActivity extends SherlockFragmentActivity implements Anggar
 	}
 
 	@Override
-	public void onDelete() {
-		// TODO Auto-generated method stub
-		
+	public void onDelete(int id_anggaran) {
+		adapter = new AnggaranFragmentPagerAdapter(getSupportFragmentManager());
+		pager.setAdapter(adapter);
+		pager.setCurrentItem(adapter.getCount() / 2);		
 	}
 
 	@Override
-	public void onUpdate() {
-		// TODO Auto-generated method stub
-		
+	public void onUpdate(int id_anggaran) {
+		Intent i = new Intent(this, AnggaranUpdateActivity.class);
+		i.putExtra("id_anggaran", id_anggaran);
+		startActivity(i);		
 	}
 
 	@Override

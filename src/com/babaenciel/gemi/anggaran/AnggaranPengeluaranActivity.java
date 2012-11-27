@@ -42,7 +42,6 @@ public class AnggaranPengeluaranActivity extends SherlockActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.anggaran_pengeluaran_activity);
 		
-		buttonPressed = 0;
 		id_anggaran = getIntent().getExtras().getInt("id_anggaran");
 		Log.d("id_anggaran", ""+id_anggaran);
 		
@@ -79,7 +78,9 @@ public class AnggaranPengeluaranActivity extends SherlockActivity {
 					
 					public void onClick(DialogInterface dialog, int which) {
 						if(anggaranPengeluaranMenuItem[which].equals("Edit")) {
-							Toast.makeText(context, "edit", Toast.LENGTH_SHORT).show();
+							Intent i = new Intent(context, AnggaranPengeluaranUpdateActivity.class);
+							i.putExtra("id_anggaran_pengeluaran", id_anggaran_pengeluaran);
+							startActivity(i);							
 						}else {
 							AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
 				    		alertDialogBuilder.setTitle("Konfirmasi Delete");
@@ -89,8 +90,7 @@ public class AnggaranPengeluaranActivity extends SherlockActivity {
 				    				public void onClick(DialogInterface dialog,int id) {
 				    					db.deleteAnggaranPengeluaran(id_anggaran_pengeluaran, id_anggaran);				    					
 				    					activity.finish();
-				    					activity.startActivity(getIntent());
-				    					buttonPressed = 1;
+				    					activity.startActivity(getIntent());				    					
 				    				}
 				    			})
 				    			.setNegativeButton("No",new DialogInterface.OnClickListener() {

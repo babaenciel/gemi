@@ -1,5 +1,7 @@
 package com.babaenciel.gemi.tagihan;
 
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 import java.util.ArrayList;
 
 import android.app.Activity;
@@ -53,10 +55,19 @@ public class TagihanFragment extends SherlockFragment {
 		
 		View view = inflater.inflate(R.layout.tagihan_fragment, null);
 		TextView text = (TextView) view.findViewById(R.id.tagihan_fragment_bulan);
-		text.setText(getArguments().getString("monthText"));
+		text.setText(getArguments().getString("monthText"));			
 				
 		db = new TagihanDatabase(getActivity());		
 		ArrayList<TagihanObject> values = db.getTagihanFromMonthYear(month, year);
+		
+		//nominal format		
+		DecimalFormatSymbols simbol = new DecimalFormatSymbols();		
+		simbol.setGroupingSeparator('.');
+		DecimalFormat customFormat = new DecimalFormat("###,###,###",simbol);
+		
+		int totalTagihan = db.getTagihanTotalFromMonthYear(month, year);
+		TextView totalView = (TextView) view.findViewById(R.id.tagihan_fragment_total);
+		totalView.setText(customFormat.format(totalTagihan));
 						
 		ListView list = (ListView) view.findViewById(R.id.tagihan_fragment_list);
 		final TagihanFragmentListAdapter adapter = new TagihanFragmentListAdapter(getActivity(), values);
@@ -98,6 +109,8 @@ public class TagihanFragment extends SherlockFragment {
 					    	}else if(tagihanItem2[item].equals("Batal Lunas")) {
 					    		db.lunas(id_tagihan, 0);	//0 = belum lunas
 						    	tagihanInterface.onLunas();
+						    }else {
+						    	tagihanInterface.onUpdate(tagihanObject.id_tagihan);
 						    }					        
 					    }
 					});
@@ -128,6 +141,8 @@ public class TagihanFragment extends SherlockFragment {
 					    	}else if(tagihanItem1[item].equals("Lunasi")) {
 						    	db.lunas(id_tagihan, 1);	//1 = lunas
 						    	tagihanInterface.onLunas();
+						    }else {
+						    	tagihanInterface.onUpdate(tagihanObject.id_tagihan);
 						    }				        
 					    }
 					});
