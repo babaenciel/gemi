@@ -3,41 +3,39 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@android:color/white">
+    android:background="@color/sunday_2">
     
-     <!-- nggak tau kenapa bisa seperti ini. trial n error -->
-    <RelativeLayout 
-        android:id="@+id/hutang_cicilan_layout"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"        
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="10dp">
-	        <TextView 
-		        android:id="@+id/hutang_cicilan_total_text"
-		        android:layout_width="wrap_content"
-		        android:layout_height="wrap_content"			          
-		        android:layout_marginLeft="10dip"    
-		        android:layout_centerVertical="true"		        
-		        android:textSize="18dip"
-		        android:textColor="@color/black_soft"       
-		        android:text="Total Pengeluaran"/>
+	<View 
+        android:id="@+id/hutang_cicilan_block"
+        android:layout_width="130dp"
+        android:layout_height="50dp"        
+        android:background="@color/sunday_5"/>
     
-		    <TextView
-		        android:id="@+id/hutang_cicilan_nominal"
-		        android:layout_width="wrap_content"
-		        android:layout_height="wrap_content"		        		
-		        android:layout_marginRight="10dip"	 
-		        android:layout_alignParentRight="true"        		       
-		        android:textSize="18dip"
-		        android:textColor="@color/blue_modern"/>
-		    		     
-    </RelativeLayout>
+    <TextView 
+		android:id="@+id/hutang_cicilan_total_text"
+		android:layout_width="wrap_content"
+		android:maxWidth="180dp"
+		android:layout_height="wrap_content"				   
+		android:layout_marginLeft="15dp"		    		       
+		android:textSize="18sp"
+		android:textColor="@android:color/white"       
+		android:text="Total\nCicilan"/>
+    
+    <TextView
+		android:id="@+id/hutang_cicilan_nominal"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_toRightOf="@id/hutang_cicilan_block"			
+		android:layout_marginTop="10dp"
+		android:layout_marginLeft="15dp"	         		       
+		android:textSize="18sp"
+		android:textColor="@android:color/black"/>
     
     <ListView 
         android:id="@+id/hutang_cicilan_list"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/hutang_cicilan_layout"
-        android:divider="@color/black_soft"/>
+        android:layout_below="@id/hutang_cicilan_block"
+        android:divider="@color/black_soft"/>   
 
 </RelativeLayout>

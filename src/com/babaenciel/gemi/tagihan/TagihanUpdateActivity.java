@@ -111,7 +111,7 @@ public class TagihanUpdateActivity extends Activity {
 					String nama = namaView.getText().toString();
 					String jumlah = nominalView.getText().toString();
 									
-					String tanggalString = date.konversiTanggal1(tanggalView.getText().toString());
+					String tanggalString = date.konversiTanggal1(tanggalView.getText().toString());					
 									
 					//db.insertTagihan(nama, Integer.parseInt(jumlah), tanggalString, 0);
 					db.updateTagihan(id_tagihan, nama, Integer.parseInt(jumlah), tanggalString);

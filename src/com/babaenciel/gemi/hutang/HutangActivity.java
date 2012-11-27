@@ -17,11 +17,13 @@ import com.actionbarsherlock.view.SubMenu;
 
 public class HutangActivity extends SherlockFragmentActivity implements HutangInterface {
 	private static final int THEME = R.style.Theme_Sherlock;
+	HutangFragmentPagerAdapter adapter;
+	ViewPager pager;
 	
     @Override
     protected void onCreate(Bundle savedInstanceState) {
     	setTheme(THEME);
-		setTitle("TAGIHAN");
+		setTitle("HUTANG");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.hutang_activity);
         
@@ -38,8 +40,8 @@ public class HutangActivity extends SherlockFragmentActivity implements HutangIn
 		db.insertHutangCicilan("cicilan 3 nich", 300000, "2012-10-10", 1);
         db.dbClose();*/
         
-        ViewPager pager = (ViewPager) findViewById(R.id.hutang_activity_pager);
-        HutangFragmentPagerAdapter adapter = new HutangFragmentPagerAdapter(getSupportFragmentManager());
+        pager = (ViewPager) findViewById(R.id.hutang_activity_pager);
+        adapter = new HutangFragmentPagerAdapter(getSupportFragmentManager());
         pager.setAdapter(adapter);
         pager.setCurrentItem(adapter.getCount() / 2);
         
@@ -70,7 +72,23 @@ public class HutangActivity extends SherlockFragmentActivity implements HutangIn
 	public void onCicilan(int id_hutang) {
 		Intent i = new Intent(this, HutangCicilanActivity.class);
 		i.putExtra("id_hutang", id_hutang);
+		startActivity(i);		
+	}
+
+	@Override
+	public void onDelete() {
+        adapter = new HutangFragmentPagerAdapter(getSupportFragmentManager());
+        pager.setAdapter(adapter);
+        pager.setCurrentItem(adapter.getCount() / 2);
+		
+	}
+
+	@Override
+	public void onUpdate(int id_hutang) {
+		Intent i = new Intent(this, HutangUpdateActivity.class);
+		i.putExtra("id_hutang", id_hutang);
 		startActivity(i);
 		
 	}
+
 }

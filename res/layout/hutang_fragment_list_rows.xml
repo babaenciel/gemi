@@ -2,7 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"        
-    android:background="@android:color/white">    
+    android:background="@color/sunday_2">    
     
     <ImageView 
         android:clickable="false"
@@ -20,42 +20,67 @@
 		android:layout_height="wrap_content"
 		android:layout_toRightOf="@id/hutang_fragment_list_rows_bullet"			
 		android:layout_marginTop="10dp"				
-		
+		android:textColor="@android:color/black" 
 		android:textSize="18dp"
 		android:maxWidth="200dip" />
+    
         
     <TextView
 	    android:id="@+id/hutang_fragment_list_rows_nominal_atas"        	    
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
-		android:layout_alignParentRight="true"		
-		android:layout_marginTop="10dp"        
-		android:layout_marginRight="10dp"
-			        
-		android:textSize="17dip"
-		android:textStyle="bold" />        	         	
+		android:layout_toRightOf="@id/hutang_fragment_list_rows_bullet"
+		android:layout_below="@id/hutang_fragment_list_rows_judul"
+		android:layout_marginTop="10dp"        		
+		android:textColor="@color/text_green"	        
+		android:textSize="17sp"
+		android:textStyle="bold" />                	
 
         	 	 	 
+    <TextView
+	    android:id="@+id/hutang_fragment_list_rows_dari_text"        	    
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_below="@id/hutang_fragment_list_rows_judul"
+		android:layout_toRightOf="@id/hutang_fragment_list_rows_nominal_atas"
+		android:layout_marginTop="10dp"        
+		android:layout_marginLeft="5dp"
+		android:textColor="@android:color/black"	        
+		android:textSize="15sp"
+		android:textStyle="bold"
+		android:text="dari" />      
+		
+		
 	<TextView
 	    android:id="@+id/hutang_fragment_list_rows_nominal_bawah"        	    
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
-		android:layout_below="@id/hutang_fragment_list_rows_nominal_atas"		
-		android:layout_alignParentRight="true"		
-		android:layout_marginRight="10dp"
-		       
-		android:textSize="15dip" />    
+		android:layout_below="@id/hutang_fragment_list_rows_judul"		
+		android:layout_toRightOf="@id/hutang_fragment_list_rows_dari_text"
+		android:layout_marginTop="10dp"        		
+		android:layout_marginLeft="5dp"
+		android:textColor="@android:color/black"       
+		android:textSize="17dip" />
+	
+	<TextView 
+        android:id="@+id/hutang_fragment_list_rows_tanggal_deadline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"        
+        android:layout_below="@id/hutang_fragment_list_rows_nominal_atas"
+        android:layout_toRightOf="@id/hutang_fragment_list_rows_bullet"	        
+        android:textSize="15sp"
+        android:textColor="@color/text_red"/>
      	
 	<ProgressBar 
         android:id="@+id/hutang_fragment_list_rows_bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/hutang_fragment_list_rows_judul"        
+        android:layout_below="@id/hutang_fragment_list_rows_tanggal_deadline"        
         style="@android:style/Widget.ProgressBar.Horizontal"
-        android:layout_marginTop="30dp" 
-        android:paddingBottom="5dp"                                         
+        android:layout_marginTop="10dp" 
+        android:paddingBottom="10dp"                                         
         android:paddingLeft="10dp"
-        android:paddingRight="10dp"/>	    
+        android:paddingRight="10dp"/>	      
     
 
 </RelativeLayout>

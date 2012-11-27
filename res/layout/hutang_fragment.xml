@@ -2,63 +2,67 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="@color/sunday_2">
     
     <TextView 
-        android:id="@+id/hutang_bulan"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="5dp"
-        android:textSize="18dip"
-        android:textColor="@color/blue_modern"
-        android:typeface="monospace"/>
-    
-     <!-- nggak tau kenapa bisa seperti ini. trial n error -->
-    <RelativeLayout 
-        android:id="@+id/hutang_layout"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"        
-        android:layout_marginTop="5dp"
-        android:layout_marginBottom="10dp"
-        android:layout_below="@id/hutang_bulan">
-	        <TextView 
-		        android:id="@+id/hutang_total_text"
-		        android:layout_width="wrap_content"
-		        android:layout_height="wrap_content"			          
-		        android:layout_marginLeft="10dip"    
-		        android:layout_centerVertical="true"		        
-		        android:textSize="18dip"
-		        android:textColor="@color/black_soft"       
-		        android:text="Total Pengeluaran"/>
-    
-		    <TextView
-		        android:id="@+id/hutang_total_nominal_atas"
-		        android:layout_width="wrap_content"
-		        android:layout_height="wrap_content"		        		
-		        android:layout_marginRight="10dip"	 
-		        android:layout_alignParentRight="true"        		       
-		        android:textSize="18dip"
-		        android:textColor="@color/blue_modern"
-		        android:text="nominal atas"/>
-		    
-		     <TextView
-		        android:id="@+id/hutang_total_nominal_bawah"
-		        android:layout_width="wrap_content"
-		        android:layout_height="wrap_content"		        		
-		        android:layout_marginRight="10dip"	 
-		        android:layout_alignParentRight="true"  
-		        android:layout_below="@id/hutang_total_nominal_atas"      		       
-		        android:textSize="18dip"
-		        android:textColor="@color/blue_modern"
-		        android:text="nominal bawah"/>
-    </RelativeLayout>
-    
-    <ListView 
-        android:id="@+id/hutang_list"
+        android:id="@+id/hutang_fragment_bulan"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/hutang_layout"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:gravity="center_horizontal"
+        android:background="@color/sunday_3"
+        android:textColor="@android:color/white"
+        android:textSize="18sp" />
+    
+   	<View 
+        android:id="@+id/hutang_fragment_total_block"
+        android:layout_width="130dp"
+        android:layout_height="60dp"
+        android:layout_below="@id/hutang_fragment_bulan"
+        android:background="@color/sunday_5"/>
+    
+    <TextView 
+		android:id="@+id/hutang_fragment_total_text"
+		android:layout_width="wrap_content"
+		android:maxWidth="180dp"
+		android:layout_height="wrap_content"				   
+		android:layout_marginLeft="15dp"
+		android:layout_below="@id/hutang_fragment_bulan" 
+		android:layout_marginTop="5dp"   		        
+		android:textSize="18sp"
+		android:textColor="@android:color/white"       
+		android:text="Total\nHutang"/>    
+    
+    <TextView
+		android:id="@+id/hutang_fragment_total_nominal_atas"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_toRightOf="@id/hutang_fragment_total_block"
+		android:layout_below="@id/hutang_fragment_bulan"		
+		android:layout_marginTop="5dp"
+		android:layout_marginLeft="15dp"	         		       
+		android:textSize="18sp"
+		android:textStyle="bold"
+		android:textColor="@color/text_green"/>
+		    
+   <TextView
+		android:id="@+id/hutang_fragment_total_nominal_bawah"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_toRightOf="@id/hutang_fragment_total_block"
+		android:layout_below="@id/hutang_fragment_total_nominal_atas"		
+		android:layout_marginTop="5dp"
+		android:layout_marginLeft="15dp"	         		       
+		android:textSize="18sp"
+		android:textColor="@android:color/black"/>
+    
+    <ListView 
+        android:id="@+id/hutang_fragment_list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/hutang_fragment_total_block"
         android:divider="@color/black_soft"/>
 
 </RelativeLayout>

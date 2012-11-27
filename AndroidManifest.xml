@@ -42,6 +42,7 @@
         <activity android:name="com.babaenciel.gemi.tagihan.TagihanInsertActivity"></activity>
         <activity android:name="com.babaenciel.gemi.tagihan.TagihanUpdateActivity"></activity>
         <activity android:name="com.babaenciel.gemi.hutang.HutangActivity"></activity>
+        <activity android:name="com.babaenciel.gemi.hutang.HutangUpdateActivity"></activity>
         <activity android:name="com.babaenciel.gemi.hutang.HutangInsertFormActivity"></activity>
         <activity android:name="com.babaenciel.gemi.hutang.HutangCicilanActivity"></activity>
         <activity android:name="com.babaenciel.gemi.tabungan.TabunganActivity"></activity>

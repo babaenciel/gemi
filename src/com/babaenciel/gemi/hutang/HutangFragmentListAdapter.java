@@ -50,6 +50,7 @@ public class HutangFragmentListAdapter extends BaseAdapter {
 			holder = new HutangHolder();
 			convertView = inflater.inflate(R.layout.hutang_fragment_list_rows, null);
 			holder.nama = (TextView) convertView.findViewById(R.id.hutang_fragment_list_rows_judul);
+			holder.tanggal_deadline = (TextView) convertView.findViewById(R.id.hutang_fragment_list_rows_tanggal_deadline);
 			holder.nominalAtas = (TextView) convertView.findViewById(R.id.hutang_fragment_list_rows_nominal_atas);
 			holder.nominalBawah = (TextView) convertView.findViewById(R.id.hutang_fragment_list_rows_nominal_bawah);
 			holder.bar = (ProgressBar) convertView.findViewById(R.id.hutang_fragment_list_rows_bar);
@@ -62,6 +63,9 @@ public class HutangFragmentListAdapter extends BaseAdapter {
 		
 		//set nama
 		holder.nama.setText(hutangObject.nama);
+		
+		//set tanggal
+		holder.tanggal_deadline.setText(hutangObject.tanggal_deadline);		
 		
 		////nominal format		
 		DecimalFormatSymbols simbol = new DecimalFormatSymbols();		

@@ -6,53 +6,68 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
+import com.actionbarsherlock.R;
+import com.babaenciel.gemi.lib.DateSlider;
+import com.babaenciel.gemi.lib.DefaultDateSlider;
+import com.babaenciel.gemi.pemasukan.PemasukanActivity;
+import com.babaenciel.gemi.pemasukan.PemasukanDatabase;
+import com.babaenciel.gemi.pemasukan.PemasukanObject;
+import com.babaenciel.gemi.utils.MyDate;
+
+import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.View.OnFocusChangeListener;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.SimpleCursorAdapter;
+import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.AdapterView.OnItemClickListener;
 
-import com.actionbarsherlock.app.SherlockActivity;
-import com.babaenciel.gemi.R;
-import com.babaenciel.gemi.lib.DateSlider;
-import com.babaenciel.gemi.lib.DefaultDateSlider;
-import com.babaenciel.gemi.pemasukan.PemasukanObject;
-import com.babaenciel.gemi.utils.MyDate;
-
-public class HutangInsertFormActivity extends SherlockActivity {
+public class HutangUpdateActivity extends Activity {
 	private static final int THEME = R.style.Theme_Sherlock;
-	private static final int DEFAULTDATESELECTOR_ID = 0;
-	AutoCompleteTextView nama;
-	EditText jumlah_hutang;
-	EditText tanggal_deadline;	
-	Context context = this;
-	HutangInsertFormActivity activity = this;
+	protected static final int DEFAULTDATESELECTOR_ID = 0;
 	private MyDate myDate;
 	private HutangDatabase db;
+	private AutoCompleteTextView nama;
+	private EditText jumlah_hutang;
+	private EditText tanggal_deadline;
+	int id_hutang;
+	protected Context context = this;
+	protected Activity activity = this;
 	
 	@Override
-	protected void onCreate(Bundle savedInstanceState) {	
+	protected void onCreate(Bundle savedInstanceState) {		
 		setTheme(THEME);
 		setTitle("HUTANG");
 		
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.hutang_insert_activity);
 		
+		id_hutang = getIntent().getExtras().getInt("id_hutang");
 		myDate = new MyDate();
 		db = new HutangDatabase(this);
+		final HutangObject object = db.getHutangSingle(id_hutang);
 		
 		nama = (AutoCompleteTextView) findViewById(R.id.hutang_insert_edittext_nama);		
 		jumlah_hutang = (EditText) findViewById(R.id.hutang_insert_edittext_nominal);
 		tanggal_deadline = (EditText) findViewById(R.id.hutang_insert_edittext_tanggal);
+		
+		nama.setText(object.nama);
+		
+		jumlah_hutang.setText(Integer.toString(object.jumlah_hutang));
 			
 /*		//set nama with autocomplete		
 		ArrayList<String> valuesNama = db.getHutangNamaAll();
@@ -85,8 +100,8 @@ public class HutangInsertFormActivity extends SherlockActivity {
 		});	*/	
 		
 		//set tanggal
-		myDate.setNow();
-		tanggal_deadline.setText(myDate.dateFull1);
+		//myDate.setNow();
+		tanggal_deadline.setText(myDate.konversiTanggal2(object.tanggal_deadline));
 		tanggal_deadline.setOnClickListener(new OnClickListener() {
 			
 			@Override
@@ -100,15 +115,13 @@ public class HutangInsertFormActivity extends SherlockActivity {
 		submit.setOnClickListener(new OnClickListener() {
 			
 			@Override
-			public void onClick(View v) {
-				HutangDatabase db = new HutangDatabase(context);
+			public void onClick(View v) {								
+				String namaString = nama.getText().toString();							
+				int jumlah_hutangInt = Integer.parseInt(jumlah_hutang.getText().toString());								
+				String tanggal_deadlineString = myDate.konversiTanggal1(tanggal_deadline.getText().toString());
 				
-				String namaString = nama.getText().toString();
-								
-				int jumlah_hutangInt = Integer.parseInt(jumlah_hutang.getText().toString());
-								
-				String tanggal_deadlineString = myDate.konversiTanggal1(tanggal_deadline.getText().toString());				
-				db.insertHutang(namaString, 0, jumlah_hutangInt, tanggal_deadlineString);
+				//db.insertHutang(namaString, object.jumlah_cicilan, jumlah_hutangInt, tanggal_deadlineString);
+				db.updateHutang(id_hutang, namaString, object.jumlah_cicilan, jumlah_hutangInt, tanggal_deadlineString);
 				
 				Intent i = new Intent(context, HutangActivity.class);
 				i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);

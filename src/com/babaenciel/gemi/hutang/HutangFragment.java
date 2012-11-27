@@ -1,5 +1,7 @@
 package com.babaenciel.gemi.hutang;
 
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 import java.util.ArrayList;
 
 import android.app.Activity;
@@ -47,25 +49,30 @@ public class HutangFragment extends SherlockFragment {
 		View view = inflater.inflate(R.layout.hutang_fragment, null);
 		
 		//db
-		HutangDatabase db = new HutangDatabase(getActivity());
+		final HutangDatabase db = new HutangDatabase(getActivity());
 		
 		//set bulan text
-		TextView bulanView = (TextView) view.findViewById(R.id.hutang_bulan);
+		TextView bulanView = (TextView) view.findViewById(R.id.hutang_fragment_bulan);
 		bulanView.setText(getArguments().getString("monthText"));
+		
+		//initialize format
+		DecimalFormatSymbols simbol = new DecimalFormatSymbols(); //diformat dulu hasilnya biar ada titiknya		
+		simbol.setGroupingSeparator('.');
+		DecimalFormat customFormat = new DecimalFormat("###,###,###",simbol);
 		
 		//set total cicilan
 		int jumlah_cicilan = db.getJumlahCicilan(month, year);
-		TextView nominal_atas = (TextView) view.findViewById(R.id.hutang_total_nominal_atas);
-		nominal_atas.setText(Integer.toString(jumlah_cicilan));
+		TextView nominal_atas = (TextView) view.findViewById(R.id.hutang_fragment_total_nominal_atas);
+		nominal_atas.setText(customFormat.format(jumlah_cicilan));
 		
 		//set total hutang
 		int jumlah_hutang = db.getJumlahHutang(month, year);
-		TextView nominal_bawah = (TextView) view.findViewById(R.id.hutang_total_nominal_bawah);
-		nominal_bawah.setText(Integer.toString(jumlah_hutang));
+		TextView nominal_bawah = (TextView) view.findViewById(R.id.hutang_fragment_total_nominal_bawah);
+		nominal_bawah.setText(customFormat.format(jumlah_hutang));
 		
 		ArrayList<HutangObject> values = db.getHutangFromMonthYear(month, year);
 		
-		ListView list = (ListView) view.findViewById(R.id.hutang_list);
+		ListView list = (ListView) view.findViewById(R.id.hutang_fragment_list);
 		final HutangFragmentListAdapter adapter = new HutangFragmentListAdapter(getActivity(), values);
 		list.setAdapter(adapter);
 		
@@ -89,9 +96,8 @@ public class HutangFragment extends SherlockFragment {
 				    			.setCancelable(false)
 				    			.setPositiveButton("Yes",new DialogInterface.OnClickListener() {
 				    				public void onClick(DialogInterface dialog,int id) {
-				    					//db.deletePemasukan(idRow);
-								    	//childListener.onDeleteChild(idRow, 1);
-				    					Toast.makeText(getActivity(), ""+id_hutang, Toast.LENGTH_SHORT).show();
+				    					db.deleteHutang(hutangObject.id_hutang);
+								    	hutangInterface.onDelete();				    					
 				    				}
 				    			})
 				    			.setNegativeButton("No",new DialogInterface.OnClickListener() {
@@ -103,10 +109,9 @@ public class HutangFragment extends SherlockFragment {
 				    		alertDialog.show();
 				    		
 				    	}else if(hutangMenuItem[item].equals("Edit")) {
-				    		Toast.makeText(getActivity(), "Edit", Toast.LENGTH_SHORT).show();
+				    		hutangInterface.onUpdate(hutangObject.id_hutang);
 				    	}else {
-				    		hutangInterface.onCicilan(id_hutang);
-				    		Toast.makeText(getActivity(), "Cicilan", Toast.LENGTH_SHORT).show();
+				    		hutangInterface.onCicilan(id_hutang);				    	
 				    	}				        
 				    }
 				});

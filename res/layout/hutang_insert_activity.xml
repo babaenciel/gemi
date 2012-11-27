@@ -3,9 +3,9 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:orientation="vertical"
-    android:background="@android:color/white"  >
+    android:background="@color/sunday_2"  >
 
-    <EditText 
+    <AutoCompleteTextView 
         android:id="@+id/hutang_insert_edittext_nama"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"        
