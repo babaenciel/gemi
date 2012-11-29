@@ -63,6 +63,8 @@
         <activity android:name="com.babaenciel.gemi.hutang.HutangCicilanUpdateActivity" ></activity>
         <activity android:name="com.babaenciel.gemi.hutang.HutangCicilanInsertFormActivity"></activity>
         <activity android:name="com.babaenciel.gemi.tabungan.TabunganActivity" ></activity>
+        <activity android:name="com.babaenciel.gemi.tabungan.TabunganInsertActivity" ></activity>
+        <activity android:name="com.babaenciel.gemi.tabungan.TabunganUpdateActivity" ></activity>
 
         <receiver
             android:name="com.babaenciel.gemi.tagihan.TagihanBroadcastReceiver"

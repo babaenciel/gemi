@@ -13,6 +13,7 @@ import com.babaenciel.gemi.hutang.HutangActivity;
 import com.babaenciel.gemi.kategori.KategoriDatabase;
 import com.babaenciel.gemi.pemasukan.PemasukanActivity;
 import com.babaenciel.gemi.tabungan.TabunganActivity;
+import com.babaenciel.gemi.tabungan.TabunganDatabase;
 import com.babaenciel.gemi.tagihan.TagihanActivity;
 
 public class GemiDashboard extends SherlockActivity implements OnClickListener {
@@ -35,6 +36,12 @@ public class GemiDashboard extends SherlockActivity implements OnClickListener {
 		db.insertKategori("Gaji");
 		db.insertKategori("Hadiah");
 		db.insertKategori("Penjualan");*/
+		
+		/*TabunganDatabase db = new TabunganDatabase(this);
+		db.insertTabungan("babaenciel", 150000, "2012-11-29");
+		db.insertTabungan("babaenciel2", 200000, "2012-11-29");
+		db.insertTabungan("babaenciel3", 100000, "2012-11-29");
+		db.dbClose();*/
 		
 		pemasukan = (View) findViewById(R.id.dashboard_pemasukan_block);
         pemasukan.setOnClickListener(this);

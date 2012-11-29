@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"    
+    android:background="@color/sunday_2" 
+    android:orientation="vertical"
+    android:padding="0dip">
+        
+    <AutoCompleteTextView 
+        android:id="@+id/tabungan_insert_activity_edittext_nama"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"        
+        android:layout_marginTop="20dip"
+        android:background="@drawable/edittext_custom"
+        android:hint="masukkan nama tabungan"
+        android:singleLine="true"
+        android:textSize="18dip"        
+        android:inputType="text"/>    
+    
+    
+     <EditText 
+        android:id="@+id/tabungan_insert_activity_edittext_nominal"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"        
+        android:layout_marginTop="20dip"
+        android:background="@drawable/edittext_custom"
+        android:hint="masukkan jumlah"
+        android:singleLine="true"
+        android:textSize="18dip"
+        android:maxLength="9"
+        android:inputType="number"/>
+     
+      
+      <EditText 
+	        android:id="@+id/tabungan_insert_activity_edittext_tanggal"
+	        android:layout_width="200dip"
+	        android:layout_height="wrap_content"        
+	        android:layout_marginTop="20dip"	        
+	        android:background="@drawable/edittext_custom"
+	        android:focusable="false"
+	        android:hint="masukkan tanggal"
+	        android:singleLine="true"	        
+	        android:textSize="18dip" />
+    
+      <Button 
+          android:id="@+id/tabungan_insert_activity_submit_button"
+          android:layout_width="80dip"
+          android:layout_height="wrap_content"          
+          android:layout_marginTop="20dip"
+          android:text="submit"/>
+
+</LinearLayout>

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="@color/sunday_2">    
+    
+    <ImageView 
+        android:clickable="false"
+        android:focusable="false"
+        android:id="@+id/bullet"        
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingRight="10dip"
+        android:layout_centerVertical="true"             
+        android:src="@drawable/bullet"/>    
+    
+    <TextView
+		android:id="@+id/tabungan_fragment_list_rows_judul"		
+		android:layout_width="wrap_content"
+		android:maxWidth="200dp"		
+		android:layout_height="wrap_content"
+		android:layout_toRightOf="@id/bullet"
+		android:layout_alignParentTop="true"
+		android:paddingTop="10dp"		
+		android:textColor="@android:color/black"   
+		android:textSize="18sp"/>
+    
+    <TextView        
+        android:id="@+id/tabungan_fragment_list_rows_tanggal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/bullet"
+        android:paddingBottom="10dp"
+        android:layout_below="@id/tabungan_fragment_list_rows_judul"
+        android:textSize="16sp"
+        android:textColor="@color/text_red"   />
+    
+    <TextView
+    	android:id="@+id/tabungan_fragment_list_rows_nominal"    	
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_below="@id/tabungan_fragment_list_rows_judul"
+		android:layout_toRightOf="@id/tabungan_fragment_list_rows_tanggal"		
+		android:layout_marginLeft="15dp"				
+		android:paddingBottom="10dp"       
+		android:textColor="@color/text_green"	        
+		android:textSize="16sp" />
+
+</RelativeLayout>

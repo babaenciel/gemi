@@ -19,8 +19,7 @@ public class TabunganFragmentPagerAdapter extends FragmentStatePagerAdapter {
 	public TabunganFragmentPagerAdapter(FragmentManager fm) {
 		super(fm);
 		this.context = context;		
-		this.counter = 0;
-		this.viewToggle = viewToggle;
+		this.counter = 0;		
 		myDate = new MyDate();
 		myDate.setNow();	
 	}
@@ -32,13 +31,7 @@ public class TabunganFragmentPagerAdapter extends FragmentStatePagerAdapter {
 		counter = arg0 - (10000/2);
 		myDate.geserBulan(counter);
 		
-		if(viewToggle == 1) {
-			f = PemasukanFragment.newInstance(myDate);
-			//Log.d("toggle", "1");
-		}else {
-			f = PemasukanFragment2.newInstance(myDate);
-			//Log.d("toggle", "2");
-		}
+		f = TabunganFragment.newInstance(myDate);
 		
 		//Log.d("fragment created", "created at position : " + arg0);
         return f;

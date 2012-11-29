@@ -9,7 +9,7 @@ public class DBAdapter extends SQLiteOpenHelper {
 	private static String dbName = "FinancialPlanning.sqlite";
 
 	public DBAdapter(Context context) {
-		super(context, dbName, null, 2);		
+		super(context, dbName, null, 1);		
 	}
 
 	@Override
@@ -68,6 +68,14 @@ public class DBAdapter extends SQLiteOpenHelper {
 			"id_hutang int)";
 		db.execSQL(tabelHutangCicilan);
 		
+		String tabelTabungan = 
+			"create table Tabungan (" +
+			"id_tabungan integer primary key autoincrement," +
+			"nama text," +
+			"nominal integer," +
+			"tanggal text)";
+		db.execSQL(tabelTabungan);
+		
 		String kategori = 
 				"create table Kategori (" +
 				"id_kategori integer primary key autoincrement, " +
@@ -85,11 +93,13 @@ public class DBAdapter extends SQLiteOpenHelper {
 
 	@Override
 	public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-/*		db.execSQL("drop table if exists Kategori");
+		//db.execSQL("drop table if exists Kategori");
 		db.execSQL("drop table if exists Pemasukan");
 		db.execSQL("drop table if exists Anggaran");
 		db.execSQL("drop table if exists Anggaran_Pengeluaran");
 		db.execSQL("drop table if exists Tagihan");
+		db.execSQL("drop table if exists Hutang");
+		db.execSQL("drop table if exists Hutang_Cicilan");
 		db.execSQL("drop trigger if exists update_id_pemasukan");
 		
 		String tabelPemasukan = 
@@ -146,18 +156,26 @@ public class DBAdapter extends SQLiteOpenHelper {
 				"id_hutang int)";
 			db.execSQL(tabelHutangCicilan);
 			
-			String kategori = 
+			String tabelTabungan = 
+				"create table Tabungan (" +
+				"id_tabungan integer primary key autoincrement," +
+				"nama text," +
+				"nominal integer," +
+				"tanggal text)";
+			db.execSQL(tabelTabungan);
+			
+			/*String kategori = 
 					"create table Kategori (" +
 					"id_kategori integer primary key autoincrement, " +
 					"nama text)";
-			db.execSQL(kategori);
+			db.execSQL(kategori);*/
 			
 			String trigger_delete_pengeluaran_anggaran = 
 				"create trigger delete_pengeluaran_anggaran after delete on Anggaran for each row " +
 				"begin " +
 				"delete from Anggaran_Pengeluaran where id_anggaran = old.id_anggaran;" +
 				"end;";
-			db.execSQL(trigger_delete_pengeluaran_anggaran);*/
+			db.execSQL(trigger_delete_pengeluaran_anggaran);
 	}
 	
 	
