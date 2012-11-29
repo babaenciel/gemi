@@ -48,8 +48,8 @@ public class AnggaranPengeluaranDatabase {
 	
 	public ArrayList<AnggaranPengeluaranObject> getAnggaranPengeluaranById(int id_anggaran) {
 		SQLiteDatabase db = dbAdapter.getReadableDatabase();
-		String query = "select * from Anggaran_Pengeluaran where id_anggaran = " + id_anggaran + " and " +
-				"order by strftime('%d', tanggal) desc";
+		String query = "select * from Anggaran_Pengeluaran where id_anggaran = " + id_anggaran + 
+				" order by strftime('%d', tanggal) desc";
 		Cursor cursor = db.rawQuery(query, null);
 		
 		ArrayList<AnggaranPengeluaranObject> values = new ArrayList<AnggaranPengeluaranObject>();

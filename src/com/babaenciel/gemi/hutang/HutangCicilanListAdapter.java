@@ -66,7 +66,14 @@ public class HutangCicilanListAdapter extends BaseAdapter {
 		DecimalFormatSymbols simbol = new DecimalFormatSymbols();		
 		simbol.setGroupingSeparator('.');
 		DecimalFormat customFormat = new DecimalFormat("###,###,###",simbol);
-		holder.nominal.setText(customFormat.format(hutangCicilanObject.nominal));					
+		holder.nominal.setText(customFormat.format(hutangCicilanObject.nominal));		
+		
+		//membuat warna zebra di rows
+		if (position % 2 == 0){
+			convertView.setBackgroundResource(R.drawable.listview_rows_color_1);
+		} else {
+			convertView.setBackgroundResource(R.drawable.listview_rows_color_2);
+		}			
 				
 		return convertView;
 	}

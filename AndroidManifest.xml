@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.babaenciel.gemi"
     android:versionCode="1"
-    android:versionName="1.0">
+    android:versionName="1.0" >
 
     <uses-sdk
         android:minSdkVersion="8"
@@ -20,47 +20,68 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        
-        <activity android:name="com.babaenciel.gemi.GemiCustomDialogWidgetActivity" 
-		    android:launchMode="singleInstance"
-		    android:theme="@android:style/Theme.Dialog"
-		    android:excludeFromRecents="true">
-		</activity>                
-        
-        <activity android:name="com.babaenciel.gemi.GemiDashboard"></activity>
-        <activity android:name="com.babaenciel.gemi.pemasukan.PemasukanActivity"></activity>
-        <activity android:name="com.babaenciel.gemi.pemasukan.PemasukanInsertActivity"></activity>
-        <activity android:name="com.babaenciel.gemi.pemasukan.PemasukanUpdateActivity"></activity>
-        <activity android:name="com.babaenciel.gemi.anggaran.AnggaranActivity"></activity>
-        <activity android:name="com.babaenciel.gemi.anggaran.AnggaranPengeluaranActivity"></activity>
-        <activity android:name="com.babaenciel.gemi.anggaran.AnggaranInsertFormActivity"></activity>
-        <activity android:name="com.babaenciel.gemi.anggaran.AnggaranUpdateActivity"></activity>
-        <activity android:name="com.babaenciel.gemi.anggaran.AnggaranPengeluaranInsertFormActivity"></activity>
-        <activity android:name="com.babaenciel.gemi.anggaran.AnggaranPengeluaranInsertFormFromWidgetActivity"></activity>
-        <activity android:name="com.babaenciel.gemi.anggaran.AnggaranPengeluaranUpdateActivity"></activity>
-        <activity android:name="com.babaenciel.gemi.tagihan.TagihanActivity"></activity>
-        <activity android:name="com.babaenciel.gemi.tagihan.TagihanInsertActivity"></activity>
-        <activity android:name="com.babaenciel.gemi.tagihan.TagihanUpdateActivity"></activity>
-        <activity android:name="com.babaenciel.gemi.hutang.HutangActivity"></activity>
-        <activity android:name="com.babaenciel.gemi.hutang.HutangUpdateActivity"></activity>
-        <activity android:name="com.babaenciel.gemi.hutang.HutangInsertFormActivity"></activity>
-        <activity android:name="com.babaenciel.gemi.hutang.HutangCicilanActivity"></activity>
-        <activity android:name="com.babaenciel.gemi.tabungan.TabunganActivity"></activity>
-        
-        <receiver android:process=":remote" android:name="com.babaenciel.gemi.tagihan.TagihanBroadcastReceiver"></receiver>
+        <activity
+            android:name="com.babaenciel.gemi.GemiCustomDialogWidgetActivity"
+            android:excludeFromRecents="true"
+            android:launchMode="singleInstance"
+            android:theme="@android:style/Theme.Dialog" >
+        </activity>
+        <activity android:name="com.babaenciel.gemi.GemiDashboard" >
+        </activity>
+        <activity android:name="com.babaenciel.gemi.pemasukan.PemasukanActivity" >
+        </activity>
+        <activity android:name="com.babaenciel.gemi.pemasukan.PemasukanInsertActivity" >
+        </activity>
+        <activity android:name="com.babaenciel.gemi.pemasukan.PemasukanUpdateActivity" >
+        </activity>
+        <activity android:name="com.babaenciel.gemi.anggaran.AnggaranActivity" >
+        </activity>
+        <activity android:name="com.babaenciel.gemi.anggaran.AnggaranPengeluaranActivity" >
+        </activity>
+        <activity android:name="com.babaenciel.gemi.anggaran.AnggaranInsertFormActivity" >
+        </activity>
+        <activity android:name="com.babaenciel.gemi.anggaran.AnggaranUpdateActivity" >
+        </activity>
+        <activity android:name="com.babaenciel.gemi.anggaran.AnggaranPengeluaranInsertFormActivity" >
+        </activity>
+        <activity android:name="com.babaenciel.gemi.anggaran.AnggaranPengeluaranInsertFormFromWidgetActivity" >
+        </activity>
+        <activity android:name="com.babaenciel.gemi.anggaran.AnggaranPengeluaranUpdateActivity" >
+        </activity>
+        <activity android:name="com.babaenciel.gemi.tagihan.TagihanActivity" >
+        </activity>
+        <activity android:name="com.babaenciel.gemi.tagihan.TagihanInsertActivity" >
+        </activity>
+        <activity android:name="com.babaenciel.gemi.tagihan.TagihanUpdateActivity" >
+        </activity>
+        <activity android:name="com.babaenciel.gemi.hutang.HutangActivity" >
+        </activity>
+        <activity android:name="com.babaenciel.gemi.hutang.HutangUpdateActivity" >
+        </activity>
+        <activity android:name="com.babaenciel.gemi.hutang.HutangInsertFormActivity" ></activity>        
+        <activity android:name="com.babaenciel.gemi.hutang.HutangCicilanActivity" ></activity>
+        <activity android:name="com.babaenciel.gemi.hutang.HutangCicilanUpdateActivity" ></activity>
+        <activity android:name="com.babaenciel.gemi.hutang.HutangCicilanInsertFormActivity"></activity>
+        <activity android:name="com.babaenciel.gemi.tabungan.TabunganActivity" ></activity>
+
         <receiver
-		       android:icon="@drawable/ic_launcher"
-		       android:label="Gemi"
-		       android:name="GemiWidgetProvider" >
-		       <intent-filter >
-		            <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
-		       </intent-filter>
-		
-		       <meta-data
-		          android:name="android.appwidget.provider"
-		          android:resource="@xml/widget_info" />
-		</receiver> 
+            android:name="com.babaenciel.gemi.tagihan.TagihanBroadcastReceiver"
+            android:process=":remote" >
+        </receiver>
+        <receiver
+            android:name="GemiWidgetProvider"
+            android:icon="@drawable/ic_launcher"
+            android:label="Gemi" >
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/widget_info" />
+        </receiver>
+
+        
     </application>
-    
 
 </manifest>

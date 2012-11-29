@@ -7,6 +7,7 @@ import java.util.Calendar;
 import java.util.Date;
 
 import com.actionbarsherlock.R;
+import com.actionbarsherlock.app.SherlockActivity;
 import com.babaenciel.gemi.lib.DateSlider;
 import com.babaenciel.gemi.lib.DefaultDateSlider;
 import com.babaenciel.gemi.pemasukan.PemasukanActivity;
@@ -36,7 +37,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.AdapterView.OnItemClickListener;
 
-public class HutangUpdateActivity extends Activity {
+public class HutangUpdateActivity extends SherlockActivity {
 	private static final int THEME = R.style.Theme_Sherlock;
 	protected static final int DEFAULTDATESELECTOR_ID = 0;
 	private MyDate myDate;

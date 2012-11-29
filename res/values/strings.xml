@@ -3,7 +3,10 @@
 
     <string name="hello">Hello World, GemiActivity!</string>
     <string name="app_name">Gemi</string>
-    <string name="dateSliderTitle">Selected date</string>   
-    <string name="kategori_prompt">Pilih Kategori</string> 
+    <string name="dateSliderTitle">Selected date</string>
+    <string name="kategori_prompt">Pilih Kategori</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="menu_settings">Settings</string>
+    <string name="title_activity_hutang_cicilan_insert_form">HutangCicilanInsertFormActivity</string>
 
 </resources>

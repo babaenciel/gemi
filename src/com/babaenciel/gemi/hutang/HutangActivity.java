@@ -40,10 +40,12 @@ public class HutangActivity extends SherlockFragmentActivity implements HutangIn
 		db.insertHutangCicilan("cicilan 3 nich", 300000, "2012-10-10", 1);
         db.dbClose();*/
         
-        pager = (ViewPager) findViewById(R.id.hutang_activity_pager);
+        //DIPINDAH DI ONRESUME SAJA BIAR MANGGILNYA SEKALI. 
+        //GUNANYA ADALAH KETIKA BACK DARI HUTANGCICILAN LANGSUNG MEREFRESH
+/*        pager = (ViewPager) findViewById(R.id.hutang_activity_pager);
         adapter = new HutangFragmentPagerAdapter(getSupportFragmentManager());
         pager.setAdapter(adapter);
-        pager.setCurrentItem(adapter.getCount() / 2);
+        pager.setCurrentItem(adapter.getCount() / 2);*/
         
     }
     
@@ -68,6 +70,15 @@ public class HutangActivity extends SherlockFragmentActivity implements HutangIn
 		return true;
 	}
 
+	@Override
+	protected void onResume() {		
+		super.onResume();
+        pager = (ViewPager) findViewById(R.id.hutang_activity_pager);
+        adapter = new HutangFragmentPagerAdapter(getSupportFragmentManager());
+        pager.setAdapter(adapter);
+        pager.setCurrentItem(adapter.getCount() / 2);
+	}
+	
 	@Override
 	public void onCicilan(int id_hutang) {
 		Intent i = new Intent(this, HutangCicilanActivity.class);

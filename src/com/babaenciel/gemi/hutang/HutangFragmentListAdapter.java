@@ -82,6 +82,13 @@ public class HutangFragmentListAdapter extends BaseAdapter {
 		holder.bar.setMax(hutangObject.jumlah_hutang);
 		holder.bar.setProgress(hutangObject.jumlah_cicilan);
 		
+		//membuat warna zebra di rows
+		if (position % 2 == 0){
+			convertView.setBackgroundResource(R.drawable.listview_rows_color_1);
+		} else {
+			convertView.setBackgroundResource(R.drawable.listview_rows_color_2);
+		}			
+		
 		return convertView;
 	}
 	

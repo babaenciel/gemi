@@ -30,7 +30,7 @@
         android:id="@+id/hutang_cicilan_list_rows_tanggal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_toRightOf="@id/bullet"
+        android:layout_toRightOf="@id/hutang_cicilan_list_rows_bullet"
         android:paddingBottom="10dp"
         android:layout_below="@id/hutang_cicilan_list_rows_judul"
         android:textSize="16sp"
