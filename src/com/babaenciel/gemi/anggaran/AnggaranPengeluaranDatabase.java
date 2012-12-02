@@ -100,6 +100,26 @@ public class AnggaranPengeluaranDatabase {
 		return jumlah;
 	}
 	
+	public int getAnggaranPengeluaranTotal(String month, String year) {
+		SQLiteDatabase db = dbAdapter.getReadableDatabase();
+		String query = "select sum(nominal) from Anggaran_Pengeluaran where " +
+				"strftime('%m', tanggal) = '" + month + "' and " +
+				"strftime('%Y', tanggal) = '" + year + "'";
+		Cursor cursor = db.rawQuery(query, null);
+		int jumlah = 0;
+		
+		if(cursor.moveToFirst()) {
+			do {
+				jumlah = cursor.getInt(0);
+			}while(cursor.moveToNext());
+		}
+				
+		cursor.close();
+		db.close();
+		
+		return jumlah;
+	}
+	
 	//method ini digunakan pada spinner di form anggaran pengeluaran,
 	//method ini berguna untuk mengambil tanggal dari suatu id.
 	//setelah mendapatkan tanggal, kemudian berlanjut ke method getAnggaranNamaAll.

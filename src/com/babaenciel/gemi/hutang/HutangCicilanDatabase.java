@@ -61,6 +61,23 @@ public class HutangCicilanDatabase {
 
 		return totalCicilan;
 	}
+	
+	public int getHutangCicilanTotal(String month, String year) {
+		SQLiteDatabase db = dbAdapter.getReadableDatabase();
+		String query = "select sum(nominal) from Hutang_Cicilan where " +
+				"strftime('%m', tanggal) = '" + month + "' and " +
+				"strftime('%Y', tanggal) = '" + year + "'";
+		Cursor cursor = db.rawQuery(query, null);
+		int totalCicilan = 0;
+		if (cursor.moveToFirst()) {
+			totalCicilan = cursor.getInt(0);
+		}
+
+		cursor.close();
+		db.close();
+
+		return totalCicilan;
+	}
 
 	public ArrayList<HutangCicilanObject> getAllHutangCicilan(int id_hutang) {
 		SQLiteDatabase db = dbAdapter.getReadableDatabase();

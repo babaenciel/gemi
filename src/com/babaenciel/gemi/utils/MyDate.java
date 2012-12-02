@@ -119,6 +119,16 @@ public class MyDate {
 		return Integer.toString(bulan);
 	}
 	
+	public String konversiTanggalDitambahi0(int tanggal) {
+		for(int i = 1; i < 10; i++) {
+			if(tanggal == i) {
+				return "0"+tanggal;
+			}
+		}
+		
+		return Integer.toString(tanggal);
+	}
+	
 	//digunakan pada saat mengeset hari pada calender di alarm manager Tagihan
 	public int konversiTanggalDihilangkan0(String hari) {		
 		if(hari.equals("01")) {

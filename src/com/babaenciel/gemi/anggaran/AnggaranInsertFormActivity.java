@@ -106,6 +106,7 @@ public class AnggaranInsertFormActivity extends SherlockActivity {
 					Toast.makeText(context, "insert : " + nama.getText().toString() + " sukses", Toast.LENGTH_LONG).show();
 					
 					Intent i = new Intent(context, AnggaranActivity.class);
+					i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
 					finish();
 					startActivity(i);
 				}

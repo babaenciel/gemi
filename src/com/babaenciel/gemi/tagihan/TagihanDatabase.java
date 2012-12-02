@@ -55,12 +55,73 @@ public class TagihanDatabase {
 		return object;
 	}
 	
+	public ArrayList<TagihanObject> getTagihanBelumLunasFromMonthYear(String month, String year) {
+		SQLiteDatabase db = dbAdapter.getReadableDatabase();
+		String query = "select * from Tagihan where " +
+				"strftime('%m', tanggal_deadline) = '" + month + "' and " +
+				"strftime('%Y', tanggal_deadline) = '" + year + "' and " +
+				"lunas = 0";
+		Cursor cursor = db.rawQuery(query, null);
+		ArrayList<TagihanObject> object = new ArrayList<TagihanObject>();
+		
+		if(cursor.moveToFirst()) {
+			do {
+				object.add(new TagihanObject(cursor.getInt(0), cursor.getString(1), cursor.getInt(2), cursor.getString(3), cursor.getInt(4)));
+			}while(cursor.moveToNext());
+		}
+		
+		cursor.close();
+		db.close();
+		
+		return object;
+	}
+	
+	public ArrayList<TagihanObject> getTagihanLunasFromMonthYear(String month, String year) {
+		SQLiteDatabase db = dbAdapter.getReadableDatabase();
+		String query = "select sum(jumlah) from Tagihan where " +
+				"strftime('%m', tanggal_deadline) = '" + month + "' and " +
+				"strftime('%Y', tanggal_deadline) = '" + year + "' and " +
+				"lunas = 1";
+		Cursor cursor = db.rawQuery(query, null);
+		ArrayList<TagihanObject> object = new ArrayList<TagihanObject>();
+		
+		if(cursor.moveToFirst()) {
+			do {
+				object.add(new TagihanObject(cursor.getInt(0), cursor.getString(1), cursor.getInt(2), cursor.getString(3), cursor.getInt(4)));
+			}while(cursor.moveToNext());
+		}
+		
+		cursor.close();
+		db.close();
+		
+		return object;
+	}
+	
 	public int getTagihanTotalFromMonthYear(String month, String year) {
 		SQLiteDatabase db = dbAdapter.getReadableDatabase();
 		String query = "select sum(jumlah) from Tagihan where " +
 				"strftime('%m', tanggal_deadline) = '"+month+"' and " +
 				"strftime('%Y', tanggal_deadline) = '"+year+"' and " +
 				"lunas = 0 " +				
+				"order by strftime('%d', tanggal_deadline) desc";
+		Cursor cursor = db.rawQuery(query, null);
+		int total = 0;
+		if(cursor.moveToFirst()) {
+			total = cursor.getInt(0);
+		}
+		
+		cursor.close();
+		db.close();
+		
+		return total;
+	}
+	
+	public int getTagihanLunasTotalFromMonthYear(String month, String year) {
+		SQLiteDatabase db = dbAdapter.getReadableDatabase();
+		String query = "select sum(jumlah) from Tagihan where " +
+				"strftime('%m', tanggal_deadline) = '"+month+"' and " +
+				"strftime('%Y', tanggal_deadline) = '"+year+"' and " +
+				"lunas = 1 " +				
 				"order by strftime('%d', tanggal_deadline) desc";
 		Cursor cursor = db.rawQuery(query, null);
 		int total = 0;

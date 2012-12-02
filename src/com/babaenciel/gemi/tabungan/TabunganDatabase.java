@@ -40,7 +40,7 @@ public class TabunganDatabase {
 		db.close();
 		
 		return object;
-	}
+	}	
 	
 	public ArrayList<TabunganObject> getTabunganAll(String month, String year) {
 		SQLiteDatabase db = dbAdapter.getReadableDatabase();
@@ -61,6 +61,24 @@ public class TabunganDatabase {
 		db.close();
 		
 		return list;
+	}
+	
+	public int getTabunganTotal() {
+		SQLiteDatabase db = dbAdapter.getReadableDatabase();
+		String query = "select sum(nominal) from Tabungan";
+				
+		Cursor cursor = db.rawQuery(query, null);
+		int totalTabungan = 0;
+		
+		if(cursor.moveToFirst()) {
+			totalTabungan = cursor.getInt(0);
+		}
+		
+		cursor.close();
+		db.close();
+		
+		return totalTabungan;
+		
 	}
 	
 	public int getTabunganTotal(String month, String year) {
@@ -94,6 +112,11 @@ public class TabunganDatabase {
 	public void deleteTabungan(int id_tabungan) {
 		SQLiteDatabase db = dbAdapter.getWritableDatabase();
 		db.delete("Tabungan", "id_tabungan = " + id_tabungan, null);
+	}
+	
+	public void deleteTabunganAll() {
+		SQLiteDatabase db = dbAdapter.getWritableDatabase();
+		db.delete("Tabungan", null, null);
 	}
 	
 	public void dbClose() {

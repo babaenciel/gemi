@@ -48,6 +48,27 @@ public class HutangDatabase {
 		return object;		
 	}
 	
+	public ArrayList<HutangObject> getHutangBelumLunasFromMonthYear(String month, String year) {
+		SQLiteDatabase db = dbAdapter.getReadableDatabase();
+		String query = "select * from Hutang where " +
+				"strftime('%m', tanggal_deadline) = '" + month + "' and " +
+				"strftime('%Y', tanggal_deadline) = '" + year + "' and " +
+				"jumlah_hutang > jumlah_cicilan";		
+		Cursor cursor = db.rawQuery(query, null);
+		ArrayList<HutangObject> object = new ArrayList<HutangObject>();
+		
+		if(cursor.moveToFirst()) {
+			do {
+				object.add(new HutangObject(cursor.getInt(0), cursor.getString(1), cursor.getInt(2), cursor.getInt(3), cursor.getString(4)));
+			}while(cursor.moveToNext());
+		}
+		
+		cursor.close();
+		db.close();
+		
+		return object;		
+	}
+	
 	public int getJumlahCicilan(String month, String year) {
 		SQLiteDatabase db = dbAdapter.getReadableDatabase();
 		String query = "select sum(jumlah_cicilan) from Hutang where " +

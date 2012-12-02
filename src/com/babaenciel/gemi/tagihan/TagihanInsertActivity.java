@@ -59,7 +59,7 @@ public class TagihanInsertActivity extends SherlockActivity {
 				
 		//set nama with autocomplete		
 		ArrayList<String> valuesNama = db.getTagihanNamaAll();
-		Log.d("valuesnama", valuesNama.get(0));
+		//Log.d("valuesnama", valuesNama.get(0));
 		ArrayAdapter<String> adapterNama = new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line, valuesNama);
 		namaView.setAdapter(adapterNama);
 		namaView.setOnItemClickListener(new OnItemClickListener() {

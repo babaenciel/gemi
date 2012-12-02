@@ -118,8 +118,7 @@
 	        android:layout_marginTop="15dp"        
 	        android:layout_marginLeft="25dp"        
 	        android:textSize="18dip"
-	        android:textColor="@android:color/black"
-	        android:text="100.000.000"/>
+	        android:textColor="@android:color/black"/>
     </RelativeLayout>
     
     
@@ -300,8 +299,7 @@
 		        android:layout_marginTop="5dp"
 		        android:layout_marginLeft="20dp"		        
 		        android:textSize="16dip"		
-		        android:textColor="@color/text_black_soft"        
-		        android:text="INTERNET dengan nama yang sangat panjang sekali nanti jadi gimana donk aku juga ngk tau nanti jadi bagaimana aapa aku batasi di inputannya aja ya"/>
+		        android:textColor="@color/text_black_soft"/>
 		    
 		    <TextView 
 		        android:id="@+id/dashboard_tagihan_terdekat_tanggal"
@@ -311,8 +309,7 @@
 		        android:layout_marginLeft="20dp"
 		        android:paddingBottom="15dp"
 		        android:textSize="18dip"		        
-		        android:textColor="@color/text_red"
-		        android:text="18-10-2012"/>
+		        android:textColor="@color/text_red"/>
 		    
 		    <TextView 
 		        android:id="@+id/dashboard_tagihan_terdekat_nominal"
@@ -322,8 +319,17 @@
 		        android:layout_toRightOf="@id/dashboard_tagihan_terdekat_tanggal"
 		        android:layout_marginLeft="20dp"
 		        android:textColor="@color/text_green"
-		        android:textSize="20dip"
-		        android:text="2.000.000.000"/>
+		        android:textSize="20dip"/>
+		    
+		    <TextView 
+		        android:id="@+id/dashboard_tagihan_terdekat_other_tagihan"
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+		        android:layout_below="@id/dashboard_tagihan_terdekat_tanggal"
+		        android:layout_marginLeft="20dp"
+		        android:layout_marginTop="5dp"
+		        android:textColor="@color/text_black_soft"
+		        android:textSize="16dp"/>
     </RelativeLayout>
         
     
@@ -375,8 +381,7 @@
 		        android:layout_marginTop="5dp"
 		        android:layout_marginLeft="20dp"		        
 		        android:textSize="16dip"		
-		        android:textColor="@color/text_black_soft"    
-		        android:text="Hutang ke Budi"/>
+		        android:textColor="@color/text_black_soft"/>
 		    
 		    <TextView 
 		        android:id="@+id/dashboard_hutang_terdekat_tanggal"
@@ -386,8 +391,7 @@
 		        android:layout_marginLeft="20dp"
 		        android:paddingBottom="15dp"
 		        android:textSize="18dip"		        
-		        android:textColor="@color/text_red"
-		        android:text="18-10-2012"/>
+		        android:textColor="@color/text_red"/>
 		    
 		    <TextView 
 		        android:id="@+id/dashboard_hutang_terdekat_nominal"
@@ -397,8 +401,17 @@
 		        android:layout_toRightOf="@id/dashboard_hutang_terdekat_tanggal"
 		        android:layout_marginLeft="20dp"
 		        android:textColor="@color/text_green"
-		        android:textSize="20dip"
-		        android:text="200.000"/>
+		        android:textSize="20dip"/>
+		    		    
+			<TextView 
+		        android:id="@+id/dashboard_hutang_terdekat_other_hutang"
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+		        android:layout_below="@id/dashboard_hutang_terdekat_tanggal"
+		        android:layout_marginLeft="20dp"
+		        android:layout_marginTop="5dp"
+		        android:textColor="@color/text_black_soft"
+		        android:textSize="16dp"/>
     </RelativeLayout>
        
     
