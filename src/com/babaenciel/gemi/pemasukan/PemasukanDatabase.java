@@ -138,6 +138,22 @@ public class PemasukanDatabase {
 		return total;
 	}
 	
+	public int getPemasukanTotal() {
+		SQLiteDatabase db = dbAdapter.getReadableDatabase();
+		String query = "select sum(nominal) from Pemasukan";
+		Cursor cursor = db.rawQuery(query, null);
+		
+		int totalPemasukan = 0;
+		if(cursor.moveToFirst()) {
+			totalPemasukan = cursor.getInt(0);
+		}
+		
+		cursor.close();
+		db.close();
+		
+		return totalPemasukan;
+	}
+	
 	//digunakan untuk mengambil kategori yang hanya muncul pada tabel pemasukan.
 	//hal ini dilakukan untuk mengurangi loop ke semua kategori yang ada.
 	public ArrayList<String> getPemasukanKategori(String month, String year) {

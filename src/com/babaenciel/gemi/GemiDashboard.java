@@ -129,6 +129,18 @@ public class GemiDashboard extends SherlockActivity implements OnClickListener {
 	}   
 	
 	public void setAllValue() {
+		//set saldo
+		int saldoPemasukanTotal = dbPemasukan.getPemasukanTotal();
+		
+        int saldoTotalAnggaranPengeluaran = dbAnggaranPengeluaran.getAnggaranPengeluaranTotal();
+        int saldoTotalTagihan = dbTagihan.getTagihanLunasTotal();
+        int saldoTotalHutangCicilan = dbHutangCicilan.getHutangCicilanTotal();
+        int saldoPengeluaran = saldoTotalAnggaranPengeluaran + saldoTotalTagihan + saldoTotalHutangCicilan;
+        
+        int saldo = saldoPemasukanTotal - saldoPengeluaran;
+        TextView saldoView = (TextView) findViewById(R.id.dashboard_saldo_nominal);
+        saldoView.setText(customFormat.format(saldo));
+		
 		//set total tabungan
 		TextView tabunganTotalView = (TextView) findViewById(R.id.dashboard_tabungan_header_nominal);
 		int totalTabungan = dbTabungan.getTabunganTotal();
@@ -146,6 +158,7 @@ public class GemiDashboard extends SherlockActivity implements OnClickListener {
         int pengeluaran = totalAnggaranPengeluaran + totalTagihan + totalHutangCicilan;
         TextView pengeluaranNominalView = (TextView) findViewById(R.id.dashboard_pengeluaran_nominal);
         pengeluaranNominalView.setText(customFormat.format(pengeluaran));
+        
         
         //set anggaran
         int anggaranTotal = dbAnggaran.getAnggaranTotal(month, year);

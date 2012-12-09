@@ -97,6 +97,7 @@ public class TagihanDatabase {
 		return object;
 	}
 	
+
 	public int getTagihanTotalFromMonthYear(String month, String year) {
 		SQLiteDatabase db = dbAdapter.getReadableDatabase();
 		String query = "select sum(jumlah) from Tagihan where " +
@@ -129,6 +130,20 @@ public class TagihanDatabase {
 			total = cursor.getInt(0);
 		}
 		
+		cursor.close();
+		db.close();
+		
+		return total;
+	}
+	
+	public int getTagihanLunasTotal() {
+		SQLiteDatabase db = dbAdapter.getReadableDatabase();
+		String query = "select sum(jumlah) from Tagihan";
+		Cursor cursor = db.rawQuery(query, null);
+		int total = 0;
+		if(cursor.moveToFirst()) {
+			total = cursor.getInt(0);
+		}
 		cursor.close();
 		db.close();
 		
