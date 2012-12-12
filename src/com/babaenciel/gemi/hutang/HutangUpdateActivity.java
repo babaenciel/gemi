@@ -68,6 +68,30 @@ public class HutangUpdateActivity extends SherlockActivity {
 		
 		nama.setText(object.nama);
 		
+		// set nama autocomplete
+		ArrayList<HutangObject> listHutang = db.getHutangAll();
+		HutangAutocompleteCustomAdapter adapter = new HutangAutocompleteCustomAdapter(
+				this, listHutang, R.layout.autocomplete_rows);
+		nama.setAdapter(adapter);
+		nama.setOnItemClickListener(new OnItemClickListener() {
+
+			@Override
+			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
+					long arg3) {
+				HutangObject object = db.getHutangSingle((int) arg3);
+
+				jumlah_hutang.setText(Integer.toString(object.jumlah_hutang));
+
+				// ini untuk menutup keyboard setelah user memilih list
+				// autocompletenya
+				if (getCurrentFocus() != null
+						&& getCurrentFocus() instanceof EditText) {
+					InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+					imm.hideSoftInputFromWindow(nama.getWindowToken(), 0);
+				}
+			}
+		});
+		
 		jumlah_hutang.setText(Integer.toString(object.jumlah_hutang));
 			
 /*		//set nama with autocomplete		

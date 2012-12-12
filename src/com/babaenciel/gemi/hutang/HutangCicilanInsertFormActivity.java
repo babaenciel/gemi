@@ -2,6 +2,7 @@ package com.babaenciel.gemi.hutang;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -11,6 +12,8 @@ import com.actionbarsherlock.view.SubMenu;
 import com.babaenciel.gemi.R;
 import com.babaenciel.gemi.R.layout;
 import com.babaenciel.gemi.R.menu;
+import com.babaenciel.gemi.anggaran.AnggaranAutocompleteCustomAdapter;
+import com.babaenciel.gemi.anggaran.AnggaranObject;
 import com.babaenciel.gemi.anggaran.AnggaranPengeluaranActivity;
 import com.babaenciel.gemi.lib.DateSlider;
 import com.babaenciel.gemi.lib.DefaultDateSlider;
@@ -25,11 +28,14 @@ import android.support.v4.widget.SimpleCursorAdapter;
 import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.AdapterView;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.AdapterView.OnItemClickListener;
 
 public class HutangCicilanInsertFormActivity extends SherlockActivity {
 
@@ -66,9 +72,33 @@ public class HutangCicilanInsertFormActivity extends SherlockActivity {
         submit = (Button) findViewById(R.id.hutang_cicilan_insert_submit_button);
                        
         String namaHutangString = db.getHutangNama(id_hutang);
-        namaHutang.setText(namaHutangString);
-        
-        myDate.setNow();
+		namaHutang.setText(namaHutangString);
+
+		// set nama autocomplete
+		ArrayList<HutangCicilanObject> listHutangCicilan = db.getHutangCicilanAll();
+		HutangCicilanAutocompleteCustomAdapter adapter = new HutangCicilanAutocompleteCustomAdapter(
+				this, listHutangCicilan, R.layout.autocomplete_rows);
+		nama.setAdapter(adapter);
+		nama.setOnItemClickListener(new OnItemClickListener() {
+
+			@Override
+			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
+					long arg3) {
+				HutangCicilanObject object = db.getHutangCicilanSingle((int) arg3);
+
+				nominal.setText(Integer.toString(object.nominal));
+
+				// ini untuk menutup keyboard setelah user memilih list
+				// autocompletenya
+				if (getCurrentFocus() != null
+						&& getCurrentFocus() instanceof EditText) {
+					InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+					imm.hideSoftInputFromWindow(nama.getWindowToken(), 0);
+				}
+			}
+		});
+		
+		myDate.setNow();
         tanggal.setText(myDate.dateFull1);
         tanggal.setOnClickListener(new OnClickListener() {
 			

@@ -2,6 +2,7 @@ package com.babaenciel.gemi.anggaran;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -12,9 +13,13 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.AdapterView;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+import android.widget.AdapterView.OnItemClickListener;
 
 import com.actionbarsherlock.R;
 import com.actionbarsherlock.app.SherlockActivity;
@@ -28,7 +33,7 @@ public class AnggaranUpdateActivity extends SherlockActivity {
 	private static final int DEFAULTDATESELECTOR_ID = 0;
 	private EditText tanggal;
 	private Button submit;
-	private EditText nama;
+	private AutoCompleteTextView nama;
 	private EditText nominal;
 	Context context = this;	
 	int id_anggaran;
@@ -50,13 +55,36 @@ public class AnggaranUpdateActivity extends SherlockActivity {
 		db = new AnggaranDatabase(this);
 		AnggaranObject object = db.getAnggaranSingle(id_anggaran);
 		
-		nama = (EditText) findViewById(R.id.anggaran_form_edittext_nama);
+		nama = (AutoCompleteTextView) findViewById(R.id.anggaran_form_edittext_nama);
 		nominal = (EditText) findViewById(R.id.anggaran_form_edittext_nominal);
 		tanggal = (EditText) findViewById(R.id.anggaran_form_edittext_tanggal);
 		submit = (Button) findViewById(R.id.anggaran_form_submit_button);
 		
-		//set nama
+		// set nama
 		nama.setText(object.nama);
+		// set nama autocomplete
+		ArrayList<AnggaranObject> listAnggaran = db.getAnggaranAll();
+		AnggaranAutocompleteCustomAdapter adapterAutocomplete = new AnggaranAutocompleteCustomAdapter(
+				this, listAnggaran, R.layout.autocomplete_rows);
+		nama.setAdapter(adapterAutocomplete);
+		nama.setOnItemClickListener(new OnItemClickListener() {
+
+			@Override
+			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
+					long arg3) {
+				AnggaranObject object = db.getAnggaranSingle((int) arg3);
+
+				nominal.setText(Integer.toString(object.nominalBawah));
+
+				// ini untuk menutup keyboard setelah user memilih list
+				// autocompletenya
+				if (getCurrentFocus() != null
+						&& getCurrentFocus() instanceof EditText) {
+					InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+					imm.hideSoftInputFromWindow(nama.getWindowToken(), 0);
+				}
+			}
+		});	
 		
 		//set nominal
 		nominal.setText(Integer.toString(object.nominalBawah));

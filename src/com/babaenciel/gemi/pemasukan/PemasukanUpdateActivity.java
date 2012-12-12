@@ -77,41 +77,42 @@ public class PemasukanUpdateActivity extends SherlockActivity {
 			if(sca.getItemId(i) == object.id_kategori) {
 				spinnerKategori.setSelection(i);
 			}
-		}
-		
+		}		
 		
 		//set nama with autocomplete		
-		nama.setText(object.nama);		
-		ArrayList<String> valuesNama = db.getPemasukanNamaAll();
-		ArrayAdapter<String> adapterNama = new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line, valuesNama);
-		nama.setAdapter(adapterNama);
+		nama.setText(object.nama);
+
+		ArrayList<PemasukanObject> listPemasukan = db.getPemasukanAllAutocomplete();
+		PemasukanAutocompleteCustomAdapter adapter = new PemasukanAutocompleteCustomAdapter(this, listPemasukan, R.layout.autocomplete_rows);
+		nama.setAdapter(adapter);
 		nama.setOnItemClickListener(new OnItemClickListener() {
 
 			@Override
 			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
 					long arg3) {
-				String namaString = ((TextView)arg1).getText().toString();
-				int id_pemasukan = db.getPemasukanIdFromNama(namaString);
-				PemasukanObject objectAutocomplete = db.getPemasukanSingle(id_pemasukan);
-				
-				for(int i = 0; i < sca.getCount(); i++) {
-					if(sca.getItemId(i) == objectAutocomplete.id_kategori) {
+				PemasukanObject object = db.getPemasukanSingle((int) arg3);
+
+				nominal.setText(Integer.toString(object.nominal));
+
+				for (int i = 0; i < sca.getCount(); i++) {
+					if (sca.getItemId(i) == object.id_kategori) {
 						spinnerKategori.setSelection(i);
 					}
 				}
-				
-				nominal.setText(Integer.toString(objectAutocomplete.nominal));
-				
-				//ini untuk menutup keyboard setelah user memilih list autocompletenya
-				if(getCurrentFocus()!=null && getCurrentFocus() instanceof EditText){
-			        InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
-			        imm.hideSoftInputFromWindow(nama.getWindowToken(), 0);
-			    }
+
+				// ini untuk menutup keyboard setelah user memilih list
+				// autocompletenya
+				if (getCurrentFocus() != null
+						&& getCurrentFocus() instanceof AutoCompleteTextView) {
+					InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+					imm.hideSoftInputFromWindow(nama.getWindowToken(), 0);
+				}
+
 			}
-			
-		});						
-		
-		//set tanggal		
+
+		});
+
+		// set tanggal
 		myDate = new MyDate();
 		tanggal.setText(myDate.konversiTanggal2(object.tanggal));
 		tanggal.setOnClickListener(new OnClickListener() {

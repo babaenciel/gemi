@@ -39,6 +39,7 @@ import com.actionbarsherlock.app.SherlockActivity;
 import com.babaenciel.gemi.R;
 import com.babaenciel.gemi.lib.DateSlider;
 import com.babaenciel.gemi.lib.DefaultDateSlider;
+import com.babaenciel.gemi.anggaran.AnggaranPengeluaranAutocompleteCustomAdapter;
 import com.babaenciel.gemi.utils.MyDate;
 
 public class AnggaranPengeluaranInsertFormActivity extends SherlockActivity {
@@ -107,28 +108,27 @@ public class AnggaranPengeluaranInsertFormActivity extends SherlockActivity {
 		});
 	    
 		//set nama with autocomplete
-		ArrayList<String> namaAll = db.getAnggaranPengeluaranNamaAll();
-		ArrayAdapter<String> adapterNama = new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line, namaAll);
-		nama.setAdapter(adapterNama);
+		ArrayList<AnggaranPengeluaranObject> listAnggaranPengeluaran = db.getAnggaranPengeluaranAll();
+		//Log.d("list ap size", ""+listAnggaranPengeluaran.size());
+		AnggaranPengeluaranAutocompleteCustomAdapter adapter = new AnggaranPengeluaranAutocompleteCustomAdapter(this, listAnggaranPengeluaran, R.layout.autocomplete_rows);
+		nama.setAdapter(adapter);
 		nama.setOnItemClickListener(new OnItemClickListener() {
 
 			@Override
 			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
-					long arg3) {
-				String namaString = ((TextView)arg1).getText().toString();
-				int id_anggaran_pengeluaran = db.getAnggaranPengeluaranIdFromNama(namaString);
-				AnggaranPengeluaranObject object = db.getAnggaranPengeluaranSingle(id_anggaran_pengeluaran);
+					long arg3) {				
+				AnggaranPengeluaranObject object = db.getAnggaranPengeluaranSingle((int)arg3);
 				
-				for(int i = 0; i < sca.getCount(); i++) {
+				/*for(int i = 0; i < sca.getCount(); i++) {
 					if(sca.getItemId(i) == object.id_anggaran) {
 						spinner.setSelection(i);
 					}
-				}
+				}*/
 				
 				nominal.setText(Integer.toString(object.nominal));
 				
 				//ini untuk menutup keyboard setelah user memilih list autocompletenya
-				if(getCurrentFocus()!=null && getCurrentFocus() instanceof EditText){
+				if(getCurrentFocus()!=null && getCurrentFocus() instanceof AutoCompleteTextView){
 			        InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
 			        imm.hideSoftInputFromWindow(nama.getWindowToken(), 0);
 			    }					

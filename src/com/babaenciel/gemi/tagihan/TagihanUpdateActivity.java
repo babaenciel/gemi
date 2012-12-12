@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
+import com.actionbarsherlock.app.SherlockActivity;
 import com.babaenciel.gemi.R;
 import com.babaenciel.gemi.lib.DateSlider;
 import com.babaenciel.gemi.lib.DefaultDateSlider;
@@ -32,7 +33,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.AdapterView.OnItemClickListener;
 
-public class TagihanUpdateActivity extends Activity {
+public class TagihanUpdateActivity extends SherlockActivity {
 	private static final int THEME = R.style.Theme_Sherlock;
 	private static final int DEFAULTDATESELECTOR_ID = 0;
 	//protected TextView tanggal_deadline;
@@ -48,7 +49,7 @@ public class TagihanUpdateActivity extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {	
 		setTheme(THEME);
-		setTitle("TAGIHAN");
+		setTitle("TAGIHAN UPDATE");
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.tagihan_insert_activity);
 		
@@ -65,31 +66,35 @@ public class TagihanUpdateActivity extends Activity {
 		date = new MyDate();
 		
 		namaView.setText(tagihanObject.nama);
-		//set nama with autocomplete		
-		ArrayList<String> valuesNama = db.getTagihanNamaAll();
-		ArrayAdapter<String> adapterNama = new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line, valuesNama);
-		namaView.setAdapter(adapterNama);
+		// set nama with autocomplete
+		// set nama with autocomplete
+		ArrayList<TagihanObject> listTagihan = db.getTagihanAll();
+		// Log.d("valuesnama", valuesNama.get(0));
+		TagihanAutocompleteCustomAdapter adapter = new TagihanAutocompleteCustomAdapter(
+				this, listTagihan, R.layout.autocomplete_rows);
+		namaView.setAdapter(adapter);
 		namaView.setOnItemClickListener(new OnItemClickListener() {
 
 			@Override
 			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
 					long arg3) {
-				String namaString = ((TextView)arg1).getText().toString();
-				int id_tagihan_temp = db.getTagihanIdFromNama(namaString);
-				TagihanObject object = db.getTagihanById(id_tagihan_temp);				
-				
+				TagihanObject object = db.getTagihanById((int) arg3);
+
 				nominalView.setText(Integer.toString(object.jumlah));
-				tanggalView.setText(date.konversiTanggal2(object.tanggal_deadline));
-				//ini untuk menutup keyboard setelah user memilih list autocompletenya
-				if(getCurrentFocus()!=null && getCurrentFocus() instanceof EditText){
-			        InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
-			        imm.hideSoftInputFromWindow(namaView.getWindowToken(), 0);
-			    }
+				// tanggal_deadline.setText(date.konversiTanggal2(object.tanggal_deadline));
+
+				// ini untuk menutup keyboard setelah user memilih list
+				// autocompletenya
+				if (getCurrentFocus() != null
+						&& getCurrentFocus() instanceof EditText) {
+					InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+					imm.hideSoftInputFromWindow(namaView.getWindowToken(), 0);
+				}
 			}
-			
-		});		
-		
-		nominalView.setText(Integer.toString(tagihanObject.jumlah));		
+
+		});
+
+		nominalView.setText(Integer.toString(tagihanObject.jumlah));
 		tanggalView.setText(date.konversiTanggal2(tagihanObject.tanggal_deadline));
 				
 		tanggalView.setOnClickListener(new OnClickListener() {

@@ -225,6 +225,24 @@ public class AnggaranPengeluaranDatabase {
 		return object;
 	}
 	
+	public ArrayList<AnggaranPengeluaranObject> getAnggaranPengeluaranAll() {
+		SQLiteDatabase db = dbAdapter.getReadableDatabase();
+		String query = "select * from Anggaran_Pengeluaran";
+		Cursor cursor = db.rawQuery(query, null);
+		ArrayList<AnggaranPengeluaranObject> list = new ArrayList<AnggaranPengeluaranObject>();
+		if(cursor.moveToFirst()) {
+			do {
+				list.add(new AnggaranPengeluaranObject(cursor.getInt(0), cursor.getString(1), cursor.getInt(2), cursor.getString(3), cursor.getInt(4)));
+			}while(cursor.moveToNext());
+			
+		}
+		
+		cursor.close();
+		db.close();
+		
+		return list;
+	}
+	
 	public void deleteAnggaranPengeluaran(int id_anggaran_pengeluaran, int id_anggaran) {
 		SQLiteDatabase db = dbAdapter.getReadableDatabase();
 		String query = "select nominal from Anggaran_Pengeluaran where " +

@@ -55,17 +55,15 @@ public class AnggaranInsertFormActivity extends SherlockActivity {
 		db = new AnggaranDatabase(this);
 		
 		//set nama autocomplete
-		ArrayList<String> namaAll = db.getAnggaranNamaAll();
-		ArrayAdapter<String> adapterNama = new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line, namaAll);
-		nama.setAdapter(adapterNama);
+		ArrayList<AnggaranObject> listAnggaran = db.getAnggaranAll();
+		AnggaranAutocompleteCustomAdapter adapter = new AnggaranAutocompleteCustomAdapter(this, listAnggaran, R.layout.autocomplete_rows);
+		nama.setAdapter(adapter);
 		nama.setOnItemClickListener(new OnItemClickListener() {
 
 			@Override
 			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
-					long arg3) {
-				String namaString = ((TextView)arg1).getText().toString();
-				int id_anggaran = db.getAnggaranIdFromNama(namaString);
-				AnggaranObject object = db.getAnggaranSingle(id_anggaran);
+					long arg3) {				
+				AnggaranObject object = db.getAnggaranSingle((int) arg3);
 				
 				nominal.setText(Integer.toString(object.nominalBawah));								
 				

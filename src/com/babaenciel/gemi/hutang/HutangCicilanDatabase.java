@@ -111,6 +111,24 @@ public class HutangCicilanDatabase {
 		db.close();
 		return object;
 	}
+	
+	public ArrayList<HutangCicilanObject> getHutangCicilanAll() {
+		SQLiteDatabase db = dbAdapter.getReadableDatabase();
+		String query = "select * from Hutang_Cicilan";
+		Cursor cursor = db.rawQuery(query, null);
+		ArrayList<HutangCicilanObject> object = new ArrayList<HutangCicilanObject>();
+		if (cursor.moveToFirst()) {
+			do {
+				object.add(new HutangCicilanObject(cursor.getInt(0), cursor
+						.getString(1), cursor.getInt(2), cursor.getString(3),
+						cursor.getInt(4)));
+			} while (cursor.moveToNext());
+		}
+		cursor.close();
+		db.close();
+		return object;
+	}
+	
 
 	public HutangCicilanObject getHutangCicilanSingle(int id_hutang_cicilan) {
 		SQLiteDatabase db = dbAdapter.getReadableDatabase();

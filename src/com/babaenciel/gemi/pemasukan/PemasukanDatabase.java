@@ -61,6 +61,25 @@ public class PemasukanDatabase {
 		return nama;
 	}
 	
+	// untuk autocomplete
+	public ArrayList<PemasukanObject> getPemasukanAllAutocomplete() {
+		SQLiteDatabase db = dbAdapter.getReadableDatabase();
+		String query = "SELECT * from Pemasukan, Kategori where Pemasukan.id_kategori = Kategori.id_kategori";
+		Cursor cursor = db.rawQuery(query, null);
+		ArrayList<PemasukanObject> list = new ArrayList<PemasukanObject>();
+
+		if (cursor.moveToFirst()) {
+			do {
+				list.add(new PemasukanObject(cursor.getInt(0), cursor.getString(1), cursor.getString(3), cursor.getInt(2), cursor.getInt(4)));
+			} while (cursor.moveToNext());
+		}
+
+		cursor.close();
+		db.close();
+		
+		return list;
+	}
+
 	public int getPemasukanIdFromNama(String nama) {
 		SQLiteDatabase db = dbAdapter.getReadableDatabase();
 		String query = "select id_pemasukan from Pemasukan where nama = '" + nama + "'";
@@ -134,7 +153,9 @@ public class PemasukanDatabase {
 			total = 0;
 		}
 				
-		cursor.close();		
+		cursor.close();	
+		db.close();
+		
 		return total;
 	}
 	

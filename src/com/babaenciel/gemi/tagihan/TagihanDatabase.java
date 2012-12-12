@@ -202,6 +202,24 @@ public class TagihanDatabase {
 		return id;
 	}
 	
+	public ArrayList<TagihanObject> getTagihanAll() {
+		SQLiteDatabase db = dbAdapter.getReadableDatabase();
+		String query = "select * from Tagihan";
+		Cursor cursor = db.rawQuery(query, null);
+		ArrayList<TagihanObject> object = new ArrayList<TagihanObject>();
+		
+		if(cursor.moveToFirst()) {
+			do {
+				object.add(new TagihanObject(cursor.getInt(0), cursor.getString(1), cursor.getInt(2), cursor.getString(3), cursor.getInt(4)));
+			}while(cursor.moveToNext());
+		}
+		
+		cursor.close();
+		db.close();
+		
+		return object;
+	}
+	
 	public void updateTagihan(int id_tagihan, String nama, int jumlah, String tanggal) {
 		SQLiteDatabase db = dbAdapter.getWritableDatabase();
 		ContentValues cv = new ContentValues();

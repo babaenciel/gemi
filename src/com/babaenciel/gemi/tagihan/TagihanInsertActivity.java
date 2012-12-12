@@ -27,6 +27,7 @@ import android.widget.AdapterView.OnItemClickListener;
 
 import com.actionbarsherlock.app.SherlockActivity;
 import com.babaenciel.gemi.R;
+import com.babaenciel.gemi.tagihan.TagihanAutocompleteCustomAdapter;
 import com.babaenciel.gemi.lib.DateSlider;
 import com.babaenciel.gemi.lib.DefaultDateSlider;
 import com.babaenciel.gemi.utils.MyDate;
@@ -58,21 +59,20 @@ public class TagihanInsertActivity extends SherlockActivity {
 		tanggal_deadline = (TextView) findViewById(R.id.tagihan_insert_edittext_tanggal);
 				
 		//set nama with autocomplete		
-		ArrayList<String> valuesNama = db.getTagihanNamaAll();
+		ArrayList<TagihanObject> listTagihan = db.getTagihanAll();
 		//Log.d("valuesnama", valuesNama.get(0));
-		ArrayAdapter<String> adapterNama = new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line, valuesNama);
-		namaView.setAdapter(adapterNama);
+		TagihanAutocompleteCustomAdapter adapter = new TagihanAutocompleteCustomAdapter(this, listTagihan, R.layout.autocomplete_rows);
+		namaView.setAdapter(adapter);
 		namaView.setOnItemClickListener(new OnItemClickListener() {
 
 			@Override
 			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
-					long arg3) {
-				String namaString = ((TextView)arg1).getText().toString();
-				int id_tagihan_temp = db.getTagihanIdFromNama(namaString);
-				TagihanObject object = db.getTagihanById(id_tagihan_temp);				
+					long arg3) {				
+				TagihanObject object = db.getTagihanById((int) arg3);				
 				
 				jumlahView.setText(Integer.toString(object.jumlah));				
-				tanggal_deadline.setText(date.konversiTanggal2(object.tanggal_deadline));
+				//tanggal_deadline.setText(date.konversiTanggal2(object.tanggal_deadline));
+				
 				//ini untuk menutup keyboard setelah user memilih list autocompletenya
 				if(getCurrentFocus()!=null && getCurrentFocus() instanceof EditText){
 			        InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);

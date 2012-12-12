@@ -2,6 +2,7 @@ package com.babaenciel.gemi.hutang;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -12,10 +13,13 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.AdapterView;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.AdapterView.OnItemClickListener;
 
 import com.actionbarsherlock.app.SherlockActivity;
 import com.babaenciel.gemi.R;
@@ -63,8 +67,35 @@ public class HutangCicilanUpdateActivity extends SherlockActivity {
         String namaHutangString = db.getHutangNama(id_hutang);
         namaHutang.setText(namaHutangString);
         
-        nama.setText(object.nama);
-        nominal.setText(Integer.toString(object.nominal));                
+		nama.setText(object.nama);
+		
+		// set nama autocomplete
+		ArrayList<HutangCicilanObject> listHutangCicilan = db
+				.getHutangCicilanAll();
+		HutangCicilanAutocompleteCustomAdapter adapter = new HutangCicilanAutocompleteCustomAdapter(
+				this, listHutangCicilan, R.layout.autocomplete_rows);
+		nama.setAdapter(adapter);
+		nama.setOnItemClickListener(new OnItemClickListener() {
+
+			@Override
+			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
+					long arg3) {
+				HutangCicilanObject object = db
+						.getHutangCicilanSingle((int) arg3);
+
+				nominal.setText(Integer.toString(object.nominal));
+
+				// ini untuk menutup keyboard setelah user memilih list
+				// autocompletenya
+				if (getCurrentFocus() != null
+						&& getCurrentFocus() instanceof EditText) {
+					InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+					imm.hideSoftInputFromWindow(nama.getWindowToken(), 0);
+				}
+			}
+		});
+		
+		nominal.setText(Integer.toString(object.nominal));                
         tanggal.setText(myDate.konversiTanggal2(object.tanggal));
         tanggal.setOnClickListener(new OnClickListener() {
 			

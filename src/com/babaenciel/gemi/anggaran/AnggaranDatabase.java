@@ -139,6 +139,24 @@ public class AnggaranDatabase {
 		return id_anggaran;		
 	}
 	
+	public ArrayList<AnggaranObject> getAnggaranAll() {
+		SQLiteDatabase db = dbAdapter.getReadableDatabase();
+		String query = "select * from Anggaran";
+		Cursor cursor = db.rawQuery(query, null);
+		
+		ArrayList<AnggaranObject> values = new ArrayList<AnggaranObject>();
+		if(cursor.moveToFirst()) {
+			do {
+				//0: id_anggaran, 1: nama, 2: jumlah_anggaran, 3: jumlah_pengeluaran, 4: tanggal
+				values.add(new AnggaranObject(cursor.getInt(0), cursor.getString(1), cursor.getInt(3), cursor.getInt(2), cursor.getString(4)));
+			}while(cursor.moveToNext());
+		}
+		
+		cursor.close();
+		db.close();
+		return values;
+	}
+	
 	public void updateAnggaran(int id_anggaran, String nama, int jumlah_anggaran, String tanggal) {
 		SQLiteDatabase db = dbAdapter.getWritableDatabase();
 		ContentValues cv = new ContentValues();

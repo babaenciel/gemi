@@ -54,35 +54,29 @@ public class HutangInsertFormActivity extends SherlockActivity {
 		jumlah_hutang = (EditText) findViewById(R.id.hutang_insert_edittext_nominal);
 		tanggal_deadline = (EditText) findViewById(R.id.hutang_insert_edittext_tanggal);
 			
-/*		//set nama with autocomplete		
-		ArrayList<String> valuesNama = db.getHutangNamaAll();
-		ArrayAdapter<String> adapterNama = new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line, valuesNama);
-		nama.setAdapter(adapterNama);
+		// set nama autocomplete
+		ArrayList<HutangObject> listHutang = db.getHutangAll();
+		HutangAutocompleteCustomAdapter adapter = new HutangAutocompleteCustomAdapter(
+				this, listHutang, R.layout.autocomplete_rows);
+		nama.setAdapter(adapter);
 		nama.setOnItemClickListener(new OnItemClickListener() {
 
 			@Override
 			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
 					long arg3) {
-				String namaString = ((TextView)arg1).getText().toString();
-				int id_pemasukan = db.getPemasukanIdFromNama(namaString);
-				PemasukanObject object = db.getPemasukanSingle(id_pemasukan);
-				
-				for(int i = 0; i < sca.getCount(); i++) {
-					if(sca.getItemId(i) == object.id_kategori) {
-						spinnerKategori.setSelection(i);
-					}
+				HutangObject object = db.getHutangSingle((int) arg3);
+
+				jumlah_hutang.setText(Integer.toString(object.jumlah_hutang));
+
+				// ini untuk menutup keyboard setelah user memilih list
+				// autocompletenya
+				if (getCurrentFocus() != null
+						&& getCurrentFocus() instanceof EditText) {
+					InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+					imm.hideSoftInputFromWindow(nama.getWindowToken(), 0);
 				}
-				
-				nominal.setText(Integer.toString(object.nominal));
-				
-				//ini untuk menutup keyboard setelah user memilih list autocompletenya
-				if(getCurrentFocus()!=null && getCurrentFocus() instanceof EditText){
-			        InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
-			        imm.hideSoftInputFromWindow(nama.getWindowToken(), 0);
-			    }
 			}
-			
-		});	*/	
+		});
 		
 		//set tanggal
 		myDate.setNow();

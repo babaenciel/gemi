@@ -2,10 +2,10 @@ package com.babaenciel.gemi;
 
 import com.babaenciel.gemi.anggaran.AnggaranPengeluaranInsertFormActivity;
 import com.babaenciel.gemi.anggaran.AnggaranPengeluaranInsertFormFromWidgetActivity;
-import com.babaenciel.gemi.hutang.HutangInsertFormActivity;
+import com.babaenciel.gemi.hutang.HutangActivity;
 import com.babaenciel.gemi.pemasukan.PemasukanInsertActivity;
-import com.babaenciel.gemi.tabungan.TabunganActivity;
-import com.babaenciel.gemi.tagihan.TagihanInsertActivity;
+import com.babaenciel.gemi.tabungan.TabunganInsertActivity;
+import com.babaenciel.gemi.tagihan.TagihanActivity;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -48,27 +48,27 @@ public class GemiCustomDialogWidgetActivity extends Activity {
 				if(title.equals("Pemasukan")) {
 					Intent i = new Intent(context, PemasukanInsertActivity.class);
 					//dismissDialog(CUSTOM_DIALOG);
-					finish();
+					//finish();
 					startActivity(i);
 				}else if(title.equals("Anggaran")) {
 					Intent i = new Intent(context, AnggaranPengeluaranInsertFormFromWidgetActivity.class);
 					//dismissDialog(CUSTOM_DIALOG);
-					finish();
+					//finish();
 					startActivity(i);
 				}else if(title.equals("Tagihan")) {
-					Intent i = new Intent(context, TagihanInsertActivity.class);
+					Intent i = new Intent(context, TagihanActivity.class);
 					//dismissDialog(CUSTOM_DIALOG);
-					finish();
+					//finish();
 					startActivity(i);
 				}else if(title.equals("Hutang")) {
-					Intent i = new Intent(context, HutangInsertFormActivity.class);
+					Intent i = new Intent(context, HutangActivity.class);
 					//dismissDialog(CUSTOM_DIALOG);
-					finish();
+					//finish();
 					startActivity(i);
 				}else  {
-					Intent i = new Intent(context, TabunganActivity.class);
+					Intent i = new Intent(context, TabunganInsertActivity.class);
 					//dismissDialog(CUSTOM_DIALOG);
-					finish();
+					//finish();
 					startActivity(i);
 				}
 				

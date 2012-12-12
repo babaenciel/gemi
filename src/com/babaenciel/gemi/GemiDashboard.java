@@ -60,10 +60,10 @@ public class GemiDashboard extends SherlockActivity implements OnClickListener {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.dashboard);
 		
-		/*KategoriDatabase db = new KategoriDatabase(this);
-		db.insertKategori("Gaji");
-		db.insertKategori("Hadiah");
-		db.insertKategori("Penjualan");*/
+//		KategoriDatabase db = new KategoriDatabase(this);
+//		db.insertKategori("Gaji");
+//		db.insertKategori("Hadiah");
+//		db.insertKategori("Penjualan");
 		
 		/*TabunganDatabase db = new TabunganDatabase(this);
 		db.insertTabungan("babaenciel", 150000, "2012-11-29");

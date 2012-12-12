@@ -96,7 +96,7 @@ public class AnggaranFragmentByDate extends SherlockFragment {
 				builder.setTitle("sub Menu");
 				builder.setItems(anggaranMenuItem, new DialogInterface.OnClickListener() {
 				    public void onClick(DialogInterface dialog, int item) {
-				    	if(anggaranMenuItem[item].equals("Delete")) {
+				    	if(anggaranMenuItem[item].equals("Delete")) {				    		
 				    		AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getActivity());
 				    		alertDialogBuilder.setTitle("Konfirmasi Delete");
 				    		alertDialogBuilder.setMessage("Yakin mau menghapus : "+ anggaranObject.nama + " ?")
