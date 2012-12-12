@@ -2,6 +2,7 @@ package com.babaenciel.gemi.tabungan;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -11,11 +12,14 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.AdapterView;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
+import android.widget.AdapterView.OnItemClickListener;
 
 import com.actionbarsherlock.app.SherlockActivity;
 import com.babaenciel.gemi.R;
@@ -57,6 +61,29 @@ public class TabunganUpdateActivity extends SherlockActivity {
 		myDate = new MyDate();		
 						
 		nama.setText(object.nama);
+		// set nama autocomplete
+		ArrayList<TabunganObject> listTabungan = db.getTabunganAll();
+		TabunganAutocompleteCustomAdapter adapter = new TabunganAutocompleteCustomAdapter(
+				this, listTabungan, R.layout.autocomplete_rows);
+		nama.setAdapter(adapter);
+		nama.setOnItemClickListener(new OnItemClickListener() {
+
+			@Override
+			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
+					long arg3) {
+				TabunganObject object = db.getTabunganSingle((int) arg3);
+
+				nominal.setText(Integer.toString(object.nominal));
+
+				// ini untuk menutup keyboard setelah user memilih list
+				// autocompletenya
+				if (getCurrentFocus() != null
+						&& getCurrentFocus() instanceof EditText) {
+					InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+					imm.hideSoftInputFromWindow(nama.getWindowToken(), 0);
+				}
+			}
+		});
 		
 		nominal.setText(Integer.toString(object.nominal));
 

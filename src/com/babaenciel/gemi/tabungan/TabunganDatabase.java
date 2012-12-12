@@ -63,6 +63,24 @@ public class TabunganDatabase {
 		return list;
 	}
 	
+	public ArrayList<TabunganObject> getTabunganAll() {
+		SQLiteDatabase db = dbAdapter.getReadableDatabase();
+		String query = "select * from Tabungan";
+		Cursor cursor = db.rawQuery(query, null);
+		ArrayList<TabunganObject> list = new ArrayList<TabunganObject>();
+		
+		if(cursor.moveToFirst()) {
+			do {
+				list.add(new TabunganObject(cursor.getInt(0), cursor.getString(1), cursor.getInt(2), cursor.getString(3)));
+			}while(cursor.moveToNext());
+		}
+		
+		cursor.close();
+		db.close();
+		
+		return list;
+	}
+	
 	public int getTabunganTotal() {
 		SQLiteDatabase db = dbAdapter.getReadableDatabase();
 		String query = "select sum(nominal) from Tabungan";

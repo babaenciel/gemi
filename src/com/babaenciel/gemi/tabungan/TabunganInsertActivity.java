@@ -28,6 +28,8 @@ import android.widget.AdapterView.OnItemClickListener;
 
 import com.actionbarsherlock.app.SherlockActivity;
 import com.babaenciel.gemi.R;
+import com.babaenciel.gemi.anggaran.AnggaranAutocompleteCustomAdapter;
+import com.babaenciel.gemi.anggaran.AnggaranObject;
 import com.babaenciel.gemi.lib.DateSlider;
 import com.babaenciel.gemi.lib.DefaultDateSlider;
 import com.babaenciel.gemi.pemasukan.PemasukanActivity;
@@ -62,9 +64,33 @@ public class TabunganInsertActivity extends SherlockActivity {
 		tanggal = (EditText) findViewById(R.id.tabungan_insert_activity_edittext_tanggal);
 		nominal = (EditText) findViewById(R.id.tabungan_insert_activity_edittext_nominal);		
 		
-		db = new TabunganDatabase(this);								
-						
-		//set tanggal. default langsung terisi now.
+		db = new TabunganDatabase(this);
+
+		// set nama autocomplete
+		ArrayList<TabunganObject> listTabungan = db.getTabunganAll();
+		TabunganAutocompleteCustomAdapter adapter = new TabunganAutocompleteCustomAdapter(
+				this, listTabungan, R.layout.autocomplete_rows);
+		nama.setAdapter(adapter);
+		nama.setOnItemClickListener(new OnItemClickListener() {
+
+			@Override
+			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
+					long arg3) {
+				TabunganObject object = db.getTabunganSingle((int) arg3);
+
+				nominal.setText(Integer.toString(object.nominal));
+
+				// ini untuk menutup keyboard setelah user memilih list
+				// autocompletenya
+				if (getCurrentFocus() != null
+						&& getCurrentFocus() instanceof EditText) {
+					InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+					imm.hideSoftInputFromWindow(nama.getWindowToken(), 0);
+				}
+			}
+		});
+		
+		// set tanggal. default langsung terisi now.
 		myDate = new MyDate();
 		myDate.setNow();
 		
